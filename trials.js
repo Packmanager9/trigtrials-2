@@ -796,8 +796,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
             TIP_engine.x = XS_engine
             TIP_engine.y = YS_engine
             TIP_engine.body = TIP_engine
-
-
+            if (player.drawbutton.isPointInside(TIP_engine)) {
+                player.deck.pull()
+            }
+            for (let t = 0; t < player.deck.active.length; t++) {
+                if (player.deck.active[t].body.isPointInside(TIP_engine)) {
+                    player.deck.active[t].play()
+                }
+            }
             for (let t = 0; t < enemies.length; t++) {
                 if (enemies[t].body.body.isPointInside(TIP_engine)) {
                     player.selected = enemies[t]
@@ -805,8 +811,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     tringle.y = player.selected.body.body.y - 40
                 }
             }
-
-
         });
         // window.addEventListener('pointerup', e => {
         //     window.removeEventListener("pointermove", continued_stimuli);
@@ -935,11 +939,118 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.selected.body.body = {}
             this.selected.body.body.x = 100
             this.selected.body.body.y = 100
-
+            this.deck = new Deck()
+            this.drawbutton = new Rectangle(580, 380, 120, 60, "purple")
+            this.energymax = 5
+            this.energy = 5
+            this.maxhealth = 100
+            this.health = 100
+            this.block = 0
+            this.thorns = 0
         }
+        draw() {
+            this.drawbutton.draw()
+            canvas_context.font = "43px arial"
+            canvas_context.fillStyle = "white"
+            canvas_context.fillText("Draw", 590, 425)
 
+            canvas_context.font = "43px arial"
+            canvas_context.fillStyle = "white"
+            canvas_context.fillText(`Health: ${this.health} Energy: ${this.energy}`, 10, 425)
+            canvas_context.font = "23px arial"
+            canvas_context.fillText(`Block: ${this.block} Thorns: ${this.thorns}`, 10, 465)
+            this.deck.draw()
+        }
     }
+    class Deck {
+        constructor() {
+            this.active = []
+            this.drawable = []
+            this.discarded = []
+            for (let t = 0; t < 10; t++) {
+                this.push(new Card())
+            }
+        }
+        push(card) {
+            this.drawable.push(card)
+        }
+        pull() {
+            player.energy = player.energymax
+            for (let t = 0; t < this.active.length; t++) {
+                this.push(this.active[t].clone())
+            }
+            this.active = []
+            for (let t = 0; t < 5; t++) {
+                let index = Math.floor(Math.random() * this.drawable.length)
+                this.active.push(this.drawable[index].clone())
+                this.drawable.splice(index, 1)
+            }
 
+            for (let t = 0; t < this.active.length; t++) {
+                this.active[t].body.x = t * 140
+            }
+            for (let t = 0; t < enemies.length; t++) {
+                enemies[t].attack()
+            }
+        }
+        softpull() {
+            player.energy = player.energymax
+            for (let t = 0; t < this.active.length; t++) {
+                this.push(this.active[t].clone())
+            }
+            this.active = []
+            for (let t = 0; t < 5; t++) {
+                let index = Math.floor(Math.random() * this.drawable.length)
+                this.active.push(this.drawable[index].clone())
+                this.drawable.splice(index, 1)
+            }
+
+            for (let t = 0; t < this.active.length; t++) {
+                this.active[t].body.x = t * 140
+            }
+            // for (let t = 0; t < enemies.length; t++) {
+            //     enemies[t].attack()
+            // }
+        }
+        draw() {
+            for (let t = 0; t < this.active.length; t++) {
+                this.active[t].draw()
+            }
+        }
+    }
+    class Card {
+        constructor() {
+            this.body = new Rectangle(0, 550, 140, 150, "red")
+            this.energy = Math.floor(Math.random() * 3)
+            this.hits = Math.floor(Math.random() * 4) + 1
+            this.played = 0
+        }
+        clone() {
+            let clone = new Card()
+            return clone
+        }
+        draw() {
+            if (this.played == 0) {
+                this.body.draw()
+                canvas_context.font = "20px arial"
+                canvas_context.fillStyle = "white"
+                canvas_context.fillText(`Damage: ${this.hits} `, this.body.x + 10, this.body.y+25)
+                canvas_context.fillText(`Energy: ${this.energy} `, this.body.x + 10, this.body.y+50)
+            }
+        }
+        play() {
+            if (this.played == 0) {
+                if (player.energy >= this.energy) {
+                    this.played = 1
+                    player.energy -= this.energy
+                    player.selected.health -= this.hits
+                    if(player.selected.health<0){
+                        player.selected.health = 0
+                    }
+                }
+            }
+        }
+    }
     class Enemy {
         constructor(type = -1) {
             if (type == -1) {
@@ -948,10 +1059,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.type = type
             }
             this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
-
             this.health = 10
             this.maxhealth = 10
             this.hits = 3
+        }
+        attack() {
+            player.health -= this.hits
         }
         draw() {
             this.body.draw()
@@ -959,15 +1072,30 @@ window.addEventListener('DOMContentLoaded', (event) => {
             canvas_context.fillStyle = "white"
             canvas_context.fillText(`${this.health}/${this.maxhealth}`, this.body.body.x - 15, this.body.body.y + 60)
             canvas_context.fillText(`Hits: ${this.hits}`, this.body.body.x - 15, this.body.body.y + 80)
+            if (this.health <= 0) {
+                enemies.splice(enemies.indexOf(this), 1)
+                if (enemies.length == 0) {
+                    enenum = Math.floor(Math.random() * 8) + 1
+                    for (let t = 0; t < enenum; t++) {
+                        let enemy = new Enemy(Math.floor(Math.random() * 4) + 2)
+                        enemies.push(enemy)
+                    }
+                    player.health = player.maxhealth
+                    player.energy = player.energymax
+                    player.deck.softpull()
+                } else if (!enemies.includes(player.selected)) {
+                    player.selected = enemies[0]
+                }
+            }
         }
 
     }
 
     let enemies = []
 
-    let enenum = Math.floor(Math.random() * 8)+1
+    let enenum = Math.floor(Math.random() * 8) + 1
     for (let t = 0; t < enenum; t++) {
-        let enemy = new Enemy(Math.floor(Math.random()*4)+2)
+        let enemy = new Enemy(Math.floor(Math.random() * 4) + 2)
         enemies.push(enemy)
     }
 
@@ -980,19 +1108,24 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     let player = new Player()
 
+    player.deck.softpull()
     function main() {
         canvas_context.clearRect(0, 0, canvas.width, canvas.height)  // refreshes the image
         // canvas_context.fillStyle = `rgba(0,0,0,.01)`
         // canvas_context.fillRect(0, 0, canvas.width, canvas.height)
         gamepadAPI.update() //checks for button presses/stick movement on the connected controller)
 
+        for (let t = 0; t < enemies.length; t++) {
+            enemies[t].body.body.x = ((canvas.width / enemies.length + 1) * (t)) + ((canvas.width / (enemies.length * 2)))
+            enemies[t].draw()
+        }
+        player.draw()
+        if (!enemies.includes(player.selected)) {
+            player.selected = enemies[0]
+        }
         tringle.x = player.selected.body.body.x
         tringle.y = player.selected.body.body.y - 40
         tringle.draw()
-        for (let t = 0; t < enemies.length; t++) {
-            enemies[t].body.body.x = ((canvas.width/enemies.length+1)*(t)) +((canvas.width/(enemies.length*2)))
-            enemies[t].draw()
-        }
     }
 
 
