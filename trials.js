@@ -796,12 +796,30 @@ window.addEventListener('DOMContentLoaded', (event) => {
             TIP_engine.x = XS_engine
             TIP_engine.y = YS_engine
             TIP_engine.body = TIP_engine
-            if (player.drawbutton.isPointInside(TIP_engine)) {
-                player.deck.pull()
+            if(player.reward == 0){
+                if (player.drawbutton.isPointInside(TIP_engine)) {
+                    player.deck.pull()
+                }
+            }else{
+                if (player.skipbutton.isPointInside(TIP_engine)) {
+                    player.deck.reward = []
+                    player.reward = 0
+                    player.deck.softpull()
+                    spawn()
+                }
             }
             for (let t = 0; t < player.deck.active.length; t++) {
                 if (player.deck.active[t].body.isPointInside(TIP_engine)) {
                     player.deck.active[t].play()
+                }
+            }
+            for (let t = 0; t < player.deck.reward.length; t++) {
+                if (player.deck.reward[t].body.isPointInside(TIP_engine)) {
+                    player.deck.drawable.push(player.deck.reward[t].clone())
+                    player.deck.reward = []
+                    player.reward = 0
+                    player.deck.softpull()
+                    spawn()
                 }
             }
             for (let t = 0; t < enemies.length; t++) {
@@ -941,24 +959,37 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.selected.body.body.y = 100
             this.deck = new Deck()
             this.drawbutton = new Rectangle(580, 380, 120, 60, "purple")
+            this.skipbutton = new Rectangle(580, 250, 120, 60, "white")
+            this.cleanbutton = new Rectangle(580, 150, 120, 60, "green")
             this.energymax = 5
             this.energy = 5
             this.maxhealth = 100
             this.health = 100
             this.block = 0
             this.thorns = 0
+            this.reward = 0
+            this.level = 0
         }
         draw() {
-            this.drawbutton.draw()
-            canvas_context.font = "43px arial"
-            canvas_context.fillStyle = "white"
-            canvas_context.fillText("Draw", 590, 425)
-
-            canvas_context.font = "43px arial"
-            canvas_context.fillStyle = "white"
-            canvas_context.fillText(`Health: ${this.health} Energy: ${this.energy}`, 10, 425)
-            canvas_context.font = "23px arial"
-            canvas_context.fillText(`Block: ${this.block} Thorns: ${this.thorns}`, 10, 465)
+            if (this.reward == 0) {
+                this.drawbutton.draw()
+                canvas_context.font = "43px arial"
+                canvas_context.fillStyle = "white"
+                canvas_context.fillText("Draw", 590, 425)
+                canvas_context.font = "43px arial"
+                canvas_context.fillStyle = "white"
+                canvas_context.fillText(`Health: ${this.health} Energy: ${this.energy}`, 10, 425)
+                canvas_context.font = "23px arial"
+                canvas_context.fillText(`Block: ${this.block} Thorns: ${this.thorns}`, 10, 465)
+            } else {
+                this.skipbutton.draw()
+                this.cleanbutton.draw()
+                canvas_context.font = "43px arial"
+                canvas_context.fillStyle = "black"
+                canvas_context.fillText("Skip", 590, 425)
+                canvas_context.fillStyle = "white"
+                canvas_context.fillText(`Select a reward card!`, 10, 425)
+            }
             this.deck.draw()
         }
     }
@@ -967,8 +998,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.active = []
             this.drawable = []
             this.discarded = []
-            for (let t = 0; t < 10; t++) {
+            this.reward = []
+            for (let t = 0; t < 5; t++) {
                 this.push(new Card())
+            }
+        }
+        makeprize() {
+            for (let t = 0; t < 5; t++) {
+                this.reward.push(new Card(player.level, Math.floor(Math.random() * 3)))
+            }
+            for (let t = 0; t < this.reward.length; t++) {
+                this.reward[t].body.x = t * 140
             }
         }
         push(card) {
@@ -1013,20 +1053,56 @@ window.addEventListener('DOMContentLoaded', (event) => {
             // }
         }
         draw() {
-            for (let t = 0; t < this.active.length; t++) {
-                this.active[t].draw()
+            if (player.reward == 0) {
+                for (let t = 0; t < this.active.length; t++) {
+                    this.active[t].draw()
+                }
+            } else {
+                for (let t = 0; t < this.reward.length; t++) {
+                    this.reward[t].draw()
+                }
             }
         }
     }
     class Card {
-        constructor() {
+        constructor(level = 0, type = 0) {
+            this.level = level
+            this.type = type
             this.body = new Rectangle(0, 550, 140, 150, "red")
             this.energy = Math.floor(Math.random() * 3)
-            this.hits = Math.floor(Math.random() * 4) + 1
+            this.hits = Math.floor(Math.random() * 4*this.level) + 2
             this.played = 0
+            if (this.type == 1) {
+                this.healing = Math.ceil(Math.random() * 3) + Math.ceil(Math.random() * 3 * level)
+                this.body.color = "green"
+            }else{
+                this.healing = 0
+            }
+            if (this.type == 2) {
+                this.block = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * 1 * level)
+                this.body.color = "gray"
+            }else{
+                this.block = 0
+            }
         }
         clone() {
             let clone = new Card()
+            clone.energy = this.energy
+            clone.level = this.level
+            clone.hits = this.hits
+            clone.type = this.type
+            if (clone.type == 1) {
+                clone.healing = this.healing
+                clone.body.color = "green"
+            }else{
+                clone.healing = 0
+            }
+            if (clone.type == 2) {
+                clone.block = this.block
+                clone.body.color = "gray"
+            }else{
+                clone.block = 0
+            }
             return clone
         }
         draw() {
@@ -1034,17 +1110,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.body.draw()
                 canvas_context.font = "20px arial"
                 canvas_context.fillStyle = "white"
-                canvas_context.fillText(`Damage: ${this.hits} `, this.body.x + 10, this.body.y+25)
-                canvas_context.fillText(`Energy: ${this.energy} `, this.body.x + 10, this.body.y+50)
+                canvas_context.fillText(`Damage: ${this.hits} `, this.body.x + 10, this.body.y + 25)
+                canvas_context.fillText(`Energy: ${this.energy} `, this.body.x + 10, this.body.y + 50)
+                if (this.type == 1) {
+                    canvas_context.fillText(`Heal: ${this.healing} `, this.body.x + 10, this.body.y + 80)
+                }else if(this.type == 2){
+                    canvas_context.fillText(`Block: ${this.block} `, this.body.x + 10, this.body.y + 80)
+
+                }
             }
         }
         play() {
             if (this.played == 0) {
                 if (player.energy >= this.energy) {
                     this.played = 1
+                    player.block+=this.block
+                    player.health+=this.healing
                     player.energy -= this.energy
                     player.selected.health -= this.hits
-                    if(player.selected.health<0){
+                    if (player.selected.health < 0) {
                         player.selected.health = 0
                     }
                 }
@@ -1059,12 +1143,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.type = type
             }
             this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
-            this.health = 10
-            this.maxhealth = 10
-            this.hits = 3
+            this.health = 10 +(Math.floor(Math.random()*player.level*10))
+            this.maxhealth = this.health
+            this.hits = Math.floor(Math.random() * (player.level + 3))
+            // this.hits = 3
         }
         attack() {
-            player.health -= this.hits
+            if(this.hits >= player.block){
+                player.health -= (this.hits-player.block)
+            }
+            if(this.hits > 0){
+                this.health-=player.thorns
+            }
         }
         draw() {
             this.body.draw()
@@ -1075,28 +1165,42 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.health <= 0) {
                 enemies.splice(enemies.indexOf(this), 1)
                 if (enemies.length == 0) {
-                    enenum = Math.floor(Math.random() * 8) + 1
-                    for (let t = 0; t < enenum; t++) {
-                        let enemy = new Enemy(Math.floor(Math.random() * 4) + 2)
-                        enemies.push(enemy)
+                    player.reward = 1
+                    for (let t = 0; t < player.deck.active.length; t++) {
+                        player.deck.push(player.deck.active[t].clone())
                     }
-                    player.health = player.maxhealth
-                    player.energy = player.energymax
-                    player.deck.softpull()
+                    player.deck.active = []
+                    player.deck.makeprize()
                 } else if (!enemies.includes(player.selected)) {
                     player.selected = enemies[0]
                 }
             }
         }
 
+
     }
 
+    let player = new Player()
     let enemies = []
 
     let enenum = Math.floor(Math.random() * 8) + 1
     for (let t = 0; t < enenum; t++) {
         let enemy = new Enemy(Math.floor(Math.random() * 4) + 2)
         enemies.push(enemy)
+    }
+    function spawn() {
+        player.level+=1
+        enenum = Math.floor(Math.random() * 8) + 1
+        for (let t = 0; t < enenum; t++) {
+            let enemy = new Enemy(Math.floor(Math.random() * 4) + 2)
+            enemies.push(enemy)
+        }
+        player.health = player.maxhealth
+        player.energy = player.energymax
+        player.block = 0
+        player.thorns = 0
+
+        player.deck.softpull()
     }
 
     let setup_canvas = document.getElementById('canvas') //getting canvas from document
@@ -1106,7 +1210,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     let tringle = new Pointer(350, 350, "white", 10)
 
-    let player = new Player()
 
     player.deck.softpull()
     function main() {
@@ -1120,12 +1223,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
             enemies[t].draw()
         }
         player.draw()
-        if (!enemies.includes(player.selected)) {
-            player.selected = enemies[0]
+        if (player.reward == 0) {
+            if (!enemies.includes(player.selected)) {
+                player.selected = enemies[0]
+            }else{
+                tringle.x = player.selected.body.body.x
+                tringle.y = player.selected.body.body.y - 40
+                tringle.draw()
+            }
         }
-        tringle.x = player.selected.body.body.x
-        tringle.y = player.selected.body.body.y - 40
-        tringle.draw()
     }
 
 
