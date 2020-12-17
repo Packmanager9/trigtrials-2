@@ -1286,7 +1286,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     let tringle = new Pointer(350, 350, "white", 10)
 
-
     player.deck.softpull()
     function main() {
         canvas_context.clearRect(0, 0, canvas.width, canvas.height)  // refreshes the image
