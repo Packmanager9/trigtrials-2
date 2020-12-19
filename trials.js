@@ -986,17 +986,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.selected.body.body.y = 100
             this.deck = new Deck()
             let strangecard = new Card(5, 0)
-            strangecard.block = 2
-            strangecard.healing = 17
-            strangecard.thorns = 9
-            strangecard.energybonus = 3
-            strangecard.poison = 10
-            strangecard.body.color = "red"
-            this.deck.push(strangecard)
-            this.deck.push(strangecard.clone())
-            this.deck.push(strangecard.clone())
-            this.deck.push(strangecard.clone())
-            this.deck.push(strangecard.clone())
+            // strangecard.block = 2
+            // strangecard.hits = 2000
+            // strangecard.healing = 17
+            // strangecard.thorns = 9
+            // strangecard.energybonus = 3
+            // strangecard.poison = 10
+            // strangecard.body.color = "red"
+            // this.deck.push(strangecard)
+            // this.deck.push(strangecard.clone())
+            // this.deck.push(strangecard.clone())
+            // this.deck.push(strangecard.clone())
+            // this.deck.push(strangecard.clone())
             this.drawbutton = new Rectangle(580, 380, 220, 60, "purple")
             this.skipbutton = new Rectangle(580, 250, 220, 60, "white")
             this.cleanbutton = new Rectangle(580, 150, 220, 60, "green")
@@ -1034,6 +1035,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 canvas_context.fillText("Skip", 590, 425)
                 canvas_context.fillStyle = "white"
                 canvas_context.fillText(`Select a reward card!`, 10, 425)
+
+                canvas_context.fillStyle = "black"
+                canvas_context.font = "33px arial"
+                canvas_context.fillText(`Clean`, 597, 190)
+                canvas_context.fillText(`Skip`, 597, 290)
                 if(this.cleaning == 1){
                     this.deck.drawable[this.displaycardindex].body.x = 100
                     this.deck.drawable[this.displaycardindex].body.y = 100
@@ -1044,6 +1050,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     canvas_context.font = "43px arial"
                     canvas_context.fillStyle = "white"
                     canvas_context.fillText(`Cards: ${this.deck.drawable.length}`, 100, 50)
+                    canvas_context.fillStyle = "black"
+                    canvas_context.fillText(`>`, 292, 220)
+                    canvas_context.fillText(`<`, 42, 220)
+                    canvas_context.font = "33px arial"
+                    canvas_context.fillText(`Remove`, 117, 305)
                 }
             }
             this.deck.draw()
@@ -1055,8 +1066,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.drawable = []
             this.discarded = []
             this.reward = []
-            for (let t = 0; t < 0; t++) {
-                this.push(new Card())
+            for (let t = 0; t < 5; t++) {
+                this.push(new Card(0, Math.floor(Math.random() * 6)))
             }
         }
         makeprize() {
