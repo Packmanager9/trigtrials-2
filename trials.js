@@ -807,6 +807,33 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     player.deck.softpull()
                     spawn()
                 }
+                if (player.cleanbutton.isPointInside(TIP_engine)) {
+                    player.cleaning *= -1
+                }
+
+                if (player.indexdownbutton.isPointInside(TIP_engine)) {
+                    player.displaycardindex -= 1
+                    if(player.displaycardindex < 0){
+                        player.displaycardindex = 0
+                    }
+                }
+                if (player.indexupbutton.isPointInside(TIP_engine)) {
+                    player.displaycardindex += 1
+                    if(player.displaycardindex > player.deck.drawable.length-1){
+                        player.displaycardindex = player.deck.drawable.length-1
+                    }
+                }
+                
+                if (player.removebutton.isPointInside(TIP_engine)) {
+                    if(player.deck.drawable.length > 1){
+                        player.deck.drawable.splice(player.displaycardindex,1)
+                        player.displaycardindex-=1
+                        if(player.displaycardindex < 0){
+                            player.displaycardindex = 0
+                        }
+                    }
+                }
+                
             }
             for (let t = 0; t < player.deck.active.length; t++) {
                 if (player.deck.active[t].body.isPointInside(TIP_engine)) {
@@ -966,9 +993,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
             strangecard.poison = 10
             strangecard.body.color = "red"
             this.deck.push(strangecard)
+            this.deck.push(strangecard.clone())
+            this.deck.push(strangecard.clone())
+            this.deck.push(strangecard.clone())
+            this.deck.push(strangecard.clone())
             this.drawbutton = new Rectangle(580, 380, 220, 60, "purple")
             this.skipbutton = new Rectangle(580, 250, 220, 60, "white")
             this.cleanbutton = new Rectangle(580, 150, 220, 60, "green")
+            this.removebutton = new Rectangle(100, 270, 160, 50, "white")
+            this.indexupbutton = new Rectangle(280, 180, 50, 50, "#00FF00")
+            this.indexdownbutton = new Rectangle(30, 180, 50, 50, "#FF0000")
             this.energymax = 5
             this.energy = 5
             this.maxhealth = 100
@@ -977,6 +1011,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.thorns = 0
             this.reward = 0
             this.level = 0
+            this.displaycardindex = 0
+            this.cleaning = -1
         }
         draw() {
             if (this.reward == 0) {
@@ -989,6 +1025,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 canvas_context.fillText(`Health: ${this.health} Energy: ${this.energy}`, 10, 425)
                 canvas_context.font = "23px arial"
                 canvas_context.fillText(`Block: ${this.block} Thorns: ${this.thorns}`, 10, 465)
+        
             } else {
                 this.skipbutton.draw()
                 this.cleanbutton.draw()
@@ -997,6 +1034,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 canvas_context.fillText("Skip", 590, 425)
                 canvas_context.fillStyle = "white"
                 canvas_context.fillText(`Select a reward card!`, 10, 425)
+                if(this.cleaning == 1){
+                    this.deck.drawable[this.displaycardindex].body.x = 100
+                    this.deck.drawable[this.displaycardindex].body.y = 100
+                    this.deck.drawable[this.displaycardindex].draw()
+                    this.removebutton.draw()
+                    this.indexdownbutton.draw()
+                    this.indexupbutton.draw()
+                    canvas_context.font = "43px arial"
+                    canvas_context.fillStyle = "white"
+                    canvas_context.fillText(`Cards: ${this.deck.drawable.length}`, 100, 50)
+                }
             }
             this.deck.draw()
         }
@@ -1007,7 +1055,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.drawable = []
             this.discarded = []
             this.reward = []
-            for (let t = 0; t < 5; t++) {
+            for (let t = 0; t < 0; t++) {
                 this.push(new Card())
             }
         }
@@ -1027,8 +1075,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             for (let t = 0; t < this.active.length; t++) {
                 this.push(this.active[t].clone())
             }
+            let pulllength = Math.min(this.drawable.length, 5)
             this.active = []
-            for (let t = 0; t < 5; t++) {
+            for (let t = 0; t < pulllength; t++) {
                 let index = Math.floor(Math.random() * this.drawable.length)
                 this.active.push(this.drawable[index].clone())
                 this.drawable.splice(index, 1)
@@ -1036,6 +1085,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
             for (let t = 0; t < this.active.length; t++) {
                 this.active[t].body.x = t * 160
+                this.active[t].body.y = 550
             }
             for (let t = 0; t < enemies.length; t++) {
                 enemies[t].attack()
@@ -1046,8 +1096,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             for (let t = 0; t < this.active.length; t++) {
                 this.push(this.active[t].clone())
             }
+            let pulllength = Math.min(this.drawable.length, 5)
             this.active = []
-            for (let t = 0; t < 5; t++) {
+            for (let t = 0; t < pulllength; t++) {
                 let index = Math.floor(Math.random() * this.drawable.length)
                 this.active.push(this.drawable[index].clone())
                 this.drawable.splice(index, 1)
