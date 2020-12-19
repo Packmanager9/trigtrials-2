@@ -958,6 +958,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.selected.body.body.x = 100
             this.selected.body.body.y = 100
             this.deck = new Deck()
+            let strangecard = new Card(5, 0)
+            strangecard.block = 2
+            strangecard.healing = 17
+            strangecard.thorns = 9
+            strangecard.energybonus = 3
+            strangecard.poison = 10
+            strangecard.body.color = "red"
+            this.deck.push(strangecard)
             this.drawbutton = new Rectangle(580, 380, 220, 60, "purple")
             this.skipbutton = new Rectangle(580, 250, 220, 60, "white")
             this.cleanbutton = new Rectangle(580, 150, 220, 60, "green")
@@ -1005,7 +1013,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         makeprize() {
             for (let t = 0; t < 5; t++) {
-                this.reward.push(new Card(player.level, Math.floor(Math.random() * 5)))
+                this.reward.push(new Card(player.level, Math.floor(Math.random() * 6)))
             }
             for (let t = 0; t < this.reward.length; t++) {
                 this.reward[t].body.x = t * 160
@@ -1048,9 +1056,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             for (let t = 0; t < this.active.length; t++) {
                 this.active[t].body.x = t * 160
             }
-            // for (let t = 0; t < enemies.length; t++) {
-            //     enemies[t].attack()
-            // }
         }
         draw() {
             if (player.reward == 0) {
@@ -1096,6 +1101,32 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }else{
                 this.thorns = 0
             }
+            if (this.type == 5) {
+                this.energybonus = Math.ceil(Math.random() * 3) 
+                this.body.color = "#00AAFF"
+            }else{
+                this.energybonus = 0
+            }
+        }
+        stringmaker(){
+            this.strings = []
+            this.strings.push([`Damage: ${this.hits}`, "white"])
+            this.strings.push([`Energy: ${this.energy}`, "white"]) 
+            if(this.block > 0){
+                this.strings.push([`Block: ${this.block}`, "black"]) 
+            }
+            if(this.thorns > 0){
+                this.strings.push([`Thorns: ${this.thorns}`, "yellow"]) 
+            }
+            if(this.poison > 0){
+                this.strings.push([`Poison: ${this.poison}`, "green"]) 
+            }
+            if(this.healing > 0){
+                this.strings.push([`Heals: ${this.healing}`, "#00FF00"]) 
+            }
+            if(this.energybonus > 0){
+                this.strings.push([`Recharge: ${this.energybonus}`, "Blue"]) 
+            }
         }
         clone() {
             let clone = new Card()
@@ -1103,47 +1134,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
             clone.level = this.level
             clone.hits = this.hits
             clone.type = this.type
-            if (clone.type == 1) {
                 clone.healing = this.healing
-                clone.body.color = "green"
-            }else{
-                clone.healing = 0
-            }
-            if (clone.type == 2) {
                 clone.block = this.block
-                clone.body.color = "gray"
-            }else{
-                clone.block = 0
-            }
-            if (clone.type == 3) {
                 clone.poison = this.poison
-                clone.body.color = "purple"
-            }else{
-                clone.poison = 0
-            }
-            if (clone.type == 4) {
                 clone.thorns = this.thorns
-                clone.body.color = "#888800"
-            }else{
-                clone.thorns = 0
-            }
+                clone.energybonus = this.energybonus
+            clone.body.color = this.body.color
             return clone
         }
         draw() {
             if (this.played == 0) {
                 this.body.draw()
-                canvas_context.font = "20px arial"
-                canvas_context.fillStyle = "white"
-                canvas_context.fillText(`Damage: ${this.hits} `, this.body.x + 10, this.body.y + 25)
-                canvas_context.fillText(`Energy: ${this.energy} `, this.body.x + 10, this.body.y + 50)
-                if (this.type == 1) {
-                    canvas_context.fillText(`Heal: ${this.healing} `, this.body.x + 10, this.body.y + 80)
-                }else if(this.type == 2){
-                    canvas_context.fillText(`Block: ${this.block} `, this.body.x + 10, this.body.y + 80)
-                }else if(this.type == 3){
-                    canvas_context.fillText(`Poison: ${this.poison} `, this.body.x + 10, this.body.y + 80)
-                }else if(this.type == 4){
-                    canvas_context.fillText(`Thorns: ${this.thorns} `, this.body.x + 10, this.body.y + 80)
+                this.stringmaker()
+                canvas_context.font = "18px arial"
+                for(let t =0;t<this.strings.length;t++){
+                    canvas_context.fillStyle = this.strings[t][1]
+                    canvas_context.fillText(this.strings[t][0], this.body.x + 10, this.body.y + 20+(t*20))
                 }
             }
         }
@@ -1156,6 +1162,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     player.block+=this.block
                     player.health+=this.healing
                     player.energy -= this.energy
+                    player.energy += this.energybonus
                     if(this.hits >= player.selected.blocks){
                         player.selected.health -= (this.hits-player.selected.blocks)
                     }
@@ -1201,6 +1208,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         stringmaker(){
             this.strings = []
+            if(this.health < 0){
+                this.health = 0
+            }
             this.strings.push([`${this.health}/${this.maxhealth}`, "white"])
             this.strings.push([`Hits: ${this.hits}`, "white"]) 
             if(this.blocks > 0){
@@ -1288,11 +1298,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     player.deck.softpull()
     function main() {
-        canvas_context.clearRect(0, 0, canvas.width, canvas.height)  // refreshes the image
-        // canvas_context.fillStyle = `rgba(0,0,0,.01)`
-        // canvas_context.fillRect(0, 0, canvas.width, canvas.height)
-        gamepadAPI.update() //checks for button presses/stick movement on the connected controller)
-
+        for(let k = 0;k<enemies.length;k++){
+            for (let t = 0; t < enemies.length; t++) {
+                enemies[t].body.body.x = ((canvas.width / enemies.length + 1) * (t)) + ((canvas.width / (enemies.length * 2)))
+                enemies[t].draw()
+            }
+        }
+        canvas_context.clearRect(0, 0, canvas.width, canvas.height) 
+        gamepadAPI.update() 
         for (let t = 0; t < enemies.length; t++) {
             enemies[t].body.body.x = ((canvas.width / enemies.length + 1) * (t)) + ((canvas.width / (enemies.length * 2)))
             enemies[t].draw()
@@ -1308,6 +1321,4 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
         }
     }
-
-
 })
