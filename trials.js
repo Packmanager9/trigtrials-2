@@ -987,18 +987,36 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.deck = new Deck()
             let strangecard = new Card(5, 0)
             this.venom = 0
-            // strangecard.block = 2
-            // strangecard.hits = 2000
-            // strangecard.healing = 17
-            // strangecard.thorns = 9
-            // strangecard.energybonus = 3
-            // strangecard.poison = 10
-            // strangecard.body.color = "red"
-            // this.deck.push(strangecard)
-            // this.deck.push(strangecard.clone())
-            // this.deck.push(strangecard.clone())
-            // this.deck.push(strangecard.clone())
-            // this.deck.push(strangecard.clone())
+
+
+            let healingcard = new Card(1, 1)
+            healingcard.healing = 4
+            healingcard.energy = 2
+            let blockcard = new Card(1, 2)
+            blockcard.block = 1
+            blockcard.energy = 1
+            let poisoncard = new Card(1, 3)
+            poisoncard.poison = 3
+            poisoncard.energy = 1
+            let thorncard = new Card(1, 4)
+            thorncard.thorns = 2
+            thorncard.energy = 1
+            let energybonuscard = new Card(1, 5)
+            energybonuscard.energybonus = 3
+            energybonuscard.energy = 2
+            let curecard = new Card(1, 6)
+            curecard.cure = 1
+            curecard.healing = 2
+            curecard.energy = 2
+
+            this.deck.push(healingcard)
+            this.deck.push(blockcard)
+            this.deck.push(poisoncard)
+            this.deck.push(thorncard)
+            this.deck.push(energybonuscard)
+            this.deck.push(curecard)
+
+
             this.drawbutton = new Rectangle(580, 380, 220, 60, "purple")
             this.skipbutton = new Rectangle(580, 250, 220, 60, "white")
             this.cleanbutton = new Rectangle(580, 150, 220, 60, "green")
@@ -1067,13 +1085,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.drawable = []
             this.discarded = []
             this.reward = []
-            for (let t = 0; t < 5; t++) {
-                this.push(new Card(0, Math.floor(Math.random() * 7)))
+            for (let t = 0; t < 0; t++) {
+                this.push(new Card(0, Math.floor(Math.random() * 8)))
             }
         }
         makeprize() {
             for (let t = 0; t < 5; t++) {
-                this.reward.push(new Card(player.level, Math.floor(Math.random() * 7)))
+                this.reward.push(new Card(player.level, Math.floor(Math.random() * 8)))
             }
             for (let t = 0; t < this.reward.length; t++) {
                 this.reward[t].body.x = t * 160
@@ -1141,6 +1159,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.energy = Math.floor(Math.random() * 3)
             this.hits = Math.floor(Math.random() * 4 * this.level) + 2
             this.played = 0
+            if(this.type == 0){
+                this.hits*= 2
+            }
             if (this.type == 1) {
                 this.healing = Math.ceil(Math.random() * 3) + Math.ceil(Math.random() * 3 * level)
                 this.body.color = "green"
@@ -1178,10 +1199,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
             } else {
                 this.cure = 0
             }
+            if (this.type == 7) {
+                this.ret = Math.ceil(Math.random() * 2) + Math.ceil(Math.random() * 2 * level)
+                this.body.color = "teal"
+            } else {
+                this.ret = 0
+            }
         }
         stringmaker() {
             this.strings = []
+            if (this.ret == 0) {
             this.strings.push([`Damage: ${this.hits}`, "white"])
+            }else{
+            this.strings.push([`Damage all: ${this.hits}`, "white"])
+            }
             this.strings.push([`Energy: ${this.energy}`, "white"])
             if (this.block > 0) {
                 this.strings.push([`Block: ${this.block}`, "black"])
@@ -1201,6 +1232,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.cure > 0) {
                 this.strings.push([`Cure`, "Magenta"])
             }
+            if (this.ret > 0) {
+                this.strings.push([`Self Damage: ${this.ret}`, "#DD3333"])
+            }
         }
         clone() {
             let clone = new Card()
@@ -1214,6 +1248,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             clone.thorns = this.thorns
             clone.cure = this.cure
             clone.energybonus = this.energybonus
+            clone.ret = this.ret
             clone.body.color = this.body.color
             return clone
         }
@@ -1232,14 +1267,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.played == 0) {
                 if (player.energy >= this.energy) {
                     this.played = 1
+                    player.health -= this.ret
                     player.thorns += this.thorns
                     player.health -= player.selected.thorns
                     player.block += this.block
                     player.health += this.healing
                     player.energy -= this.energy
                     player.energy += this.energybonus
-                    if (this.hits >= player.selected.blocks) {
-                        player.selected.health -= (this.hits - player.selected.blocks)
+                    if(this.ret == 0){
+                        if (this.hits >= player.selected.blocks) {
+                            player.selected.health -= (this.hits - player.selected.blocks)
+                        }
+                    }else{
+                        for(let t = 0;t<enemies.length;t++){
+                            enemies[t].health -= this.hits
+                        }
                     }
                     player.selected.poison += this.poison
                     if (player.selected.health < 0) {
