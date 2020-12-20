@@ -1239,7 +1239,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     class Enemy {
         constructor(type = -1) {
             if (type == -1) {
-                this.type = Math.floor(Math.random() * 4)
+                this.type = Math.floor(Math.random() * 5)
             } else {
                 this.type = type
             }
@@ -1262,7 +1262,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
             this.health = 10 +(Math.floor(Math.random()*player.level*10))
             this.maxhealth = this.health
-            this.hits = Math.floor(Math.random() * (player.level + 3))
+            this.hits = (Math.floor(Math.random() * (player.level + 3)))+1
             // this.hits = 3
             this.poison = 0
             this.strings = []
