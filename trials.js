@@ -795,6 +795,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             delete keysPressed[event.key];
         });
         window.addEventListener('pointerdown', e => {
+            if(player.health > 0){
             FLEX_engine = canvas.getBoundingClientRect();
             XS_engine = e.clientX - FLEX_engine.left;
             YS_engine = e.clientY - FLEX_engine.top;
@@ -861,6 +862,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     tringle.y = player.selected.body.body.y - 40
                 }
             }
+        }
         });
         // window.addEventListener('pointerup', e => {
         //     window.removeEventListener("pointermove", continued_stimuli);
@@ -1264,6 +1266,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.type == 7) {
                 this.ret = Math.ceil(Math.random() * 2) + Math.ceil(Math.random() * 2 * level)
                 this.body.color = "teal"
+                if(this.ret > this.ret ){
+                    this.hits = this.ret
+                }
             } else {
                 this.ret = 0
             }
@@ -1366,7 +1371,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     }
     class Enemy {
-        constructor(type = -1) {
+        constructor(type = -1, level = player.level) {
             if (type == -1) {
                 this.type = Math.floor(Math.random() * 21)
 
@@ -1454,11 +1459,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.type = type
             }
 
+            this.level = level
 
             this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
-            this.health = 10 + (Math.floor(Math.random() * player.level * 10))
+            this.health = 10 + (Math.floor(Math.random() * this.level * 10))
             this.maxhealth = this.health
-            this.hits = (Math.floor(Math.random() * (player.level + 2.5))) + 1
+            this.hits = (Math.floor(Math.random() * (this.level + 2.5))) + 1
 
             this.poison = 0
             this.venom = 0
@@ -1466,19 +1472,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.enrage = 0
             this.thorns = 0
             if (this.blockyes == 1) {
-                this.blocks = Math.floor(Math.random() * (player.level + 2))
+                this.blocks = Math.floor(Math.random() * (this.level + 2))
             }
             if (this.thornsyes == 1) {
-                this.thorns = Math.floor(Math.random() * (player.level + 3))
+                this.thorns = Math.floor(Math.random() * (this.level + 3))
             }
             if (this.healsyes == 1) {
-                this.heals = Math.floor(Math.random() * (player.level + 3))
+                this.heals = Math.floor(Math.random() * (this.level + 3))
             }
             if (this.venomyes == 1) {
-                this.venom = Math.floor(Math.random() * (player.level + 3))
+                this.venom = Math.floor(Math.random() * (this.level + 3))
             }
             if (this.enrageyes == 1) {
-                this.enrage = Math.floor(Math.random() * (player.level + 1))+1
+                this.enrage = Math.floor(Math.random() * (this.level + 1))+1
             }
             if (this.summonyes == 1) {
                 this.summon = 1
@@ -1520,7 +1526,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         attack() {
             if(this.summon > 0){
-                summons.push(new Enemy(-1))
+                summons.push(new Enemy(-1, Math.max(this.level-2,0)))
             }
             player.venom += this.venom
             if ((this.hits+this.enrage) >= player.block) {
@@ -1620,14 +1626,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
     function main() {
         for (let k = 0; k < enemies.length; k++) {
             for (let t = 0; t < enemies.length; t++) {
-                enemies[t].body.body.x = ((canvas.width / enemies.length + 1) * (t)) + ((canvas.width / (enemies.length * 2)))
+                enemies[t].body.body.x = (((canvas.width-30) / enemies.length + 1) * (t)) + (((canvas.width-30) / (enemies.length * 2)))
                 enemies[t].draw()
             }
         }
-        canvas_context.clearRect(0, 0, canvas.width, canvas.height)
+        canvas_context.clearRect(0, 0, (canvas.width), canvas.height)
         gamepadAPI.update()
         for (let t = 0; t < enemies.length; t++) {
-            enemies[t].body.body.x = ((canvas.width / enemies.length + 1) * (t)) + ((canvas.width / (enemies.length * 2)))
+            enemies[t].body.body.x = (((canvas.width-30) / enemies.length + 1) * (t)) + (((canvas.width-30) / (enemies.length * 2)))
             enemies[t].draw()
         }
         player.draw()
