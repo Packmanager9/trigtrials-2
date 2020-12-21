@@ -1066,7 +1066,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.block = 0
             this.thorns = 0
             this.reward = 0
-            this.level = 2
+            this.level = 0
             this.displaycardindex = 0
             this.cleaning = -1
         }
@@ -1458,7 +1458,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
             this.health = 10 + (Math.floor(Math.random() * player.level * 10))
             this.maxhealth = this.health
-            this.hits = (Math.floor(Math.random() * (player.level + 3))) + 1
+            this.hits = (Math.floor(Math.random() * (player.level + 2.5))) + 1
 
             this.poison = 0
             this.venom = 0
@@ -1591,6 +1591,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         let enemy = new Enemy(-1)
         enemies.push(enemy)
     }
+    player.level = 2
     function spawn() {
         player.level += 1
         enenum = Math.floor(Math.random() * 8) + 1
