@@ -211,15 +211,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.xmom = 0
             this.ymom = 0
             this.stroke = stroke
-            this.strokeWidth = strokeWidth
+            this.strokeWidth = 2
             this.fill = fill
         }
         draw() {
+
+            canvas_context.beginPath()
             canvas_context.fillStyle = this.color
-            canvas_context.strokeStyle = "black"
+            canvas_context.strokeStyle = "white"
             canvas_context.lineWidth = Math.max(this.strokeWidth, .00001)
             canvas_context.strokeRect(this.x, this.y, this.width, this.height)
             canvas_context.fillRect(this.x, this.y, this.width, this.height)
+
+            canvas_context.closePath()
         }
         move() {
             this.x += this.xmom
@@ -472,6 +476,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.body.y += this.ymom
         }
         draw() {
+            canvas_context.lineWidth = 3
             this.nodes = []
             this.angleIncrement = (Math.PI * 2) / this.sides
             this.body.radius = this.size - (this.size * .293)
@@ -870,6 +875,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
             TIP_engine.y = YS_engine
             TIP_engine.body = TIP_engine
 
+            // if (player.drawbutton.isPointInside(TIP_engine)) {
+            //     player.drawbutton.stokeWidth = 3
+            // }else{
+            //     player.drawbutton.strokeWidth = 0
+            // }
+            
+
+            for (let t = 0; t < player.deck.active.length; t++) {
+                if (player.deck.active[t].body.isPointInside(TIP_engine)) {
+                    player.deck.active[t].body.strokeWidth = 3
+                }else{
+                    player.deck.active[t].body.strokeWidth = 0
+                }
+            }
 
         }
     }
@@ -965,6 +984,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         draw() {
             canvas_context.beginPath();
+            canvas_context.lineWidth = 3
             canvas_context.moveTo(this.x, this.y + this.length / 2);
             canvas_context.lineTo(this.x + this.length, this.y + this.length / 2);
             canvas_context.lineTo(this.x, this.y + this.length * 1.41);
@@ -1016,13 +1036,29 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.deck.push(energybonuscard)
             this.deck.push(curecard)
 
+            this.r = 0
+            this.g = 255
+            this.b = 0
 
-            this.drawbutton = new Rectangle(580, 380, 220, 60, "purple")
+
             this.skipbutton = new Rectangle(580, 250, 220, 60, "white")
             this.cleanbutton = new Rectangle(580, 150, 220, 60, "green")
             this.removebutton = new Rectangle(100, 270, 160, 50, "white")
             this.indexupbutton = new Rectangle(280, 180, 50, 50, "#00FF00")
             this.indexdownbutton = new Rectangle(30, 180, 50, 50, "#FF0000")
+            this.drawbutton = new Rectangle(880, 660, 220, 50, "black")
+            this.cardbox = new Rectangle(0, 500, 750, 220, "#222222")
+            this.statbox = new Rectangle(750, 500, 620, 220, "#111111")
+            this.buffbox = new Rectangle(850, 610, 330, 40, "#222222")
+            this.energybarx = new Rectangle(1030, 590, 150, 10,  `#222222`)
+            this.healthbarx = new Rectangle(850, 590, 150, 10, `#222222`)
+            this.healthbar = new Rectangle(850, 590, 150, 10, `rgb(${this.r},${this.g},${this.b})`)
+            this.energybar = new Rectangle(1030, 590, 150, 10, "cyan")
+            this.healthbar.strokeWidth = 0
+            this.energybar.strokeWidth = 0
+            this.cardbox.strokeWidth = 0
+            this.statbox.strokeWidth = 0
+            this.buffbox.strokeWidth = 0
             this.energymax = 5
             this.energy = 5
             this.maxhealth = 100
@@ -1035,16 +1071,36 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.cleaning = -1
         }
         draw() {
+            this.cardbox.draw()
+            this.statbox.draw()
+            this.buffbox.draw()
+            this.healthbarx.draw()
+            this.energybarx.draw()
+
+            if(this.health < 0 ){
+                this.health = 0
+            }
+
+            this.healthbar.width = Math.min((150*(this.health/this.maxhealth)),150)
+            this.energybar.width = Math.min((150*(this.energy/this.energymax)),150)
+
+            this.g = ((this.healthbar.width/150))*255
+            this.r = 255-this.g
+            this.healthbar.color = `rgb(${this.r},${this.g},${this.b})`
+
+            this.healthbar.draw()
+            this.energybar.draw()
             if (this.reward == 0) {
                 this.drawbutton.draw()
                 canvas_context.font = "43px arial"
                 canvas_context.fillStyle = "white"
-                canvas_context.fillText("Draw", 590, 425)
-                canvas_context.font = "43px arial"
+                canvas_context.fillText("Draw", this.drawbutton.x+60, this.drawbutton.y+40)
+                canvas_context.font = "19px arial"
                 canvas_context.fillStyle = "white"
-                canvas_context.fillText(`Health: ${this.health} Energy: ${this.energy}`, 10, 425)
-                canvas_context.font = "23px arial"
-                canvas_context.fillText(`Block: ${this.block} Thorns: ${this.thorns} Poisoned: ${this.venom}`, 10, 465)
+                canvas_context.fillText(`Health: ${this.health}`, this.healthbar.x, this.healthbar.y-20)
+                canvas_context.fillText(`Energy: ${this.energy}`, this.energybar.x, this.energybar.y-20)
+                canvas_context.font = "19px arial"
+                canvas_context.fillText(`Block: ${this.block} Thorns: ${this.thorns} Poisoned: ${this.venom}`, this.buffbox.x+25, this.buffbox.y+25)
 
             } else {
                 this.skipbutton.draw()
@@ -1115,7 +1171,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
 
             for (let t = 0; t < this.active.length; t++) {
-                this.active[t].body.x = t * 160
+                this.active[t].body.x = (t * 141)+40
                 this.active[t].body.y = 550
             }
             for (let t = 0; t < enemies.length; t++) {
@@ -1136,7 +1192,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
 
             for (let t = 0; t < this.active.length; t++) {
-                this.active[t].body.x = t * 160
+                this.active[t].body.x = (t * 141)+40
             }
         }
         draw() {
@@ -1155,7 +1211,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         constructor(level = 0, type = 0) {
             this.level = level
             this.type = type
-            this.body = new Rectangle(0, 550, 160, 150, "red")
+            this.body = new Rectangle(0, 550, 100, 120, "red")
             this.energy = Math.floor(Math.random() * 3)
             this.hits = Math.floor(Math.random() * 4 * this.level) + 2
             this.played = 0
@@ -1205,6 +1261,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             } else {
                 this.ret = 0
             }
+
+            this.line = new Line(this.body.x + 10, this.body.y + 60, this.body.x+this.body.width-10, this.body.y + 60, "white")
         }
         stringmaker() {
             this.strings = []
@@ -1214,6 +1272,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.strings.push([`Damage all: ${this.hits}`, "white"])
             }
             this.strings.push([`Energy: ${this.energy}`, "white"])
+            this.strings.push([`padding`, "transparent"])
             if (this.block > 0) {
                 this.strings.push([`Block: ${this.block}`, "black"])
             }
@@ -1256,11 +1315,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.played == 0) {
                 this.body.draw()
                 this.stringmaker()
-                canvas_context.font = "18px arial"
+                canvas_context.font = "12px arial"
                 for (let t = 0; t < this.strings.length; t++) {
                     canvas_context.fillStyle = this.strings[t][1]
                     canvas_context.fillText(this.strings[t][0], this.body.x + 10, this.body.y + 20 + (t * 20))
                 }
+
+            this.line = new Line(this.body.x + 10, this.body.y + 60, this.body.x+this.body.width-10, this.body.y + 60, "white")
+            this.line.draw()
             }
         }
         play() {
@@ -1274,6 +1336,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     player.health += this.healing
                     player.energy -= this.energy
                     player.energy += this.energybonus
+                    if(player.selected.enrage > 0){
+                        player.selected.enrage+=1
+                    }
                     if(this.ret == 0){
                         if (this.hits >= player.selected.blocks) {
                             player.selected.health -= (this.hits - player.selected.blocks)
@@ -1331,6 +1396,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.healsyes = 1
                     this.thornsyes = 1
                 }
+                if (this.type == 8) {
+                    this.enrageyes = 1
+                }
 
 
             } else {
@@ -1340,6 +1408,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
             this.venom = 0
             this.blocks = 0
+            this.enrage = 0
             this.thorns = 0
             if (this.blockyes == 1) {
                 this.blocks = Math.floor(Math.random() * (player.level + 2))
@@ -1352,6 +1421,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             if (this.venomyes == 1) {
                 this.venom = Math.floor(Math.random() * (player.level + 3))
+            }
+            if (this.enrageyes == 1) {
+                this.enrage = Math.floor(Math.random() * (player.level + 1))+1
             }
             this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
             this.health = 10 + (Math.floor(Math.random() * player.level * 10))
@@ -1368,7 +1440,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.health = 0
             }
             this.strings.push([`${this.health}/${this.maxhealth}`, "white"])
-            this.strings.push([`Hits: ${this.hits}`, "white"])
+            this.strings.push([`Hits: ${this.hits+this.enrage}`, "white"])
             if (this.blocks > 0) {
                 this.strings.push([`Blocks: ${this.blocks}`, "gray"])
             }
@@ -1384,13 +1456,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.venom > 0) {
                 this.strings.push([`Venom: ${this.venom}`, "magenta"])
             }
+            if (this.enrage > 0) {
+                this.strings.push([`Enrage: ${this.enrage}`, "#DD2222"])
+            }
         }
         attack() {
             player.venom += this.venom
-            if (this.hits >= player.block) {
-                player.health -= (this.hits - player.block)
+            if ((this.hits+this.enrage) >= player.block) {
+                player.health -= ((this.hits+this.enrage) - player.block)
             }
-            if (this.hits > 0) {
+            if ((this.hits+this.enrage)> 0) {
                 this.health -= player.thorns
             }
             this.health -= this.poison
