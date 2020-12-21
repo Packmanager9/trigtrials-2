@@ -1066,7 +1066,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.block = 0
             this.thorns = 0
             this.reward = 0
-            this.level = 0
+            this.level = 2
             this.displaycardindex = 0
             this.cleaning = -1
         }
@@ -1298,7 +1298,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.strings.push([`Cure`, "Magenta"])
             }
             if (this.ret > 0) {
-                this.strings.push([`Self Damage: ${this.ret}`, "#DD3333"])
+                this.strings.push([`Self Damage: ${this.ret}`, "#ffffff"])
             }
         }
         clone() {
@@ -1324,7 +1324,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 canvas_context.font = "12px arial"
                 for (let t = 0; t < this.strings.length; t++) {
                     canvas_context.fillStyle = this.strings[t][1]
-                    canvas_context.fillText(this.strings[t][0], this.body.x + 10, this.body.y + 20 + (t * 20))
+                    canvas_context.fillText(this.strings[t][0], this.body.x + 7.5, this.body.y + 20 + (t * 20))
                 }
 
             this.line = new Line(this.body.x + 10, this.body.y + 60, this.body.x+this.body.width-10, this.body.y + 60, "white")
@@ -1368,7 +1368,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     class Enemy {
         constructor(type = -1) {
             if (type == -1) {
-                this.type = Math.floor(Math.random() * 18)
+                this.type = Math.floor(Math.random() * 21)
 
                 if (this.type == 0) {
                     this.thornsyes = 1
@@ -1434,6 +1434,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 }
                 if (this.type == 17) {
                     this.thornsyes = 1
+                    this.summonyes = 1
+                }
+                if (this.type == 18) {
+                    this.blockyes = 1
+                    this.summonyes = 1
+                }
+                if (this.type == 19) {
+                    this.venomyes = 1
+                    this.summonyes = 1
+                }
+                if (this.type == 20) {
+                    this.enrageyes = 1
                     this.summonyes = 1
                 }
 
@@ -1586,6 +1598,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             let enemy = new Enemy(-1)
             enemies.push(enemy)
         }
+        player.maxhealth+=20
         player.health = player.maxhealth
         player.energy = player.energymax
         player.block = 0
