@@ -1177,6 +1177,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
             for (let t = 0; t < enemies.length; t++) {
                 enemies[t].attack()
             }
+            for (let t = 0; t < summons.length; t++) {
+                if(enemies.length < 16){
+                    enemies.push(summons[t])
+                }
+            }
+            summons = []
         }
         softpull() {
             player.energy = player.energymax
@@ -1362,7 +1368,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     class Enemy {
         constructor(type = -1) {
             if (type == -1) {
-                this.type = Math.floor(Math.random() * 9)
+                this.type = Math.floor(Math.random() * 18)
 
                 if (this.type == 0) {
                     this.thornsyes = 1
@@ -1396,8 +1402,39 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.healsyes = 1
                     this.thornsyes = 1
                 }
-                if (this.type == 8) {
+                if (this.type == 9) {
                     this.enrageyes = 1
+                }
+                if (this.type == 10) {
+                    this.enrageyes = 1
+                    this.blockyes = 1
+                }
+                if (this.type == 11) {
+                    this.enrageyes = 1
+                    this.healsyes = 1
+                }
+                if (this.type == 12) {
+                    this.enrageyes = 1
+                    this.thornsyes = 1
+                }
+                if (this.type == 13) {
+                    this.enrageyes = 1
+                    this.venomyes = 1
+                }
+                if (this.type == 14) {
+                    this.summonyes = 1
+                }
+                if (this.type == 15) {
+                    this.blockyes = 1
+                    this.venomyes = 1
+                }
+                if (this.type == 16) {
+                    this.thornsyes = 1
+                    this.enrageyes = 1
+                }
+                if (this.type == 17) {
+                    this.thornsyes = 1
+                    this.summonyes = 1
                 }
 
 
@@ -1406,6 +1443,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
 
 
+            this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
+            this.health = 10 + (Math.floor(Math.random() * player.level * 10))
+            this.maxhealth = this.health
+            this.hits = (Math.floor(Math.random() * (player.level + 3))) + 1
+
+            this.poison = 0
             this.venom = 0
             this.blocks = 0
             this.enrage = 0
@@ -1425,12 +1468,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.enrageyes == 1) {
                 this.enrage = Math.floor(Math.random() * (player.level + 1))+1
             }
-            this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
-            this.health = 10 + (Math.floor(Math.random() * player.level * 10))
-            this.maxhealth = this.health
-            this.hits = (Math.floor(Math.random() * (player.level + 3))) + 1
-            // this.hits = 3
-            this.poison = 0
+            if (this.summonyes == 1) {
+                this.summon = 1
+                if(Math.random()<.09){
+                    this.hits = 0
+                }
+            }
             this.strings = []
             this.stringmaker()
         }
@@ -1459,8 +1502,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.enrage > 0) {
                 this.strings.push([`Enrage: ${this.enrage}`, "#DD2222"])
             }
+            if (this.summon > 0) {
+                this.strings.push([`Summoner`, "#AAAA00"])
+            }
         }
         attack() {
+            if(this.summon > 0){
+                summons.push(new Enemy(-1))
+            }
             player.venom += this.venom
             if ((this.hits+this.enrage) >= player.block) {
                 player.health -= ((this.hits+this.enrage) - player.block)
@@ -1523,6 +1572,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     let player = new Player()
     let enemies = []
+    let summons = []
 
     let enenum = Math.floor(Math.random() * 8) + 1
     for (let t = 0; t < enenum; t++) {
