@@ -1376,7 +1376,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     class Enemy {
         constructor(type = -1, level = player.level) {
             if (type == -1) {
-                this.type = Math.floor(Math.random() * 28)
+                this.type = Math.floor(Math.random() * 36)
                 if (this.type == 0) {
                     this.thornsyes = 1
                 }
@@ -1482,7 +1482,37 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.bypassyes = 1
                     this.healsyes = 1
                 }
-
+                if (this.type == 28) {
+                    this.cureyes = 1
+                }
+                if (this.type == 29) {
+                    this.cureyes = 1
+                    this.enrageyes = 1
+                }
+                if (this.type == 30) {
+                    this.cureyes = 1
+                    this.venomyes = 1
+                }
+                if (this.type == 31) {
+                    this.cureyes = 1
+                    this.summonyes = 1
+                }
+                if (this.type == 32) {
+                    this.cureyes = 1
+                    this.thornsyes = 1
+                }
+                if (this.type == 33) {
+                    this.cureyes = 1
+                    this.blockyes = 1
+                }
+                if (this.type == 34) {
+                    this.cureyes = 1
+                    this.healsyes = 1
+                }
+                if (this.type == 35) {
+                    this.cureyes = 1
+                    this.bypassyes = 1
+                }
 
             } else {
                 this.type = type
@@ -1518,6 +1548,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             if (this.bypassyes == 1) {
                 this.bypass = Math.floor(Math.random() * (this.level + 4)) + 1
+            }
+            if (this.cureyes == 1) {
+                this.cure = Math.floor(Math.random() * (this.level + 4)) + 1
             }
             if (this.summonyes == 1) {
                 this.summon = 1
@@ -1559,6 +1592,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.bypass > 0) {
                 this.strings.push([`Bypass: ${this.bypass}`, "#AAAAAA"])
             }
+            if (this.cureyes > 0) {
+                this.strings.push([`Treat: ${this.cure}`, "#FFAAAA"])
+            }
         }
         attack() {
             if (this.summon > 0) {
@@ -1582,6 +1618,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         clicked = 1
                         if (enemies[index].health > enemies[index].maxhealth) {
                             enemies[index].health = enemies[index].maxhealth
+                        }
+                    }
+                    if (t > 100) {
+                        break
+                    }
+                }
+            }
+            if (this.cure > 0) {
+                let index = Math.floor(enemies.length * Math.random())
+                let clicked = 0
+                for (let t = 0; clicked < 1; t++) {
+                    index = Math.floor(enemies.length * Math.random())
+                    if (enemies[index].poison > 0) {
+                        enemies[index].poison -= this.cure
+                        clicked = 1
+                        if (enemies[index].poison < 0) {
+                            enemies[index].poison = 0
                         }
                     }
                     if (t > 100) {
