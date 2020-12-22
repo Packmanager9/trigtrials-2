@@ -1551,7 +1551,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.enrage = Math.floor(Math.random() * (this.level + 1)) + 1
             }
             if (this.bypassyes == 1) {
-                this.bypass = Math.floor(Math.random() * (this.level + 4)) + 1
+                this.bypass = Math.floor(Math.random() * (this.level * 3)) + 1
             }
             if (this.cureyes == 1) {
                 this.cure = Math.floor(Math.random() * (this.level + 4)) + 1
