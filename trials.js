@@ -1269,7 +1269,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.type == 7) {
                 this.ret = Math.ceil(Math.random() * 2) + Math.ceil(Math.random() * 2 * level)
                 this.body.color = "teal"
-                if (this.ret > this.ret) {
+                if (this.ret > this.hits) {
                     this.hits = this.ret
                 }
             } else {
