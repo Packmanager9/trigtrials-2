@@ -795,74 +795,74 @@ window.addEventListener('DOMContentLoaded', (event) => {
             delete keysPressed[event.key];
         });
         window.addEventListener('pointerdown', e => {
-            if(player.health > 0){
-            FLEX_engine = canvas.getBoundingClientRect();
-            XS_engine = e.clientX - FLEX_engine.left;
-            YS_engine = e.clientY - FLEX_engine.top;
-            TIP_engine.x = XS_engine
-            TIP_engine.y = YS_engine
-            TIP_engine.body = TIP_engine
-            if (player.reward == 0) {
-                if (player.drawbutton.isPointInside(TIP_engine)) {
-                    player.deck.pull()
-                }
-            } else {
-                if (player.skipbutton.isPointInside(TIP_engine)) {
-                    player.deck.reward = []
-                    player.reward = 0
-                    player.deck.softpull()
-                    spawn()
-                }
-                if (player.cleanbutton.isPointInside(TIP_engine)) {
-                    player.cleaning *= -1
-                }
-
-                if (player.indexdownbutton.isPointInside(TIP_engine)) {
-                    player.displaycardindex -= 1
-                    if (player.displaycardindex < 0) {
-                        player.displaycardindex = 0
+            if (player.health > 0) {
+                FLEX_engine = canvas.getBoundingClientRect();
+                XS_engine = e.clientX - FLEX_engine.left;
+                YS_engine = e.clientY - FLEX_engine.top;
+                TIP_engine.x = XS_engine
+                TIP_engine.y = YS_engine
+                TIP_engine.body = TIP_engine
+                if (player.reward == 0) {
+                    if (player.drawbutton.isPointInside(TIP_engine)) {
+                        player.deck.pull()
                     }
-                }
-                if (player.indexupbutton.isPointInside(TIP_engine)) {
-                    player.displaycardindex += 1
-                    if (player.displaycardindex > player.deck.drawable.length - 1) {
-                        player.displaycardindex = player.deck.drawable.length - 1
+                } else {
+                    if (player.skipbutton.isPointInside(TIP_engine)) {
+                        player.deck.reward = []
+                        player.reward = 0
+                        player.deck.softpull()
+                        spawn()
                     }
-                }
+                    if (player.cleanbutton.isPointInside(TIP_engine)) {
+                        player.cleaning *= -1
+                    }
 
-                if (player.removebutton.isPointInside(TIP_engine)) {
-                    if (player.deck.drawable.length > 1) {
-                        player.deck.drawable.splice(player.displaycardindex, 1)
+                    if (player.indexdownbutton.isPointInside(TIP_engine)) {
                         player.displaycardindex -= 1
                         if (player.displaycardindex < 0) {
                             player.displaycardindex = 0
                         }
                     }
-                }
+                    if (player.indexupbutton.isPointInside(TIP_engine)) {
+                        player.displaycardindex += 1
+                        if (player.displaycardindex > player.deck.drawable.length - 1) {
+                            player.displaycardindex = player.deck.drawable.length - 1
+                        }
+                    }
 
-            }
-            for (let t = 0; t < player.deck.active.length; t++) {
-                if (player.deck.active[t].body.isPointInside(TIP_engine)) {
-                    player.deck.active[t].play()
+                    if (player.removebutton.isPointInside(TIP_engine)) {
+                        if (player.deck.drawable.length > 1) {
+                            player.deck.drawable.splice(player.displaycardindex, 1)
+                            player.displaycardindex -= 1
+                            if (player.displaycardindex < 0) {
+                                player.displaycardindex = 0
+                            }
+                        }
+                    }
+
+                }
+                for (let t = 0; t < player.deck.active.length; t++) {
+                    if (player.deck.active[t].body.isPointInside(TIP_engine)) {
+                        player.deck.active[t].play()
+                    }
+                }
+                for (let t = 0; t < player.deck.reward.length; t++) {
+                    if (player.deck.reward[t].body.isPointInside(TIP_engine)) {
+                        player.deck.drawable.push(player.deck.reward[t].clone())
+                        player.deck.reward = []
+                        player.reward = 0
+                        player.deck.softpull()
+                        spawn()
+                    }
+                }
+                for (let t = 0; t < enemies.length; t++) {
+                    if (enemies[t].body.body.isPointInside(TIP_engine)) {
+                        player.selected = enemies[t]
+                        tringle.x = player.selected.body.body.x
+                        tringle.y = player.selected.body.body.y - 40
+                    }
                 }
             }
-            for (let t = 0; t < player.deck.reward.length; t++) {
-                if (player.deck.reward[t].body.isPointInside(TIP_engine)) {
-                    player.deck.drawable.push(player.deck.reward[t].clone())
-                    player.deck.reward = []
-                    player.reward = 0
-                    player.deck.softpull()
-                    spawn()
-                }
-            }
-            for (let t = 0; t < enemies.length; t++) {
-                if (enemies[t].body.body.isPointInside(TIP_engine)) {
-                    player.selected = enemies[t]
-                    tringle.x = player.selected.body.body.x
-                    tringle.y = player.selected.body.body.y - 40
-                }
-            }
-        }
         });
         // window.addEventListener('pointerup', e => {
         //     window.removeEventListener("pointermove", continued_stimuli);
@@ -882,12 +882,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
             // }else{
             //     player.drawbutton.strokeWidth = 0
             // }
-            
+
 
             for (let t = 0; t < player.deck.active.length; t++) {
                 if (player.deck.active[t].body.isPointInside(TIP_engine)) {
                     player.deck.active[t].body.strokeWidth = 3
-                }else{
+                } else {
                     player.deck.active[t].body.strokeWidth = 0
                 }
             }
@@ -1043,8 +1043,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.b = 0
 
 
-            this.skipbutton = new Rectangle(580, 250, 220, 60, "white")
-            this.cleanbutton = new Rectangle(580, 150, 220, 60, "green")
+            this.skipbutton = new Rectangle(880, 540, 220, 60, "white")
+            this.cleanbutton = new Rectangle(880, 640, 220, 60, "green")
             this.removebutton = new Rectangle(100, 270, 160, 50, "white")
             this.indexupbutton = new Rectangle(280, 180, 50, 50, "#00FF00")
             this.indexdownbutton = new Rectangle(30, 180, 50, 50, "#FF0000")
@@ -1052,7 +1052,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.cardbox = new Rectangle(0, 500, 750, 220, "#222222")
             this.statbox = new Rectangle(750, 500, 620, 220, "#111111")
             this.buffbox = new Rectangle(850, 610, 330, 40, "#222222")
-            this.energybarx = new Rectangle(1030, 590, 150, 10,  `#222222`)
+            this.energybarx = new Rectangle(1030, 590, 150, 10, `#222222`)
             this.healthbarx = new Rectangle(850, 590, 150, 10, `#222222`)
             this.healthbar = new Rectangle(850, 590, 150, 10, `rgb(${this.r},${this.g},${this.b})`)
             this.energybar = new Rectangle(1030, 590, 150, 10, "cyan")
@@ -1075,34 +1075,37 @@ window.addEventListener('DOMContentLoaded', (event) => {
         draw() {
             this.cardbox.draw()
             this.statbox.draw()
-            this.buffbox.draw()
-            this.healthbarx.draw()
-            this.energybarx.draw()
-
-            if(this.health < 0 ){
+            
+            if (this.health < 0) {
                 this.health = 0
             }
 
-            this.healthbar.width = Math.min((150*(this.health/this.maxhealth)),150)
-            this.energybar.width = Math.min((150*(this.energy/this.energymax)),150)
-
-            this.g = ((this.healthbar.width/150))*255
-            this.r = 255-this.g
-            this.healthbar.color = `rgb(${this.r},${this.g},${this.b})`
-
-            this.healthbar.draw()
-            this.energybar.draw()
             if (this.reward == 0) {
+
+                this.buffbox.draw()
+                this.healthbarx.draw()
+                this.energybarx.draw()
+
+                this.healthbar.width = Math.min((150 * (this.health / this.maxhealth)), 150)
+                this.energybar.width = Math.min((150 * (this.energy / this.energymax)), 150)
+
+                this.g = ((this.healthbar.width / 150)) * 255
+                this.r = 255 - this.g
+                this.healthbar.color = `rgb(${this.r},${this.g},${this.b})`
+
+                this.healthbar.draw()
+                this.energybar.draw()
+
                 this.drawbutton.draw()
                 canvas_context.font = "43px arial"
                 canvas_context.fillStyle = "white"
-                canvas_context.fillText("Draw", this.drawbutton.x+60, this.drawbutton.y+40)
+                canvas_context.fillText("Draw", this.drawbutton.x + 60, this.drawbutton.y + 40)
                 canvas_context.font = "19px arial"
                 canvas_context.fillStyle = "white"
-                canvas_context.fillText(`Health: ${this.health}`, this.healthbar.x, this.healthbar.y-20)
-                canvas_context.fillText(`Energy: ${this.energy}`, this.energybar.x, this.energybar.y-20)
+                canvas_context.fillText(`Health: ${this.health}`, this.healthbar.x, this.healthbar.y - 20)
+                canvas_context.fillText(`Energy: ${this.energy}`, this.energybar.x, this.energybar.y - 20)
                 canvas_context.font = "19px arial"
-                canvas_context.fillText(`Block: ${this.block} Thorns: ${this.thorns} Poisoned: ${this.venom}`, this.buffbox.x+25, this.buffbox.y+25)
+                canvas_context.fillText(`Block: ${this.block} Thorns: ${this.thorns} Poisoned: ${this.venom}`, this.buffbox.x + 25, this.buffbox.y + 25)
 
             } else {
                 this.skipbutton.draw()
@@ -1115,8 +1118,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                 canvas_context.fillStyle = "black"
                 canvas_context.font = "33px arial"
-                canvas_context.fillText(`Clean`, 597, 190)
-                canvas_context.fillText(`Skip`, 597, 290)
+                canvas_context.fillText(`Clean`, this.cleanbutton.x + 60, this.cleanbutton.y + 40)
+                canvas_context.fillText(`Skip`, this.skipbutton.x + 70, this.skipbutton.y + 40)
                 if (this.cleaning == 1) {
                     this.deck.drawable[this.displaycardindex].body.x = 100
                     this.deck.drawable[this.displaycardindex].body.y = 100
@@ -1173,14 +1176,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
 
             for (let t = 0; t < this.active.length; t++) {
-                this.active[t].body.x = (t * 141)+40
+                this.active[t].body.x = (t * 141) + 40
                 this.active[t].body.y = 550
             }
             for (let t = 0; t < enemies.length; t++) {
                 enemies[t].attack()
             }
             for (let t = 0; t < summons.length; t++) {
-                if(enemies.length < 16){
+                if (enemies.length < 16) {
                     enemies.push(summons[t])
                 }
             }
@@ -1200,7 +1203,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
 
             for (let t = 0; t < this.active.length; t++) {
-                this.active[t].body.x = (t * 141)+40
+                this.active[t].body.x = (t * 141) + 40
             }
         }
         draw() {
@@ -1223,8 +1226,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.energy = Math.floor(Math.random() * 3)
             this.hits = Math.floor(Math.random() * 4 * this.level) + 2
             this.played = 0
-            if(this.type == 0){
-                this.hits*= 2
+            if (this.type == 0) {
+                this.hits *= 2
             }
             if (this.type == 1) {
                 this.healing = Math.ceil(Math.random() * 3) + Math.ceil(Math.random() * 3 * level)
@@ -1266,21 +1269,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.type == 7) {
                 this.ret = Math.ceil(Math.random() * 2) + Math.ceil(Math.random() * 2 * level)
                 this.body.color = "teal"
-                if(this.ret > this.ret ){
+                if (this.ret > this.ret) {
                     this.hits = this.ret
                 }
             } else {
                 this.ret = 0
             }
 
-            this.line = new Line(this.body.x + 10, this.body.y + 60, this.body.x+this.body.width-10, this.body.y + 60, "white")
+            this.line = new Line(this.body.x + 10, this.body.y + 60, this.body.x + this.body.width - 10, this.body.y + 60, "white")
         }
         stringmaker() {
             this.strings = []
             if (this.ret == 0) {
-            this.strings.push([`Damage: ${this.hits}`, "white"])
-            }else{
-            this.strings.push([`Damage all: ${this.hits}`, "white"])
+                this.strings.push([`Damage: ${this.hits}`, "white"])
+            } else {
+                this.strings.push([`Damage all: ${this.hits}`, "white"])
             }
             this.strings.push([`Energy: ${this.energy}`, "white"])
             this.strings.push([`padding`, "transparent"])
@@ -1332,8 +1335,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     canvas_context.fillText(this.strings[t][0], this.body.x + 7.5, this.body.y + 20 + (t * 20))
                 }
 
-            this.line = new Line(this.body.x + 10, this.body.y + 60, this.body.x+this.body.width-10, this.body.y + 60, "white")
-            this.line.draw()
+                this.line = new Line(this.body.x + 10, this.body.y + 60, this.body.x + this.body.width - 10, this.body.y + 60, "white")
+                this.line.draw()
             }
         }
         play() {
@@ -1347,15 +1350,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     player.health += this.healing
                     player.energy -= this.energy
                     player.energy += this.energybonus
-                    if(player.selected.enrage > 0){
-                        player.selected.enrage+=1
+                    if (player.selected.enrage > 0) {
+                        player.selected.enrage += 1
                     }
-                    if(this.ret == 0){
+                    if (this.ret == 0) {
                         if (this.hits >= player.selected.blocks) {
                             player.selected.health -= (this.hits - player.selected.blocks)
                         }
-                    }else{
-                        for(let t = 0;t<enemies.length;t++){
+                    } else {
+                        for (let t = 0; t < enemies.length; t++) {
                             enemies[t].health -= this.hits
                         }
                     }
@@ -1373,8 +1376,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     class Enemy {
         constructor(type = -1, level = player.level) {
             if (type == -1) {
-                this.type = Math.floor(Math.random() * 21)
-
+                this.type = Math.floor(Math.random() * 28)
                 if (this.type == 0) {
                     this.thornsyes = 1
                 }
@@ -1453,6 +1455,33 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.enrageyes = 1
                     this.summonyes = 1
                 }
+                if (this.type == 21) {
+                    this.bypassyes = 1
+                }
+                if (this.type == 22) {
+                    this.bypassyes = 1
+                    this.enrageyes = 1
+                }
+                if (this.type == 23) {
+                    this.bypassyes = 1
+                    this.venomyes = 1
+                }
+                if (this.type == 24) {
+                    this.bypassyes = 1
+                    this.summonyes = 1
+                }
+                if (this.type == 25) {
+                    this.bypassyes = 1
+                    this.thornsyes = 1
+                }
+                if (this.type == 26) {
+                    this.bypassyes = 1
+                    this.blockyes = 1
+                }
+                if (this.type == 27) {
+                    this.bypassyes = 1
+                    this.healsyes = 1
+                }
 
 
             } else {
@@ -1484,11 +1513,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.venom = Math.floor(Math.random() * (this.level + 3))
             }
             if (this.enrageyes == 1) {
-                this.enrage = Math.floor(Math.random() * (this.level + 1))+1
+                this.enrage = Math.floor(Math.random() * (this.level + 1)) + 1
+            }
+            if (this.bypassyes == 1) {
+                this.bypass = Math.floor(Math.random() * (this.level + 4)) + 1
             }
             if (this.summonyes == 1) {
                 this.summon = 1
-                if(Math.random()<.09){
+                if (Math.random() < .09) {
                     this.hits = 0
                 }
             }
@@ -1501,7 +1533,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.health = 0
             }
             this.strings.push([`${this.health}/${this.maxhealth}`, "white"])
-            this.strings.push([`Hits: ${this.hits+this.enrage}`, "white"])
+            this.strings.push([`Hits: ${this.hits + this.enrage}`, "white"])
             if (this.blocks > 0) {
                 this.strings.push([`Blocks: ${this.blocks}`, "gray"])
             }
@@ -1523,16 +1555,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.summon > 0) {
                 this.strings.push([`Summoner`, "#AAAA00"])
             }
+            if (this.bypass > 0) {
+                this.strings.push([`Bypass: ${this.bypass}`, "#AAAAAA"])
+            }
         }
         attack() {
-            if(this.summon > 0){
-                summons.push(new Enemy(-1, Math.max(this.level-2,0)))
+            if (this.summon > 0) {
+                summons.push(new Enemy(-1, Math.max(this.level - 2, 0)))
             }
             player.venom += this.venom
-            if ((this.hits+this.enrage) >= player.block) {
-                player.health -= ((this.hits+this.enrage) - player.block)
+            if ((this.hits + this.enrage) >= (player.block - this.bypass)) {
+                player.health -= ((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0))
             }
-            if ((this.hits+this.enrage)> 0) {
+            if ((this.hits + this.enrage) > 0) {
                 this.health -= player.thorns
             }
             this.health -= this.poison
@@ -1605,7 +1640,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             let enemy = new Enemy(-1)
             enemies.push(enemy)
         }
-        player.maxhealth+=20
+        player.maxhealth += 20
         player.health = player.maxhealth
         player.energy = player.energymax
         player.block = 0
@@ -1626,14 +1661,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
     function main() {
         for (let k = 0; k < enemies.length; k++) {
             for (let t = 0; t < enemies.length; t++) {
-                enemies[t].body.body.x = (((canvas.width-30) / enemies.length + 1) * (t)) + (((canvas.width-30) / (enemies.length * 2)))
+                enemies[t].body.body.x = (((canvas.width - 30) / enemies.length + 1) * (t)) + (((canvas.width - 30) / (enemies.length * 2)))
                 enemies[t].draw()
             }
         }
         canvas_context.clearRect(0, 0, (canvas.width), canvas.height)
         gamepadAPI.update()
         for (let t = 0; t < enemies.length; t++) {
-            enemies[t].body.body.x = (((canvas.width-30) / enemies.length + 1) * (t)) + (((canvas.width-30) / (enemies.length * 2)))
+            enemies[t].body.body.x = (((canvas.width - 30) / enemies.length + 1) * (t)) + (((canvas.width - 30) / (enemies.length * 2)))
             enemies[t].draw()
         }
         player.draw()
