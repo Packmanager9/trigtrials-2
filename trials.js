@@ -1500,6 +1500,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.blocks = 0
             this.enrage = 0
             this.thorns = 0
+            this.bypass = 0
             if (this.blockyes == 1) {
                 this.blocks = Math.floor(Math.random() * (this.level + 2))
             }
@@ -1640,7 +1641,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             let enemy = new Enemy(-1)
             enemies.push(enemy)
         }
-        player.maxhealth += 20
+        player.maxhealth += 10
         player.health = player.maxhealth
         player.energy = player.energymax
         player.block = 0
