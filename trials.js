@@ -1236,33 +1236,33 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.healing = 0
             }
             if (this.type == 2) {
-                this.block = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * 1 * level)
+                this.block = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * 1.2 * level)
                 this.body.color = "gray"
             } else {
                 this.block = 0
             }
             if (this.type == 3) {
-                this.poison = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * 1 * level)
-                this.body.color = "purple"
+                this.poison = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * 3 * level)
+                this.body.color = "#FF00FF"
             } else {
                 this.poison = 0
             }
             if (this.type == 4) {
-                this.thorns = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * 1 * level)
+                this.thorns = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * 1.5 * level)
                 this.body.color = "#888800"
             } else {
                 this.thorns = 0
             }
             if (this.type == 5) {
                 this.energybonus = Math.ceil(Math.random() * 3)
-                this.body.color = "#00AAFF"
+                this.body.color = "#00CCFF"
             } else {
                 this.energybonus = 0
             }
             if (this.type == 6) {
                 this.cure = 1
                 this.healing = Math.ceil(Math.random() * 2) + Math.ceil(Math.random() * 2 * level)
-                this.body.color = "pink"
+                this.body.color = "#EEEEEE"
             } else {
                 this.cure = 0
             }
@@ -1286,6 +1286,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.strings.push([`Damage all: ${this.hits}`, "white"])
             }
             this.strings.push([`Energy: ${this.energy}`, "white"])
+            if(this.body.color == "#EEEEEE"){
+                this.strings[0][1] = "black"
+                this.strings[1][1] = "black"
+            }
             this.strings.push([`padding`, "transparent"])
             if (this.block > 0) {
                 this.strings.push([`Block: ${this.block}`, "black"])
@@ -1297,13 +1301,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.strings.push([`Poison: ${this.poison}`, "green"])
             }
             if (this.healing > 0) {
-                this.strings.push([`Heals: ${this.healing}`, "#00DD00"])
+                this.strings.push([`Heals: ${this.healing}`, "#00CC00"])
             }
             if (this.energybonus > 0) {
                 this.strings.push([`Recharge: ${this.energybonus}`, "Blue"])
             }
             if (this.cure > 0) {
-                this.strings.push([`Cure`, "Magenta"])
+                this.strings.push([`Cure`, "#DD00DD"])
             }
             if (this.ret > 0) {
                 this.strings.push([`Self Damage: ${this.ret}`, "#ffffff"])
