@@ -479,7 +479,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             canvas_context.lineWidth = 3
             this.nodes = []
             this.angleIncrement = (Math.PI * 2) / this.sides
-            this.body.radius = this.size - (this.size * .293)
+            this.body.radius = this.size - (this.size * -.293)
             for (let t = 0; t < this.sides; t++) {
                 let node = new Circle(this.body.x + (this.size * (Math.cos(this.angle))), this.body.y + (this.size * (Math.sin(this.angle))), 0, "transparent")
                 this.nodes.push(node)
