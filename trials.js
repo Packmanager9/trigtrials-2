@@ -1742,7 +1742,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let player = new Player()
     let enemies = []
     let summons = []
-
+    let expcounter = 0
     let enenum = Math.floor(Math.random() * 8) + 1
     for (let t = 0; t < enenum; t++) {
         let enemy = new Enemy(-1)
@@ -1750,13 +1750,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
     player.level = 2
     function spawn() {
-        player.level += 1
+        expcounter++
+        if(expcounter > 4){
+            player.level += 1
+            player.maxhealth += 10
+            expcounter = 0
+        }
         enenum = Math.floor(Math.random() * 8) + 1
         for (let t = 0; t < enenum; t++) {
             let enemy = new Enemy(-1)
             enemies.push(enemy)
         }
-        player.maxhealth += 10
         player.health = player.maxhealth
         player.energy = player.energymax
         player.block = 0
