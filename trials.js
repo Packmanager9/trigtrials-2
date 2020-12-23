@@ -1380,7 +1380,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     class Enemy {
         constructor(type = -1, level = player.level) {
             if (type == -1) {
-                this.type = Math.floor(Math.random() * 36)
+                this.type = Math.floor(Math.random() * 45)
                 if (this.type == 0) {
                     this.thornsyes = 1
                 }
@@ -1517,6 +1517,41 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.cureyes = 1
                     this.bypassyes = 1
                 }
+                if (this.type == 36) {
+                    this.betrayyes = 1
+                }
+                if (this.type == 37) {
+                    this.betrayyes = 1
+                    this.enrageyes = 1
+                }
+                if (this.type == 38) {
+                    this.betrayyes = 1
+                    this.venomyes = 1
+                }
+                if (this.type == 39) {
+                    this.betrayyes = 1
+                    this.summonyes = 1
+                }
+                if (this.type == 40) {
+                    this.betrayyes = 1
+                    this.thornsyes = 1
+                }
+                if (this.type == 41) {
+                    this.betrayyes = 1
+                    this.blockyes = 1
+                }
+                if (this.type == 42) {
+                    this.betrayyes = 1
+                    this.healsyes = 1
+                }
+                if (this.type == 43) {
+                    this.betrayyes = 1
+                    this.bypassyes = 1
+                }
+                if (this.type == 44) {
+                    this.cureyes = 1
+                    this.betrayyes = 1
+                }
 
             } else {
                 this.type = type
@@ -1525,7 +1560,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.level = level
 
             this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
-            this.health = 10 + (Math.floor(Math.random() * this.level * 10))
+            this.health = 10 + (Math.floor(Math.random() * this.level * 15))
             this.maxhealth = this.health
             this.hits = (Math.floor(Math.random() * (this.level + 2.5))) + 1
 
@@ -1555,6 +1590,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             if (this.cureyes == 1) {
                 this.cure = Math.floor(Math.random() * (this.level + 4)) + 1
+            }
+            if (this.betrayyes == 1) {
+                this.betray = Math.floor(Math.random() * (this.level + 4)) + 1
             }
             if (this.summonyes == 1) {
                 this.summon = 1
@@ -1596,8 +1634,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.bypass > 0) {
                 this.strings.push([`Bypass: ${this.bypass}`, "#AAAAAA"])
             }
-            if (this.cureyes > 0) {
+            if (this.cure > 0) {
                 this.strings.push([`Treat: ${this.cure}`, "#FFAAAA"])
+            }
+            if (this.betray > 0) {
+                this.strings.push([`Betray: ${this.betray}`, "#FF0099"])
             }
         }
         attack() {
@@ -1640,6 +1681,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         if (enemies[index].poison < 0) {
                             enemies[index].poison = 0
                         }
+                    }
+                    if (t > 100) {
+                        break
+                    }
+                }
+            }
+            if (this.betray > 0) {
+                let index = Math.floor(enemies.length * Math.random())
+                let clicked = 0
+                for (let t = 0; clicked < 1; t++) {
+                    index = Math.floor(enemies.length * Math.random())
+                    if (enemies[index] != this) {
+                        enemies[index].health -= this.betray
+                        clicked = 1
                     }
                     if (t > 100) {
                         break
