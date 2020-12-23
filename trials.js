@@ -1381,6 +1381,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
         constructor(type = -1, level = player.level) {
             if (type == -1) {
                 this.type = Math.floor(Math.random() * 45)
+                if(Math.random() < .5){
+                    this.type = 2
+                }else{  
+                    this.type = 43
+                }
                 if (this.type == 0) {
                     this.thornsyes = 1
                 }
@@ -1559,6 +1564,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
             this.level = level
 
+            this.level = 4
+
             this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
             this.health = 10 + (Math.floor(Math.random() * this.level * 15))
             this.maxhealth = this.health
@@ -1570,6 +1577,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.enrage = 0
             this.thorns = 0
             this.bypass = 0
+            this.betray = 0
             if (this.blockyes == 1) {
                 this.blocks = Math.floor(Math.random() * (this.level + 2))
             }
@@ -1693,9 +1701,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 for (let t = 0; clicked < 1; t++) {
                     index = Math.floor(enemies.length * Math.random())
                     if (enemies[index] != this) {
-                        enemies[index].health -= this.betray
+                        enemies[index].health -= ((this.betray ) - Math.max((enemies[index].blocks - this.bypass), 0))
                         if (enemies[index].enrage > 0) {
                             enemies[index].enrage += 1
+                        }
+                        if (enemies[index].thorns > 0) {
+                            this.health -= enemies[index].thorns
                         }
                         clicked = 1
                     }
@@ -1743,7 +1754,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let enemies = []
     let summons = []
     let expcounter = 0
-    let enenum = Math.floor(Math.random() * 8) + 1
+    let enenum = 2 // Math.floor(Math.random() * 8) + 1
     for (let t = 0; t < enenum; t++) {
         let enemy = new Enemy(-1)
         enemies.push(enemy)
