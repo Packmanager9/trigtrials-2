@@ -1381,11 +1381,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         constructor(type = -1, level = player.level) {
             if (type == -1) {
                 this.type = Math.floor(Math.random() * 45)
-                if(Math.random() < .5){
-                    this.type = 2
-                }else{  
-                    this.type = 43
-                }
                 if (this.type == 0) {
                     this.thornsyes = 1
                 }
@@ -1564,7 +1559,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
             this.level = level
 
-            this.level = 4
 
             this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
             this.health = 10 + (Math.floor(Math.random() * this.level * 15))
@@ -1754,7 +1748,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let enemies = []
     let summons = []
     let expcounter = 0
-    let enenum = 2 // Math.floor(Math.random() * 8) + 1
+    let enenum =  Math.floor(Math.random() * 8) + 1
     for (let t = 0; t < enenum; t++) {
         let enemy = new Enemy(-1)
         enemies.push(enemy)
