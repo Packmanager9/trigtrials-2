@@ -1075,7 +1075,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         draw() {
             this.cardbox.draw()
             this.statbox.draw()
-            
+
             if (this.health < 0) {
                 this.health = 0
             }
@@ -1286,7 +1286,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.strings.push([`Damage all: ${this.hits}`, "white"])
             }
             this.strings.push([`Energy: ${this.energy}`, "white"])
-            if(this.body.color == "#EEEEEE"){
+            if (this.body.color == "#EEEEEE") {
                 this.strings[0][1] = "black"
                 this.strings[1][1] = "black"
             }
@@ -1694,8 +1694,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     index = Math.floor(enemies.length * Math.random())
                     if (enemies[index] != this) {
                         enemies[index].health -= this.betray
-                        if(enemies[index].enrage > 0){
-                            enemies[index].enrage +=1
+                        if (enemies[index].enrage > 0) {
+                            enemies[index].enrage += 1
                         }
                         clicked = 1
                     }
