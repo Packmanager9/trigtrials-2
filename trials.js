@@ -1694,6 +1694,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     index = Math.floor(enemies.length * Math.random())
                     if (enemies[index] != this) {
                         enemies[index].health -= this.betray
+                        if(enemies[index].enrage > 0){
+                            enemies[index].enrage +=1
+                        }
                         clicked = 1
                     }
                     if (t > 100) {
