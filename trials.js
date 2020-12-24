@@ -1642,6 +1642,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.level = level
             // this.level = 5
 
+            // if(Math.random() < .5){
+            //     this.level = 5
+            //     this.blockyes = 1
+            //     this.thornsyes = 1
+            //     this.healsyes = 1
+            //     this.venomyes = 1
+            //     this.enrageyes = 1
+            //     this.bypassyes = 1
+            //     this.cureyes = 1
+            //     this.betrayyes = 1
+            //     this.drainyes = 1
+            //     this.paddingyes = 1
+            //     this.summonyes = 1
+            // }
+
 
             this.body = new Polygon(350, 160, 15, getRandomColor(), this.type)
             this.health = 10 + (Math.floor(Math.random() * this.level * 15))
@@ -1657,18 +1672,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.thorns = 0
             this.bypass = 0
             this.betray = 0
-
-            // this.blockyes = 1
-            // this.thornsyes = 1
-            // this.healsyes = 1
-            // this.venomyes = 1
-            // this.enrageyes = 1
-            // this.bypassyes = 1
-            // this.cureyes = 1
-            // this.betrayyes = 1
-            // this.drainyes = 1
-            // this.paddingyes = 1
-            // this.summonyes = 1
 
 
             if (this.blockyes == 1) {
