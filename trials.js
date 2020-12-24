@@ -1640,7 +1640,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
 
             this.level = level
-            this.level = 4
 
 
             this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
