@@ -1848,7 +1848,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             // canvas_context.fillStyle = "white"
             for (let t = 0; t < this.strings.length; t++) {
                 canvas_context.fillStyle = this.strings[t][1]
-                canvas_context.fillText(this.strings[t][0], this.body.body.x - 15, this.body.body.y + 60 + (t * 20))
+                canvas_context.fillText(this.strings[t][0], this.body.body.x - 15, this.body.body.y + 60 + (t * 18))
             }
             // canvas_context.fillText(`${this.health}/${this.maxhealth}`, this.body.body.x - 15, this.body.body.y + 60)
             // canvas_context.fillText(`Hits: ${this.hits}`, this.body.body.x - 15, this.body.body.y + 80)
