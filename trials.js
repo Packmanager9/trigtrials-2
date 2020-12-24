@@ -1380,7 +1380,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     class Enemy {
         constructor(type = -1, level = player.level) {
             if (type == -1) {
-                this.type = Math.floor(Math.random() * 45)
+                this.type = Math.floor(Math.random() * 66)
                 if (this.type == 0) {
                     this.thornsyes = 1
                 }
@@ -1552,12 +1552,95 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.cureyes = 1
                     this.betrayyes = 1
                 }
+                if (this.type == 45) {
+                    this.drainyes = 1
+                }
+                if (this.type == 46) {
+                    this.betrayyes = 1
+                    this.drainyes = 1
+                }
+                if (this.type == 47) {
+                    this.drainyes = 1
+                    this.enrageyes = 1
+                }
+                if (this.type == 48) {
+                    this.drainyes = 1
+                    this.venomyes = 1
+                }
+                if (this.type == 49) {
+                    this.drainyes = 1
+                    this.summonyes = 1
+                }
+                if (this.type == 50) {
+                    this.drainyes = 1
+                    this.thornsyes = 1
+                }
+                if (this.type == 51) {
+                    this.drainyes = 1
+                    this.blockyes = 1
+                }
+                if (this.type == 52) {
+                    this.drainyes = 1
+                    this.healsyes = 1
+                }
+                if (this.type == 53) {
+                    this.drainyes = 1
+                    this.bypassyes = 1
+                }
+                if (this.type == 54) {
+                    this.cureyes = 1
+                    this.drainyes = 1
+                }
+                if (this.type == 55) {
+                    this.paddingyes = 1
+                }
+                if (this.type == 56) {
+                    this.betrayyes = 1
+                    this.paddingyes = 1
+                }
+                if (this.type == 57) {
+                    this.paddingyes = 1
+                    this.enrageyes = 1
+                }
+                if (this.type == 58) {
+                    this.paddingyes = 1
+                    this.venomyes = 1
+                }
+                if (this.type == 59) {
+                    this.paddingyes = 1
+                    this.summonyes = 1
+                }
+                if (this.type == 60) {
+                    this.paddingyes = 1
+                    this.thornsyes = 1
+                }
+                if (this.type == 61) {
+                    this.paddingyes = 1
+                    this.blockyes = 1
+                }
+                if (this.type == 62) {
+                    this.paddingyes = 1
+                    this.healsyes = 1
+                }
+                if (this.type == 63) {
+                    this.paddingyes = 1
+                    this.bypassyes = 1
+                }
+                if (this.type == 64) {
+                    this.cureyes = 1
+                    this.paddingyes = 1
+                }
+                if (this.type == 65) {
+                    this.drainyes = 1
+                    this.paddingyes = 1
+                }
 
             } else {
                 this.type = type
             }
 
             this.level = level
+            this.level = 4
 
 
             this.body = new Polygon(350, 200, 15, getRandomColor(), this.type)
@@ -1566,6 +1649,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.hits = (Math.floor(Math.random() * (this.level + 2.5))) + 1
 
             this.poison = 0
+            this.padding = 0
+            this.drain = 0
             this.venom = 0
             this.blocks = 0
             this.enrage = 0
@@ -1596,11 +1681,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.betrayyes == 1) {
                 this.betray = Math.floor(Math.random() * (this.level + 4)) + 1
             }
+            if (this.drainyes == 1) {
+                this.drain = Math.floor(Math.random() * (this.level + 3)) + 1
+            }
+            if (this.paddingyes == 1) {
+                this.padding = Math.floor(Math.random() * (this.level + 5)) + 1
+            }
             if (this.summonyes == 1) {
                 this.summon = 1
                 if (Math.random() < .09) {
                     this.hits = 0
                 }
+            }
+            if(this.drain > (this.hits+this.enrage) && this.drain > this.betray){
+                this.drain = Math.max(this.hits+this.enrage, this.betray)
             }
             this.strings = []
             this.stringmaker()
@@ -1609,6 +1703,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.strings = []
             if (this.health < 0) {
                 this.health = 0
+            }
+            if (this.health > this.maxhealth) {
+                this.health = this.maxhealth
             }
             this.strings.push([`${this.health}/${this.maxhealth}`, "white"])
             this.strings.push([`Hits: ${this.hits + this.enrage}`, "white"])
@@ -1642,6 +1739,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.betray > 0) {
                 this.strings.push([`Betray: ${this.betray}`, "#FF0099"])
             }
+            if (this.drain > 0) {
+                this.strings.push([`Drain: ${this.drain}`, "#99AAFF"])
+            }
+            if (this.padding > 0) {
+                this.strings.push([`Padded: ${this.padding}`, "#FFFFFF"])
+            }
         }
         attack() {
             if (this.summon > 0) {
@@ -1650,9 +1753,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
             player.venom += this.venom
             if ((this.hits + this.enrage) >= (player.block - this.bypass)) {
                 player.health -= ((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0))
+                if (((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0)) > this.drain) {
+                    this.health += this.drain
+                } else {
+                    this.health += ((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0))
+                }
             }
             if ((this.hits + this.enrage) > 0) {
-                this.health -= player.thorns
+                this.health -= Math.max(player.thorns-this.padding, 0)
             }
             this.health -= this.poison
             if (this.heals > 0) {
@@ -1695,12 +1803,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 for (let t = 0; clicked < 1; t++) {
                     index = Math.floor(enemies.length * Math.random())
                     if (enemies[index] != this) {
-                        enemies[index].health -= ((this.betray ) - Math.max((enemies[index].blocks - this.bypass), 0))
+                        enemies[index].health -= ((this.betray) - Math.max((enemies[index].blocks - this.bypass), 0))
+                        if (((this.betray) - Math.max((enemies[index].blocks - this.bypass), 0)) > this.drain) {
+                            this.health += this.drain
+                        } else {
+                            this.health += ((this.betray) - Math.max((enemies[index].blocks - this.bypass), 0))
+                        }
                         if (enemies[index].enrage > 0) {
                             enemies[index].enrage += 1
                         }
                         if (enemies[index].thorns > 0) {
-                            this.health -= enemies[index].thorns
+                            this.health -= Math.max(enemies[index].thorns-this.padding, 0)
                         }
                         clicked = 1
                     }
@@ -1748,7 +1861,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let enemies = []
     let summons = []
     let expcounter = 0
-    let enenum =  Math.floor(Math.random() * 8) + 1
+    let enenum = Math.floor(Math.random() * 8) + 1
     for (let t = 0; t < enenum; t++) {
         let enemy = new Enemy(-1)
         enemies.push(enemy)
@@ -1756,7 +1869,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     player.level = 2
     function spawn() {
         expcounter++
-        if(expcounter > 4){
+        if (expcounter > 4) {
             player.level += 1
             player.maxhealth += 10
             expcounter = 0
