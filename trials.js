@@ -1687,7 +1687,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
 
             this.level = level
-            this.level = 5
+            // this.level = 5
 
             // if(Math.random() < .5){
             //     this.level = 5
