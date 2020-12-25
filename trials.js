@@ -1366,7 +1366,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                             enemies[t].health -= this.hits
                         }
                     }
-                    player.selected.poison += this.poison
+                    player.selected.poison += Math.max(this.poison-player.selected.resist, 0)
                     if (player.selected.health < 0) {
                         player.selected.health = 0
                     }
@@ -1380,7 +1380,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     class Enemy {
         constructor(type = -1, level = player.level) {
             if (type == -1) {
-                this.type = Math.floor(Math.random() * 66)
+                this.type = Math.floor(Math.random() * 78)
                 if (this.type == 0) {
                     this.thornsyes = 1
                 }
@@ -1634,13 +1634,60 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.drainyes = 1
                     this.paddingyes = 1
                 }
+                if (this.type == 66) {
+                    this.resistyes = 1
+                }
+                if (this.type == 67) {
+                    this.paddingyes = 1
+                    this.resistyes = 1
+                }
+                if (this.type == 68) {
+                    this.betrayyes = 1
+                    this.resistyes = 1
+                }
+                if (this.type == 69) {
+                    this.resistyes = 1
+                    this.enrageyes = 1
+                }
+                if (this.type == 70) {
+                    this.resistyes = 1
+                    this.venomyes = 1
+                }
+                if (this.type == 71) {
+                    this.resistyes = 1
+                    this.summonyes = 1
+                }
+                if (this.type == 72) {
+                    this.resistyes = 1
+                    this.thornsyes = 1
+                }
+                if (this.type == 73) {
+                    this.resistyes = 1
+                    this.blockyes = 1
+                }
+                if (this.type == 74) {
+                    this.resistyes = 1
+                    this.healsyes = 1
+                }
+                if (this.type == 75) {
+                    this.resistyes = 1
+                    this.bypassyes = 1
+                }
+                if (this.type == 76) {
+                    this.cureyes = 1
+                    this.resistyes = 1
+                }
+                if (this.type == 77) {
+                    this.drainyes = 1
+                    this.resistyes = 1
+                }
 
             } else {
                 this.type = type
             }
 
             this.level = level
-            // this.level = 5
+            this.level = 5
 
             // if(Math.random() < .5){
             //     this.level = 5
@@ -1664,6 +1711,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.hits = (Math.floor(Math.random() * (this.level + 2.5))) + 1
 
             this.poison = 0
+            this.resist = 0
             this.padding = 0
             this.drain = 0
             this.venom = 0
@@ -1703,6 +1751,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             if (this.paddingyes == 1) {
                 this.padding = Math.floor(Math.random() * (this.level + 5)) + 1
+            }
+            if (this.resistyes == 1) {
+                this.resist = Math.floor(Math.random() * (this.level + 1)) + 1
             }
             if (this.summonyes == 1) {
                 this.summon = 1
@@ -1761,6 +1812,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             if (this.padding > 0) {
                 this.strings.push([`Padded: ${this.padding}`, "#FFFFFF"])
+            }
+            if (this.resist > 0) {
+                this.strings.push([`Resist: ${this.resist}`, "#FFAA00"])
             }
         }
         attack() {
