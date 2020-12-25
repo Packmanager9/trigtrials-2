@@ -2191,7 +2191,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         drawImage(flip, flop, img=this.imageholder, x=this.body.body.x, y=this.body.body.y, width=60, height=60, deg=0, ) {
 
-            this.imageholder.src = srcnames(this.type) + ".svg"
+            this.imageholder.src = (srcnames(this.type) + ".svg").toLowerCase()
             canvas_context.save();
             let flipScale 
             let flopScale
