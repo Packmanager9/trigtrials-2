@@ -2227,6 +2227,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }, 18);
 
         }
+        attackstart(){
+            let holder = this
+            setTimeout(function () {
+                holder.attack()
+            }, (300));
+        }
         attack() {
             if (this.health > 0) {
                 this.animate(this.body)
@@ -2310,9 +2316,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             let indexer = enemies.indexOf(this)
             console.log(indexer)
             if (indexer < enemies.length - 1) {
-                setTimeout(function () {
-                    enemies[indexer + 1].attack()
-                }, (300));
+                enemies[indexer + 1].attackstart()
             } else {
                 for (let t = 0; t < summons.length; t++) {
                     if (enemies.length < 16) {
