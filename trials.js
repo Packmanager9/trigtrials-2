@@ -2434,6 +2434,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     player.deck.softpull()
     function main() {
+        if(keysPressed['1']){
+            player.deck.active[0].play()
+        }
+        if(keysPressed['2']){
+            player.deck.active[1].play()
+        }
+        if(keysPressed['3']){
+            player.deck.active[2].play()
+        }
+        if(keysPressed['4']){
+            player.deck.active[3].play()
+        }
+        if(keysPressed['5']){
+            player.deck.active[4].play()
+        }
         for (let k = 0; k < enemies.length; k++) {
             for (let t = 0; t < enemies.length; t++) {
                 enemies[t].body.body.x = (((canvas.width - 30) / enemies.length + 1) * (t)) + (((canvas.width - 30) / (enemies.length * 2)))
