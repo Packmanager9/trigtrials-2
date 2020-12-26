@@ -424,7 +424,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.reflect = reflect
             this.xmom = xmom
             this.ymom = ymom
-            this.body = new Circle(x, y, size - (size *-3.293), "transparent")
+            this.body = new Circle(x, y, size - (size * -3.293), "transparent")
             this.nodes = []
             this.angle = angle
             this.size = size
@@ -807,7 +807,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 TIP_engine.body = TIP_engine
                 if (player.reward == 0) {
                     if (player.drawbutton.isPointInside(TIP_engine)) {
-                        if(player.locked == 0){
+                        if (player.locked == 0) {
                             player.deck.pull()
                         }
                     }
@@ -1102,7 +1102,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.healthbar.draw()
                 this.energybar.draw()
 
-                if(this.locked == 0){
+                if (this.locked == 0) {
                     this.drawbutton.draw()
                     canvas_context.font = "43px arial"
                     canvas_context.fillStyle = "white"
@@ -1198,12 +1198,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             setTimeout(function () {
                 enemies[0].attack()
             }, (100));
-            for (let t = 0; t < summons.length; t++) {
-                if (enemies.length < 16) {
-                    enemies.push(summons[t])
-                }
-            }
-            summons = []
+
         }
         softpull() {
             player.energy = player.energymax
@@ -1986,6 +1981,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.drainyes = 1
                     this.resistyes = 1
                 }
+                // if(expcounter == 0){
+                //     if(level == 10){
+                //         this.type = 23
+                //     }
+                // }
 
                 this.imageholder = new Image()
                 this.imageholder.src = srcnames(this.type) + ".svg"
@@ -2125,77 +2125,78 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.strings.push([`Resist: ${this.resist}`, "#FFAA00"])
             }
         }
-        animate(guy){
+        animate(guy) {
 
-        setTimeout(function () {
-            guy.body.y -= 7
             setTimeout(function () {
-                guy.body.y -= 6.5
+                guy.body.y -= 7
                 setTimeout(function () {
-                    guy.body.y -= 6
+                    guy.body.y -= 6.5
                     setTimeout(function () {
-                        guy.body.y -= 5.5
+                        guy.body.y -= 6
                         setTimeout(function () {
-                            guy.body.y -= 5
+                            guy.body.y -= 5.5
                             setTimeout(function () {
-                                guy.body.y -= 4.5
+                                guy.body.y -= 5
                                 setTimeout(function () {
-                                    guy.body.y -= 4
+                                    guy.body.y -= 4.5
                                     setTimeout(function () {
-                                        guy.body.y -= 3.5
+                                        guy.body.y -= 4
                                         setTimeout(function () {
-                                            guy.body.y -= 3
+                                            guy.body.y -= 3.5
                                             setTimeout(function () {
-                                                guy.body.y -= 2.5
+                                                guy.body.y -= 3
                                                 setTimeout(function () {
-                                                    guy.body.y -= 2
+                                                    guy.body.y -= 2.5
                                                     setTimeout(function () {
-                                                        guy.body.y -= 1.5
+                                                        guy.body.y -= 2
                                                         setTimeout(function () {
-                                                            guy.body.y -= 1
+                                                            guy.body.y -= 1.5
                                                             setTimeout(function () {
-                                                                guy.body.y -= 0.5
+                                                                guy.body.y -= 1
                                                                 setTimeout(function () {
-                                                                    guy.body.y -= 0
+                                                                    guy.body.y -= 0.5
                                                                     setTimeout(function () {
-                                                                        guy.body.y += 0.5
+                                                                        guy.body.y -= 0
                                                                         setTimeout(function () {
-                                                                            guy.body.y += 1
+                                                                            guy.body.y += 0.5
                                                                             setTimeout(function () {
-                                                                                guy.body.y += 1.5
+                                                                                guy.body.y += 1
                                                                                 setTimeout(function () {
-                                                                                    guy.body.y += 2
+                                                                                    guy.body.y += 1.5
                                                                                     setTimeout(function () {
-                                                                                        guy.body.y += 2.5
+                                                                                        guy.body.y += 2
                                                                                         setTimeout(function () {
-                                                                                            guy.body.y += 3
+                                                                                            guy.body.y += 2.5
                                                                                             setTimeout(function () {
-                                                                                                guy.body.y += 3.5
+                                                                                                guy.body.y += 3
                                                                                                 setTimeout(function () {
-                                                                                                    guy.body.y += 4
+                                                                                                    guy.body.y += 3.5
                                                                                                     setTimeout(function () {
-                                                                                                        guy.body.y += 4.5
+                                                                                                        guy.body.y += 4
                                                                                                         setTimeout(function () {
-                                                                                                            guy.body.y += 5
+                                                                                                            guy.body.y += 4.5
                                                                                                             setTimeout(function () {
-                                                                                                                guy.body.y += 5.5
+                                                                                                                guy.body.y += 5
                                                                                                                 setTimeout(function () {
-                                                                                                                    guy.body.y += 6
+                                                                                                                    guy.body.y += 5.5
                                                                                                                     setTimeout(function () {
-                                                                                                                        guy.body.y += 6.5
+                                                                                                                        guy.body.y += 6
                                                                                                                         setTimeout(function () {
-                                                                                                                            guy.body.y += 7
+                                                                                                                            guy.body.y += 6.5
                                                                                                                             setTimeout(function () {
+                                                                                                                                guy.body.y += 7
                                                                                                                                 setTimeout(function () {
                                                                                                                                     setTimeout(function () {
                                                                                                                                         setTimeout(function () {
                                                                                                                                             setTimeout(function () {
-                                                                                                                                                // jumpvar = 0
+                                                                                                                                                setTimeout(function () {
+                                                                                                                                                    // jumpvar = 0
+                                                                                                                                                }, 1);
                                                                                                                                             }, 1);
                                                                                                                                         }, 1);
                                                                                                                                     }, 1);
                                                                                                                                 }, 1);
-                                                                                                                            }, 1);
+                                                                                                                            }, 18);
                                                                                                                         }, 18);
                                                                                                                     }, 18);
                                                                                                                 }, 18);
@@ -2224,11 +2225,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     }, 18);
                 }, 18);
             }, 18);
-        }, 18);
 
         }
         attack() {
-            if(this.health > 0){
+            if (this.health > 0) {
                 this.animate(this.body)
                 if (this.summon > 0) {
                     summons.push(new Enemy(-1, Math.max(this.level - 2, 0)))
@@ -2305,64 +2305,70 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         }
                     }
                 }
-    
+
             }
-            let indexer = enemies.indexOf(this) 
+            let indexer = enemies.indexOf(this)
             console.log(indexer)
-            if(indexer< enemies.length-1){
-            setTimeout(function () {
-                enemies[indexer+1].attack()
-            }, (300));
-            }else{
+            if (indexer < enemies.length - 1) {
                 setTimeout(function () {
-                player.locked = 0
-            }, (600));
+                    enemies[indexer + 1].attack()
+                }, (300));
+            } else {
+                for (let t = 0; t < summons.length; t++) {
+                    if (enemies.length < 16) {
+                        enemies.push(summons[t])
+                    }
+                }
+                summons = []
+                setTimeout(function () {
+                    player.locked = 0
+                }, (600));
             }
         }
-        drawImage(flip, flop, img=this.imageholder, x=this.body.body.x, y=this.body.body.y, width=60, height=60, deg=0, ) {
+        drawImage(flip, flop, img = this.imageholder, x = this.body.body.x, y = this.body.body.y, width = 60, height = 60, deg = 0,) {
 
             this.imageholder.src = (srcnames(this.type) + ".svg").toLowerCase()
             canvas_context.save();
-            let flipScale 
+            let flipScale
             let flopScale
-           
-           if(typeof width === "undefined") width = img.width;
-           if(typeof height === "undefined") height = img.height;
-           
-           // Set rotation point to center of image, instead of top/left
-           if(true) {
-               x -= width/2;
-               y -= height/2;
-           }
-           
-           // Set the origin to the center of the image
-           canvas_context.translate(x + width/2, y + height/2);
-           
-           // Rotate the canvas around the origin
-           var rad = 2 * Math.PI - deg * Math.PI / 180;    
-           canvas_context.rotate(rad);
-           
-           // Flip/flop the canvas
-           if(flip) flipScale = -1; else flipScale = 1;
-           if(flop) flopScale = -1; else flopScale = 1;
-           canvas_context.scale(flipScale, flopScale);
-           
-           // Draw the image    
-           canvas_context.drawImage(this.imageholder, -30, -30, 60, 60);
-           
-           canvas_context.restore();
-           }
+
+            if (typeof width === "undefined") width = img.width;
+            if (typeof height === "undefined") height = img.height;
+
+            // Set rotation point to center of image, instead of top/left
+            if (true) {
+                x -= width / 2;
+                y -= height / 2;
+            }
+
+            // Set the origin to the center of the image
+            canvas_context.translate(x + width / 2, y + height / 2);
+
+            // Rotate the canvas around the origin
+            var rad = 2 * Math.PI - deg * Math.PI / 180;
+            canvas_context.rotate(rad);
+
+            // Flip/flop the canvas
+            if (flip) flipScale = -1; else flipScale = 1;
+            if (flop) flopScale = -1; else flopScale = 1;
+            canvas_context.scale(flipScale, flopScale);
+
+            // Draw the image    
+            canvas_context.drawImage(this.imageholder, -30, -30, 60, 60);
+
+            canvas_context.restore();
+        }
         draw() {
 
             this.stringmaker()
             // this.body.draw()
             // canvas_context.drawImage(this.imageholder, this.body.body.x-30, this.body.body.y-30, 60,60)
 
-            if(enemies.indexOf(this)>=Math.floor(enemies.length*.5)){
-            this.drawImage(true, false)
-            }else{
+            if (enemies.indexOf(this) >= Math.floor(enemies.length * .5)) {
+                this.drawImage(true, false)
+            } else {
 
-            this.drawImage(false, false)
+                this.drawImage(false, false)
             }
             canvas_context.font = "12px arial"
             // canvas_context.fillStyle = "white"
@@ -2434,19 +2440,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     player.deck.softpull()
     function main() {
-        if(keysPressed['1']){
+        if (keysPressed['1']) {
             player.deck.active[0].play()
         }
-        if(keysPressed['2']){
+        if (keysPressed['2']) {
             player.deck.active[1].play()
         }
-        if(keysPressed['3']){
+        if (keysPressed['3']) {
             player.deck.active[2].play()
         }
-        if(keysPressed['4']){
+        if (keysPressed['4']) {
             player.deck.active[3].play()
         }
-        if(keysPressed['5']){
+        if (keysPressed['5']) {
             player.deck.active[4].play()
         }
         for (let k = 0; k < enemies.length; k++) {
