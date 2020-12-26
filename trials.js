@@ -787,7 +787,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         canvas.style.background = style
         window.setInterval(function () {
             main()
-        }, 300)
+        }, 75)
         document.addEventListener('keydown', (event) => {
             keysPressed[event.key] = true;
         });
@@ -807,7 +807,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 TIP_engine.body = TIP_engine
                 if (player.reward == 0) {
                     if (player.drawbutton.isPointInside(TIP_engine)) {
-                        player.deck.pull()
+                        if(player.locked == 0){
+                            player.deck.pull()
+                        }
                     }
                 } else {
                     if (player.skipbutton.isPointInside(TIP_engine)) {
@@ -1004,6 +1006,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     class Player {
         constructor() {
+            this.locked = 0
             this.selected = {}
             this.selected.body = {}
             this.selected.body.body = {}
@@ -1099,10 +1102,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.healthbar.draw()
                 this.energybar.draw()
 
-                this.drawbutton.draw()
+                if(this.locked == 0){
+                    this.drawbutton.draw()
+                    canvas_context.font = "43px arial"
+                    canvas_context.fillStyle = "white"
+                    canvas_context.fillText("Draw", this.drawbutton.x + 60, this.drawbutton.y + 40)
+                }
                 canvas_context.font = "43px arial"
                 canvas_context.fillStyle = "white"
-                canvas_context.fillText("Draw", this.drawbutton.x + 60, this.drawbutton.y + 40)
+                // canvas_context.fillText("Draw", this.drawbutton.x + 60, this.drawbutton.y + 40)
                 canvas_context.font = "19px arial"
                 canvas_context.fillStyle = "white"
                 canvas_context.fillText(`Health: ${this.health}`, this.healthbar.x, this.healthbar.y - 20)
@@ -1182,9 +1190,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.active[t].body.x = (t * 141) + 40
                 this.active[t].body.y = 550
             }
-            for (let t = 0; t < enemies.length; t++) {
-                enemies[t].attack()
-            }
+            // for (let t = 0; t < enemies.length; t++) {
+            //     enemies[t].attack()
+            // }
+
+            player.locked = 1
+            setTimeout(function () {
+                enemies[0].attack()
+            }, (100));
             for (let t = 0; t < summons.length; t++) {
                 if (enemies.length < 16) {
                     enemies.push(summons[t])
@@ -1233,7 +1246,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.hits *= 2
             }
             if (this.type == 1) {
-                this.healing = Math.ceil(Math.random() * 3) + Math.ceil(Math.random() * 3 * level)
+                this.healing = Math.ceil(Math.random() * 4.1) + Math.ceil(Math.random() * 4.1 * level)
                 this.body.color = "green"
             } else {
                 this.healing = 0
@@ -2112,81 +2125,198 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.strings.push([`Resist: ${this.resist}`, "#FFAA00"])
             }
         }
+        animate(guy){
+
+        setTimeout(function () {
+            guy.body.y -= 7
+            setTimeout(function () {
+                guy.body.y -= 6.5
+                setTimeout(function () {
+                    guy.body.y -= 6
+                    setTimeout(function () {
+                        guy.body.y -= 5.5
+                        setTimeout(function () {
+                            guy.body.y -= 5
+                            setTimeout(function () {
+                                guy.body.y -= 4.5
+                                setTimeout(function () {
+                                    guy.body.y -= 4
+                                    setTimeout(function () {
+                                        guy.body.y -= 3.5
+                                        setTimeout(function () {
+                                            guy.body.y -= 3
+                                            setTimeout(function () {
+                                                guy.body.y -= 2.5
+                                                setTimeout(function () {
+                                                    guy.body.y -= 2
+                                                    setTimeout(function () {
+                                                        guy.body.y -= 1.5
+                                                        setTimeout(function () {
+                                                            guy.body.y -= 1
+                                                            setTimeout(function () {
+                                                                guy.body.y -= 0.5
+                                                                setTimeout(function () {
+                                                                    guy.body.y -= 0
+                                                                    setTimeout(function () {
+                                                                        guy.body.y += 0.5
+                                                                        setTimeout(function () {
+                                                                            guy.body.y += 1
+                                                                            setTimeout(function () {
+                                                                                guy.body.y += 1.5
+                                                                                setTimeout(function () {
+                                                                                    guy.body.y += 2
+                                                                                    setTimeout(function () {
+                                                                                        guy.body.y += 2.5
+                                                                                        setTimeout(function () {
+                                                                                            guy.body.y += 3
+                                                                                            setTimeout(function () {
+                                                                                                guy.body.y += 3.5
+                                                                                                setTimeout(function () {
+                                                                                                    guy.body.y += 4
+                                                                                                    setTimeout(function () {
+                                                                                                        guy.body.y += 4.5
+                                                                                                        setTimeout(function () {
+                                                                                                            guy.body.y += 5
+                                                                                                            setTimeout(function () {
+                                                                                                                guy.body.y += 5.5
+                                                                                                                setTimeout(function () {
+                                                                                                                    guy.body.y += 6
+                                                                                                                    setTimeout(function () {
+                                                                                                                        guy.body.y += 6.5
+                                                                                                                        setTimeout(function () {
+                                                                                                                            guy.body.y += 7
+                                                                                                                            setTimeout(function () {
+                                                                                                                                setTimeout(function () {
+                                                                                                                                    setTimeout(function () {
+                                                                                                                                        setTimeout(function () {
+                                                                                                                                            setTimeout(function () {
+                                                                                                                                                // jumpvar = 0
+                                                                                                                                            }, 1);
+                                                                                                                                        }, 1);
+                                                                                                                                    }, 1);
+                                                                                                                                }, 1);
+                                                                                                                            }, 1);
+                                                                                                                        }, 18);
+                                                                                                                    }, 18);
+                                                                                                                }, 18);
+                                                                                                            }, 18);
+                                                                                                        }, 18);
+                                                                                                    }, 18);
+                                                                                                }, 18);
+                                                                                            }, 18);
+                                                                                        }, 18);
+                                                                                    }, 18);
+                                                                                }, 18);
+                                                                            }, 18);
+                                                                        }, 18);
+                                                                    }, 18);
+                                                                }, 18);
+                                                            }, 18);
+                                                        }, 18);
+                                                    }, 18);
+                                                }, 18);
+                                            }, 18);
+                                        }, 18);
+                                    }, 18);
+                                }, 18);
+                            }, 18);
+                        }, 18);
+                    }, 18);
+                }, 18);
+            }, 18);
+        }, 18);
+
+        }
         attack() {
-            if (this.summon > 0) {
-                summons.push(new Enemy(-1, Math.max(this.level - 2, 0)))
-            }
-            player.venom += this.venom
-            if ((this.hits + this.enrage) >= (player.block - this.bypass)) {
-                player.health -= ((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0))
-                if (((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0)) > this.drain) {
-                    this.health += this.drain
-                } else {
-                    this.health += ((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0))
+            if(this.health > 0){
+                this.animate(this.body)
+                if (this.summon > 0) {
+                    summons.push(new Enemy(-1, Math.max(this.level - 2, 0)))
                 }
-            }
-            if ((this.hits + this.enrage) > 0) {
-                this.health -= Math.max(player.thorns - this.padding, 0)
-            }
-            this.health -= this.poison
-            if (this.heals > 0) {
-                let index = Math.floor(enemies.length * Math.random())
-                let clicked = 0
-                for (let t = 0; clicked < 1; t++) {
-                    index = Math.floor(enemies.length * Math.random())
-                    if (enemies[index].health < enemies[index].maxhealth) {
-                        enemies[index].health += this.heals
-                        clicked = 1
-                        if (enemies[index].health > enemies[index].maxhealth) {
-                            enemies[index].health = enemies[index].maxhealth
-                        }
-                    }
-                    if (t > 100) {
-                        break
+                player.venom += this.venom
+                if ((this.hits + this.enrage) >= (player.block - this.bypass)) {
+                    player.health -= ((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0))
+                    if (((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0)) > this.drain) {
+                        this.health += this.drain
+                    } else {
+                        this.health += ((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0))
                     }
                 }
-            }
-            if (this.cure > 0) {
-                let index = Math.floor(enemies.length * Math.random())
-                let clicked = 0
-                for (let t = 0; clicked < 1; t++) {
-                    index = Math.floor(enemies.length * Math.random())
-                    if (enemies[index].poison > 0) {
-                        enemies[index].poison -= this.cure
-                        clicked = 1
-                        if (enemies[index].poison < 0) {
-                            enemies[index].poison = 0
+                if ((this.hits + this.enrage) > 0) {
+                    this.health -= Math.max(player.thorns - this.padding, 0)
+                }
+                this.health -= this.poison
+                if (this.heals > 0) {
+                    let index = Math.floor(enemies.length * Math.random())
+                    let clicked = 0
+                    for (let t = 0; clicked < 1; t++) {
+                        index = Math.floor(enemies.length * Math.random())
+                        if (enemies[index].health < enemies[index].maxhealth) {
+                            enemies[index].health += this.heals
+                            clicked = 1
+                            if (enemies[index].health > enemies[index].maxhealth) {
+                                enemies[index].health = enemies[index].maxhealth
+                            }
                         }
-                    }
-                    if (t > 100) {
-                        break
+                        if (t > 100) {
+                            break
+                        }
                     }
                 }
-            }
-            if (this.betray > 0) {
-                let index = Math.floor(enemies.length * Math.random())
-                let clicked = 0
-                for (let t = 0; clicked < 1; t++) {
-                    index = Math.floor(enemies.length * Math.random())
-                    if (enemies[index] != this) {
-                        enemies[index].health -= ((this.betray) - Math.max((enemies[index].blocks - this.bypass), 0))
-                        if (((this.betray) - Math.max((enemies[index].blocks - this.bypass), 0)) > this.drain) {
-                            this.health += this.drain
-                        } else {
-                            this.health += ((this.betray) - Math.max((enemies[index].blocks - this.bypass), 0))
+                if (this.cure > 0) {
+                    let index = Math.floor(enemies.length * Math.random())
+                    let clicked = 0
+                    for (let t = 0; clicked < 1; t++) {
+                        index = Math.floor(enemies.length * Math.random())
+                        if (enemies[index].poison > 0) {
+                            enemies[index].poison -= this.cure
+                            clicked = 1
+                            if (enemies[index].poison < 0) {
+                                enemies[index].poison = 0
+                            }
                         }
-                        if (enemies[index].enrage > 0) {
-                            enemies[index].enrage += 1
+                        if (t > 100) {
+                            break
                         }
-                        if (enemies[index].thorns > 0) {
-                            this.health -= Math.max(enemies[index].thorns - this.padding, 0)
-                        }
-                        clicked = 1
-                    }
-                    if (t > 100) {
-                        break
                     }
                 }
+                if (this.betray > 0) {
+                    let index = Math.floor(enemies.length * Math.random())
+                    let clicked = 0
+                    for (let t = 0; clicked < 1; t++) {
+                        index = Math.floor(enemies.length * Math.random())
+                        if (enemies[index] != this) {
+                            enemies[index].health -= ((this.betray) - Math.max((enemies[index].blocks - this.bypass), 0))
+                            if (((this.betray) - Math.max((enemies[index].blocks - this.bypass), 0)) > this.drain) {
+                                this.health += this.drain
+                            } else {
+                                this.health += ((this.betray) - Math.max((enemies[index].blocks - this.bypass), 0))
+                            }
+                            if (enemies[index].enrage > 0) {
+                                enemies[index].enrage += 1
+                            }
+                            if (enemies[index].thorns > 0) {
+                                this.health -= Math.max(enemies[index].thorns - this.padding, 0)
+                            }
+                            clicked = 1
+                        }
+                        if (t > 100) {
+                            break
+                        }
+                    }
+                }
+    
+            }
+            let indexer = enemies.indexOf(this) 
+            console.log(indexer)
+            if(indexer< enemies.length-1){
+            setTimeout(function () {
+                enemies[indexer+1].attack()
+            }, (300));
+            }else{
+                setTimeout(function () {
+                player.locked = 0
+            }, (600));
             }
         }
         drawImage(flip, flop, img=this.imageholder, x=this.body.body.x, y=this.body.body.y, width=60, height=60, deg=0, ) {
