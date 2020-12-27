@@ -787,7 +787,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         canvas.style.background = style
         window.setInterval(function () {
             main()
-        }, 75)
+        }, 18)
         document.addEventListener('keydown', (event) => {
             keysPressed[event.key] = true;
         });
@@ -1988,7 +1988,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 // }
 
                 this.imageholder = new Image()
-                this.imageholder.src = `m${this.type}`//srcnames(this.type) + ".svg"
+                this.imageholder.src = `m${this.type}.png`//srcnames(this.type) + ".svg"
             } else {
                 this.type = type
             }
@@ -2196,35 +2196,35 @@ window.addEventListener('DOMContentLoaded', (event) => {
                                                                                                                                         }, 1);
                                                                                                                                     }, 1);
                                                                                                                                 }, 1);
-                                                                                                                            }, 18);
-                                                                                                                        }, 18);
-                                                                                                                    }, 18);
-                                                                                                                }, 18);
-                                                                                                            }, 18);
-                                                                                                        }, 18);
-                                                                                                    }, 18);
-                                                                                                }, 18);
-                                                                                            }, 18);
-                                                                                        }, 18);
-                                                                                    }, 18);
-                                                                                }, 18);
-                                                                            }, 18);
-                                                                        }, 18);
-                                                                    }, 18);
-                                                                }, 18);
-                                                            }, 18);
-                                                        }, 18);
-                                                    }, 18);
-                                                }, 18);
-                                            }, 18);
-                                        }, 18);
-                                    }, 18);
-                                }, 18);
-                            }, 18);
-                        }, 18);
-                    }, 18);
-                }, 18);
-            }, 18);
+                                                                                                                            }, 9);
+                                                                                                                        }, 9);
+                                                                                                                    }, 9);
+                                                                                                                }, 9);
+                                                                                                            }, 9);
+                                                                                                        }, 9);
+                                                                                                    }, 9);
+                                                                                                }, 9);
+                                                                                            }, 9);
+                                                                                        }, 9);
+                                                                                    }, 9);
+                                                                                }, 9);
+                                                                            }, 9);
+                                                                        }, 9);
+                                                                    }, 9);
+                                                                }, 9);
+                                                            }, 9);
+                                                        }, 9);
+                                                    }, 9);
+                                                }, 9);
+                                            }, 9);
+                                        }, 9);
+                                    }, 9);
+                                }, 9);
+                            }, 9);
+                        }, 9);
+                    }, 9);
+                }, 9);
+            }, 9);
 
         }
         attackstart(){
@@ -2331,7 +2331,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         drawImage(flip, flop, img = this.imageholder, x = this.body.body.x, y = this.body.body.y, width = 60, height = 60, deg = 0,) {
 
-            this.imageholder.src = (srcnames(this.type) + ".svg").toLowerCase()
+            this.imageholder.src = `m${this.type}.png`//(srcnames(this.type) + ".svg").toLowerCase()
             canvas_context.save();
             let flipScale
             let flopScale
