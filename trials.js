@@ -1442,7 +1442,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     // if (Math.random() < .5) {
                     //     return "genaupresangb";
                     // }
-                    return "genaupresangc";
+                    return "genaupresang";
                 case 22:
                     return "daahnida";
                 case 23:
@@ -1988,7 +1988,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 // }
 
                 this.imageholder = new Image()
-                this.imageholder.src = srcnames(this.type) + ".svg"
+                this.imageholder.src = `m${this.type}`//srcnames(this.type) + ".svg"
             } else {
                 this.type = type
             }
