@@ -1013,33 +1013,48 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.selected.body.body.x = 100
             this.selected.body.body.y = 100
             this.deck = new Deck()
-            let strangecard = new Card(5, 0)
             this.venom = 0
 
+            let strangecard = new Card(5, 0)
+            
             let stuncard = new Card(1, 8)
             stuncard.stun = 1
-            stuncard.energy = 0
-
+            stuncard.energy = 1
+            stuncard.hits = 5
             let healingcard = new Card(1, 1)
-            healingcard.healing = 4
+            healingcard.healing = 10
             healingcard.energy = 2
+            healingcard.hits = 2
             let blockcard = new Card(1, 2)
             blockcard.block = 1
             blockcard.energy = 1
+            blockcard.hits = 3
             let poisoncard = new Card(1, 3)
-            poisoncard.poison = 3
+            poisoncard.poison = 4
             poisoncard.energy = 1
+            poisoncard.hits = 2
             let thorncard = new Card(1, 4)
             thorncard.thorns = 2
             thorncard.energy = 1
+            thorncard.hits = 3
             let energybonuscard = new Card(1, 5)
             energybonuscard.energybonus = 3
             energybonuscard.energy = 2
+            energybonuscard.hits = 5
             let curecard = new Card(1, 6)
             curecard.cure = 1
             curecard.healing = 2
             curecard.energy = 2
+            let pullcard = new Card(1, 9)
+            pullcard.pull = 1
+            pullcard.hits = 6
+            pullcard.energy = 1
+            let retcard = new Card(1, 7)
+            retcard.ret = 1
+            retcard.hits = 3
+            retcard.energy = 2
 
+            this.deck.push(pullcard)
             this.deck.push(healingcard)
             this.deck.push(blockcard)
             this.deck.push(poisoncard)
@@ -1047,6 +1062,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.deck.push(energybonuscard)
             this.deck.push(curecard)
             this.deck.push(stuncard)
+            this.deck.push(retcard)
 
             this.r = 0
             this.g = 255
@@ -1162,12 +1178,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.discarded = []
             this.reward = []
             for (let t = 0; t < 0; t++) {
-                this.push(new Card(0, Math.floor(Math.random() * 9)))
+                this.push(new Card(0, Math.floor(Math.random() * 10)))
             }
         }
         makeprize() {
             for (let t = 0; t < 5; t++) {
-                this.reward.push(new Card(player.level, Math.floor(Math.random() * 9)))
+                this.reward.push(new Card(player.level, Math.floor(Math.random() * 10)))
             }
             for (let t = 0; t < this.reward.length; t++) {
                 this.reward[t].body.x = t * 160
@@ -1238,7 +1254,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.level = level
             this.type = type
             this.body = new Rectangle(0, 550, 100, 120, "red")
-            this.energy = Math.floor(Math.random() * 3)
+            this.energy = Math.floor(Math.random() * 3) + 1
+            if (Math.random() < .5) {
+                this.energy -= 1
+            }
             this.hits = Math.floor(Math.random() * 4 * this.level) + 2
             this.played = 0
             if (this.type == 0) {
@@ -1251,19 +1270,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.healing = 0
             }
             if (this.type == 2) {
-                this.block = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * 1.2 * level)
+                this.block = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * .8 * level)
                 this.body.color = "gray"
             } else {
                 this.block = 0
             }
             if (this.type == 3) {
-                this.poison = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * 3 * level)
+                this.poison = Math.ceil(Math.random() * 1.05) + Math.ceil(Math.random() * 4 * level)
                 this.body.color = "#FF00FF"
             } else {
                 this.poison = 0
             }
             if (this.type == 4) {
-                this.thorns = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * 1.5 * level)
+                this.thorns = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * 2 * level)
                 this.body.color = "#666600"
             } else {
                 this.thorns = 0
@@ -1291,13 +1310,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.ret = 0
             }
             if (this.type == 8) {
-                this.stun =  Math.ceil(Math.random() * .55 * level)
-                if(this.stun == 0){
+                this.stun = Math.ceil(Math.random() * .55 * level)
+                if (this.stun == 0) {
                     this.stun = 1
                 }
                 this.body.color = "blue"
             } else {
                 this.stun = 0
+            }
+            if (this.type == 9) {
+                this.pull = 1
+                this.body.color = "#FEDCBA"
+                if(this.energy < 1){
+                    this.energy = 1
+                }
+            } else {
+                this.pull = 0
             }
 
             this.line = new Line(this.body.x + 10, this.body.y + 60, this.body.x + this.body.width - 10, this.body.y + 60, "white")
@@ -1310,7 +1338,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.strings.push([`Damage all: ${this.hits}`, "white"])
             }
             this.strings.push([`Energy: ${this.energy}`, "white"])
-            if (this.body.color == "#EEEEEE" || this.body.color == "#00FF00" || this.body.color == "#00CCFF" ) {
+            if (this.body.color == "#EEEEEE" || this.body.color == "#00FF00" || this.body.color == "#00CCFF" || this.body.color == "#FEDCBA") {
                 this.strings[0][1] = "black"
                 this.strings[1][1] = "black"
             }
@@ -1339,6 +1367,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.stun > 0) {
                 this.strings.push([`Stun: ${this.stun}`, "#FFFF00"])
             }
+            if (this.pull > 0) {
+                this.strings.push([`Pull`, "#0000FF"])
+            }
         }
         clone() {
             let clone = new Card()
@@ -1354,6 +1385,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             clone.energybonus = this.energybonus
             clone.ret = this.ret
             clone.stun = this.stun
+            clone.pull = this.pull
             clone.body.color = this.body.color
             return clone
         }
@@ -1394,13 +1426,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
                             enemies[t].health -= this.hits
                         }
                     }
-                    player.selected.stun += Math.max(this.stun-player.selected.thick, 0)
+                    player.selected.stun += Math.max(this.stun - player.selected.thick, 0)
                     player.selected.poison += Math.max(this.poison - player.selected.resist, 0)
                     if (player.selected.health < 0) {
                         player.selected.health = 0
                     }
                     if (this.cure == 1) {
                         player.venom = 0
+                    }
+                }
+                if (this.pull == 1) {
+                    let index = Math.floor(Math.random() * player.deck.drawable.length)
+
+                    let blockindex = player.deck.active.indexOf(this)
+                    player.deck.push(this.clone())
+
+                    player.deck.active = player.deck.active.filter(a => a != this)
+                    player.deck.active.push(player.deck.drawable[index].clone())
+                    player.deck.drawable.splice(index,1)
+
+                    for (let t = 0; t < player.deck.active.length; t++) {
+                        player.deck.active[t].body.x = (t * 141) + 40
                     }
                 }
             }
@@ -1698,7 +1744,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
         constructor(type = -1, level = player.level) {
 
             if (type == -1) {
-                this.type = Math.floor(Math.random() * 91)
+                this.type = Math.floor(Math.random() * 105)
+                // this.type = 99
                 if (this.type == 0) {
                     this.thornsyes = 1
                 }
@@ -2050,6 +2097,61 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.resistyes = 1
                     this.thickyes = 1
                 }
+                if (this.type == 91) {
+                    this.rampageyes = 1
+                }
+                if (this.type == 92) {
+                    this.paddingyes = 1
+                    this.rampageyes = 1
+                }
+                if (this.type == 93) {
+                    this.betrayyes = 1
+                    this.rampageyes = 1
+                }
+                if (this.type == 94) {
+                    this.rampageyes = 1
+                    this.enrageyes = 1
+                }
+                if (this.type == 95) {
+                    this.rampageyes = 1
+                    this.venomyes = 1
+                }
+                if (this.type == 96) {
+                    this.rampageyes = 1
+                    this.summonyes = 1
+                }
+                if (this.type == 97) {
+                    this.rampageyes = 1
+                    this.thornsyes = 1
+                }
+                if (this.type == 98) {
+                    this.rampageyes = 1
+                    this.blockyes = 1
+                }
+                if (this.type == 99) {
+                    this.rampageyes = 1
+                    this.healsyes = 1
+                }
+                if (this.type == 100) {
+                    this.rampageyes = 1
+                    this.bypassyes = 1
+                }
+                if (this.type == 101) {
+                    this.cureyes = 1
+                    this.rampageyes = 1
+                }
+                if (this.type == 102) {
+                    this.drainyes = 1
+                    this.rampageyes = 1
+                }
+                if (this.type == 103) {
+                    this.resistyes = 1
+                    this.rampageyes = 1
+                }
+                if (this.type == 104) {
+                    this.thickyes = 1
+                    this.rampageyes = 1
+                }
                 // if(expcounter == 0){
                 //     if(level == 10){
                 //         this.type = 23
@@ -2098,6 +2200,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.bypass = 0
             this.betray = 0
             this.thick = 0
+            this.rampage = 0
             this.stun = 0
 
 
@@ -2137,6 +2240,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.thickyes == 1) {
                 this.thick = Math.floor(Math.random() * (this.level + 0)) + 1
             }
+            if (this.rampageyes == 1) {
+                this.rampage = Math.floor(Math.random() * (this.level + 2)) + 1
+            }
             if (this.summonyes == 1) {
                 this.summon = 1
                 if (Math.random() < .09) {
@@ -2158,7 +2264,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.health = this.maxhealth
             }
             this.strings.push([`${this.health}/${this.maxhealth}`, "white"])
-            this.strings.push([`Hits: ${this.hits + this.enrage}`, "white"])
+            this.strings.push([`Hits: ${this.hits + this.enrage + this.rampage}`, "white"])
             if (this.blocks > 0) {
                 this.strings.push([`Blocks: ${this.blocks}`, "gray"])
             }
@@ -2203,6 +2309,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             if (this.thick > 0) {
                 this.strings.push([`Thick: ${this.thick}`, "#33FFAA"])
+            }
+            if (this.rampage > 0) {
+                this.strings.push([`Rampage: ${this.rampage}`, "#AA33FF"])
             }
         }
         animate(guy) {
@@ -2323,15 +2432,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         summons.push(new Enemy(-1, Math.max(this.level - 2, 0)))
                     }
                     player.venom += this.venom
-                    if ((this.hits + this.enrage) >= (player.block - this.bypass)) {
-                        player.health -= ((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0))
-                        if (((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0)) > this.drain) {
+                    if ((this.hits + this.enrage + this.rampage) >= (player.block - this.bypass)) {
+                        player.health -= ((this.hits + this.enrage + this.rampage) - Math.max((player.block - this.bypass), 0))
+                        if (((this.hits + this.enrage + this.rampage) - Math.max((player.block - this.bypass), 0)) > this.drain) {
                             this.health += this.drain
                         } else {
-                            this.health += ((this.hits + this.enrage) - Math.max((player.block - this.bypass), 0))
+                            this.health += ((this.hits + this.enrage + this.rampage) - Math.max((player.block - this.bypass), 0))
                         }
                     }
-                    if ((this.hits + this.enrage) > 0) {
+                    if ((this.hits + this.enrage + this.rampage) > 0) {
                         this.health -= Math.max(player.thorns - this.padding, 0)
                     }
                     this.health -= this.poison
@@ -2394,13 +2503,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
                             }
                         }
                     }
-                }else{
+                    if (this.rampage > 0) {
+                        this.rampage += 1
+                    }
+                } else {
                     this.health -= this.poison
                 }
             }
 
             this.stun -= 1
-            if(this.stun < 0){
+            if (this.stun < 0) {
                 this.stun = 0
             }
 
@@ -2535,31 +2647,35 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     player.deck.softpull()
     function main() {
-        if (keysPressed['1']) {
-            player.deck.active[0].play()
-        }
-        if (keysPressed['2']) {
-            player.deck.active[1].play()
-        }
-        if (keysPressed['3']) {
-            player.deck.active[2].play()
-        }
-        if (keysPressed['4']) {
-            player.deck.active[3].play()
-        }
-        if (keysPressed['5']) {
-            player.deck.active[4].play()
+        if (player.reward == 0) {
+            if(player.health > 0){
+                if (keysPressed['1']) {
+                    player.deck.active[0].play()
+                }
+                if (keysPressed['2']) {
+                    player.deck.active[1].play()
+                }
+                if (keysPressed['3']) {
+                    player.deck.active[2].play()
+                }
+                if (keysPressed['4']) {
+                    player.deck.active[3].play()
+                }
+                if (keysPressed['5']) {
+                    player.deck.active[4].play()
+                }
+            }
         }
         for (let k = 0; k < enemies.length; k++) {
             for (let t = 0; t < enemies.length; t++) {
-                enemies[t].body.body.x = (((canvas.width - 30) / enemies.length + 1) * (t)) + (((canvas.width - 30) / (enemies.length * 2)))
+                enemies[t].body.body.x = (((canvas.width - 36) / enemies.length + 1) * (t)) + (((canvas.width - 36) / (enemies.length * 2)))
                 enemies[t].draw()
             }
         }
         canvas_context.clearRect(0, 0, (canvas.width), canvas.height)
         gamepadAPI.update()
         for (let t = 0; t < enemies.length; t++) {
-            enemies[t].body.body.x = (((canvas.width - 30) / enemies.length + 1) * (t)) + (((canvas.width - 30) / (enemies.length * 2)))
+            enemies[t].body.body.x = (((canvas.width - 36) / enemies.length + 1) * (t)) + (((canvas.width - 36) / (enemies.length * 2)))
             enemies[t].draw()
         }
         player.draw()
