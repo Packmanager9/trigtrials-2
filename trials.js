@@ -1016,7 +1016,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.venom = 0
 
             let strangecard = new Card(5, 0)
-            
+
             let stuncard = new Card(1, 8)
             stuncard.stun = 1
             stuncard.energy = 1
@@ -1258,7 +1258,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (Math.random() < .5) {
                 this.energy -= 1
             }
-            this.hits = Math.floor(Math.random() * 4 * this.level) + 2
+            this.hits = Math.floor(((Math.random()*.5)+.5 )* 8 * this.level) + 2
             this.played = 0
             if (this.type == 0) {
                 this.hits *= 2
@@ -2185,7 +2185,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
             this.body = new Polygon(350, 160, 15, getRandomColor(), this.type)
-            this.health = 10 + (Math.floor(Math.random() * this.level * 15))
+            this.health = 10 + (Math.floor(Math.random() * this.level * 35))
             this.maxhealth = this.health
             this.hits = (Math.floor(Math.random() * (this.level + 2.5))) + 1
 
