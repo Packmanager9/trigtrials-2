@@ -1434,19 +1434,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     if (this.cure == 1) {
                         player.venom = 0
                     }
-                }
-                if (this.pull == 1) {
-                    let index = Math.floor(Math.random() * player.deck.drawable.length)
-
-                    let blockindex = player.deck.active.indexOf(this)
-                    player.deck.push(this.clone())
-
-                    player.deck.active = player.deck.active.filter(a => a != this)
-                    player.deck.active.push(player.deck.drawable[index].clone())
-                    player.deck.drawable.splice(index,1)
-
-                    for (let t = 0; t < player.deck.active.length; t++) {
-                        player.deck.active[t].body.x = (t * 141) + 40
+                    if (this.pull == 1) {
+                        let index = Math.floor(Math.random() * player.deck.drawable.length)
+    
+                        let blockindex = player.deck.active.indexOf(this)
+                        player.deck.push(this.clone())
+    
+                        player.deck.active = player.deck.active.filter(a => a != this)
+                        player.deck.active.push(player.deck.drawable[index].clone())
+                        player.deck.drawable.splice(index,1)
+    
+                        for (let t = 0; t < player.deck.active.length; t++) {
+                            player.deck.active[t].body.x = (t * 141) + 40
+                        }
                     }
                 }
             }
