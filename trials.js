@@ -1183,6 +1183,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
         }
         makeprize() {
+            summons = []
             for (let t = 0; t < 5; t++) {
                 this.reward.push(new Card(player.level, Math.floor(Math.random() * 10)))
             }
@@ -2247,7 +2248,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.body = new Polygon(350, 160, 15, getRandomColor(), this.type)
             this.health = 10 + (Math.floor(Math.random() * this.level * 35))
             this.maxhealth = this.health
-            this.hits = (Math.floor(Math.random() * (this.level + 2.5))) + 1
+            this.hits = (Math.floor(Math.random() * (this.level * 2))) + 1
 
             this.poison = 0
             this.resist = 0
@@ -2690,7 +2691,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         let enemy = new Enemy(-1)
         enemies.push(enemy)
     }
-    player.level = 2
+    player.level = 1
     function spawn() {
         expcounter++
         if (expcounter > 4) {
