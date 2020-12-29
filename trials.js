@@ -1088,8 +1088,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.cardbox.strokeWidth = 0
             this.statbox.strokeWidth = 0
             this.buffbox.strokeWidth = 0
-            this.energymax = 5
-            this.energy = 5
+            this.energymax = 7
+            this.energy = 7
             this.maxhealth = 100
             this.health = 100
             this.block = 0
@@ -1257,53 +1257,60 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.type = type
             this.body = new Rectangle(0, 550, 100, 120, "red")
             this.energy = Math.floor(Math.random() * 3) + 1
-            if (Math.random() < .5) {
+            if (Math.random() < .1) {
                 this.energy -= 1
             }
-            this.hits = Math.floor(((Math.random()*.5)+.5 )* 8 * this.level) + 2
+            this.hits = Math.floor(((Math.random()*.3)+.7 )* 8 * this.level) + 2
             this.played = 0
             if (this.type == 0) {
                 this.hits *= 2
             }
             if (this.type == 1) {
-                this.healing = Math.ceil(Math.random() * 5.1) + Math.ceil(Math.random() * 5.1 * level)
+                this.healing = Math.ceil(((Math.random()*.3)+.7) * 5.1) + Math.ceil(((Math.random()*.3)+.7) * 5.1 * level)
                 this.body.color = "#00FF00"
             } else {
                 this.healing = 0
             }
             if (this.type == 2) {
-                this.block = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * .8 * level)
+                this.block = Math.ceil(((Math.random()*.3)+.7) * 1) + Math.ceil(((Math.random()*.3)+.7) * .8 * level)
                 this.body.color = "gray"
             } else {
                 this.block = 0
             }
             if (this.type == 3) {
-                this.poison = Math.ceil(Math.random() * 1.05) + Math.ceil(Math.random() * 4 * level)
+                this.poison = Math.ceil(((Math.random()*.3)+.7) * 1.05) + Math.ceil(((Math.random()*.3)+.7) * 8 * level)
                 this.body.color = "#FF00FF"
             } else {
                 this.poison = 0
             }
             if (this.type == 4) {
-                this.thorns = Math.ceil(Math.random() * 1) + Math.ceil(Math.random() * 2 * level)
+                this.thorns = Math.ceil(((Math.random()*.3)+.7) * 1.05) + Math.ceil(((Math.random()*.3)+.7) * 3.5 * level)
                 this.body.color = "#666600"
             } else {
                 this.thorns = 0
             }
             if (this.type == 5) {
-                this.energybonus = Math.ceil(Math.random() * 3)
+
+                this.energybonus = 1
+                // this.energybonus = Math.ceil(((Math.random())) * 3)
+                for(let t = 0;t<3;t++){
+                    if(Math.random()<.55){
+                        this.energybonus+=1
+                    }
+                }
                 this.body.color = "#00CCFF"
             } else {
                 this.energybonus = 0
             }
             if (this.type == 6) {
                 this.cure = 1
-                this.healing = Math.ceil(Math.random() * 2) + Math.ceil(Math.random() * 2 * level)
+                this.healing = Math.ceil(((Math.random()*.3)+.7) * 2) + Math.ceil(((Math.random()*.3)+.7) * 2 * level)
                 this.body.color = "#EEEEEE"
             } else {
                 this.cure = 0
             }
             if (this.type == 7) {
-                this.ret = Math.ceil(Math.random() * 2) + Math.ceil(Math.random() * 2 * level)
+                this.ret = Math.ceil(((Math.random()*1)+0)) + Math.ceil(((Math.random()*1)+0) * 2 * level)
                 this.body.color = "teal"
                 if (this.ret > this.hits) {
                     this.hits = this.ret
@@ -1312,7 +1319,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.ret = 0
             }
             if (this.type == 8) {
-                this.stun = Math.ceil(Math.random() * .55 * level)
+                this.stun = Math.ceil(((Math.random()*.3)+.7) * .55 * level)
                 if (this.stun == 0) {
                     this.stun = 1
                 }
