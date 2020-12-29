@@ -1045,6 +1045,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             curecard.cure = 1
             curecard.healing = 2
             curecard.energy = 2
+            curecard.hits = 6
             let pullcard = new Card(1, 9)
             pullcard.pull = 1
             pullcard.hits = 6
@@ -1744,7 +1745,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         constructor(type = -1, level = player.level) {
 
             if (type == -1) {
-                this.type = Math.floor(Math.random() * 105)
+                this.type = Math.floor(Math.random() * 120)
                 // this.type = 99
                 if (this.type == 0) {
                     this.thornsyes = 1
@@ -2152,6 +2153,65 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.thickyes = 1
                     this.rampageyes = 1
                 }
+                if (this.type == 105) {
+                    this.explodeyes = 1
+                }
+                if (this.type == 106) {
+                    this.paddingyes = 1
+                    this.explodeyes = 1
+                }
+                if (this.type == 107) {
+                    this.betrayyes = 1
+                    this.explodeyes = 1
+                }
+                if (this.type == 108) {
+                    this.explodeyes = 1
+                    this.enrageyes = 1
+                }
+                if (this.type == 109) {
+                    this.explodeyes = 1
+                    this.venomyes = 1
+                }
+                if (this.type == 110) {
+                    this.explodeyes = 1
+                    this.summonyes = 1
+                }
+                if (this.type == 111) {
+                    this.explodeyes = 1
+                    this.thornsyes = 1
+                }
+                if (this.type == 112) {
+                    this.explodeyes = 1
+                    this.blockyes = 1
+                }
+                if (this.type == 113) {
+                    this.explodeyes = 1
+                    this.healsyes = 1
+                }
+                if (this.type == 114) {
+                    this.explodeyes = 1
+                    this.bypassyes = 1
+                }
+                if (this.type == 115) {
+                    this.cureyes = 1
+                    this.explodeyes = 1
+                }
+                if (this.type == 116) {
+                    this.drainyes = 1
+                    this.explodeyes = 1
+                }
+                if (this.type == 117) {
+                    this.resistyes = 1
+                    this.explodeyes = 1
+                }
+                if (this.type == 118) {
+                    this.thickyes = 1
+                    this.explodeyes = 1
+                }
+                if (this.type == 119) {
+                    this.rampageyes = 1
+                    this.explodeyes = 1
+                }
                 // if(expcounter == 0){
                 //     if(level == 10){
                 //         this.type = 23
@@ -2200,10 +2260,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.bypass = 0
             this.betray = 0
             this.thick = 0
+            this.explode = 0
             this.rampage = 0
             this.stun = 0
 
 
+            if (this.explodeyes == 1) {
+                this.explode = Math.floor(Math.random() * (this.level +4) * 2)+1
+            }
             if (this.blockyes == 1) {
                 this.blocks = Math.floor(Math.random() * (this.level + 2))
             }
@@ -2311,7 +2375,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.strings.push([`Thick: ${this.thick}`, "#33FFAA"])
             }
             if (this.rampage > 0) {
-                this.strings.push([`Rampage: ${this.rampage}`, "#AA33FF"])
+                this.strings.push([`Frenzy: ${this.rampage}`, "#AA33FF"])
+            }
+            if (this.explode > 0) {
+                this.strings.push([`Detonate: ${this.explode + this.enrage + this.rampage}`, "#FF6600"])
             }
         }
         animate(guy) {
@@ -2590,6 +2657,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
             //     canvas_context.fillText(`Poisoned: ${this.poison}`, this.body.body.x - 15, this.body.body.y + 100)
             // }
             if (this.health <= 0) {
+                if(this.explode > 0){
+                    for(let t = 0;t< enemies.length;t++){
+                        enemies[t].health-=  ((this.explode  + this.enrage + this.rampage) - Math.max((enemies[t].blocks - this.bypass), 0))
+                    }
+                    player.health -= ((this.explode  + this.enrage + this.rampage) - Math.max((player.block - this.bypass), 0))
+
+                }
                 enemies.splice(enemies.indexOf(this), 1)
                 if (enemies.length == 0) {
                     player.reward = 1
