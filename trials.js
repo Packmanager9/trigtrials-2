@@ -1255,7 +1255,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
     class Card {
         constructor(level = 0, type = 0) {
-            this.level = level+1
+            this.level = level + 1
             this.type = type
             this.body = new Rectangle(0, 550, 100, 120, "red")
             this.energy = Math.floor(Math.random() * 3) + 1
@@ -1268,25 +1268,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.hits *= 2
             }
             if (this.type == 1) {
-                this.healing = Math.ceil(((Math.random() * .3) + .7) * 5.1) + Math.ceil(((Math.random() * .3) + .7) * 5.1 * level)
+                this.healing = Math.ceil(((Math.random() * .3) + .7) * 5.1) + Math.ceil(((Math.random() * .3) + .7) * 6.1 * (level + 1))+1
                 this.body.color = "#00FF00"
             } else {
                 this.healing = 0
             }
             if (this.type == 2) {
-                this.block = Math.ceil(((Math.random() * .3) + .7) * 1) + Math.ceil(((Math.random() * .3) + .7) * .8 * level)
+                this.block = (Math.ceil(((Math.random() * .3) + .7) * 1) + Math.ceil(((Math.random() * .3) + .7) * 1.2 * (level + 1))) + 1
                 this.body.color = "gray"
             } else {
                 this.block = 0
             }
             if (this.type == 3) {
-                this.poison = Math.ceil(((Math.random() * .3) + .7) * 1.05) + Math.ceil(((Math.random() * .3) + .7) * 8 * level)
+                this.poison = Math.ceil(((Math.random() * .3) + .7) * 1.05) + Math.ceil(((Math.random() * .3) + .7) * 9 * (level + 1))+1
                 this.body.color = "#FF00FF"
             } else {
                 this.poison = 0
             }
             if (this.type == 4) {
-                this.thorns = Math.ceil(((Math.random() * .3) + .7) * 1.05) + Math.ceil(((Math.random() * .3) + .7) * 3.5 * level)
+                this.thorns = (Math.ceil(((Math.random() * .3) + .7) * 1.05) + Math.ceil(((Math.random() * .3) + .7) * 3.5 * (level + 1))) + 1
                 this.body.color = "#666600"
             } else {
                 this.thorns = 0
@@ -1306,7 +1306,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             if (this.type == 6) {
                 this.cure = 1
-                this.healing = Math.ceil(((Math.random() * .3) + .7) * 2) + Math.ceil(((Math.random() * .3) + .7) * 2 * level)
+                this.healing = Math.ceil(((Math.random() * .3) + .7) * 2) + Math.ceil(((Math.random() * .3) + .7) * 3 * (level + 1))+1
                 this.body.color = "#EEEEEE"
             } else {
                 this.cure = 0
@@ -1321,7 +1321,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.ret = 0
             }
             if (this.type == 8) {
-                this.stun = Math.ceil(((Math.random() * .3) + .7) * .55 * level)
+                this.stun = Math.ceil(((Math.random() * .3) + .7) * .65 * level)
                 if (this.stun == 0) {
                     this.stun = 1
                 }
@@ -2337,7 +2337,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 }
             }
             if (this.drain > (this.hits + this.enrage + this.rampage) && this.drain > (this.betray + this.enrage + this.rampage)) {
-                this.drain = Math.max(this.hits + this.enrage + this.rampage, this.betray + this.rampage + this.enrage )
+                this.drain = Math.max(this.hits + this.enrage + this.rampage, this.betray + this.rampage + this.enrage)
             }
             this.strings = []
             this.stringmaker()
