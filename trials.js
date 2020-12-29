@@ -1052,8 +1052,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             pullcard.energy = 1
             let retcard = new Card(1, 7)
             retcard.ret = 1
-            retcard.hits = 3
-            retcard.energy = 2
+            retcard.hits = 4
+            retcard.energy = 1
 
             this.deck.push(pullcard)
             this.deck.push(healingcard)
