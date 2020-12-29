@@ -2257,7 +2257,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.body = new Polygon(350, 160, 15, getRandomColor(), this.type)
             this.health = 10 + (Math.floor(((Math.random()*.25)+.75) * this.level * 35))
             this.maxhealth = this.health
-            this.hits = (Math.floor( ((Math.random()*.25)+.75)  * (this.level * 2))) + 1
+            this.hits = (Math.floor( ((Math.random()*.25)+.75)  * (this.level * 3))) + 1
 
             this.poison = 0
             this.resist = 0
@@ -2276,19 +2276,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
             if (this.explodeyes == 1) {
-                this.explode = Math.floor(((Math.random()*.25)+.75) * (this.level +4) * 4)+2
+                this.explode = Math.floor(((Math.random()*.25)+.75) * (this.level +3) * 3)+1
             }
             if (this.blockyes == 1) {
                 this.blocks = Math.floor(((Math.random()*.25)+.75) * (this.level + 2) * 2)
             }
             if (this.thornsyes == 1) {
-                this.thorns = Math.floor(((Math.random()*.25)+.75) * (this.level + 3) * 2)
+                this.thorns = Math.floor(((Math.random()*.25)+.75) * (this.level + 2) * 1.5)
             }
             if (this.healsyes == 1) {
-                this.heals = Math.floor(((Math.random()*.25)+.75) * (this.level + 5) * 4)
+                this.heals = Math.floor(((Math.random()*.25)+.75) * (this.level + 5) * 2.8)
             }
             if (this.venomyes == 1) {
-                this.venom = Math.floor(((Math.random()*.25)+.75) * (this.level + 3) * 2.5)
+                this.venom = Math.floor(((Math.random()*.25)+.75) * (this.level + 3) * 2.1)
             }
             if (this.enrageyes == 1) {
                 this.enrage = Math.floor(((Math.random()*.25)+.75) * (this.level + 1) * 2) + 1
@@ -2297,7 +2297,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.bypass = Math.floor(((Math.random()*.25)+.75) * (this.level * 3) * 2.5) + 1
             }
             if (this.cureyes == 1) {
-                this.cure = Math.floor(((Math.random()*.25)+.75) * (this.level + 4) * 2) + 1
+                this.cure = Math.floor(((Math.random()*.25)+.75) * (this.level + 4) * 1.8) + 1
             }
             if (this.betrayyes == 1) {
                 this.betray = Math.floor(((Math.random()*.25)+.75) * (this.level + 4) * 2) + 1
@@ -2306,10 +2306,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.drain = Math.floor(((Math.random()*.25)+.75) * (this.level + 3) * 5) + 1
             }
             if (this.paddingyes == 1) {
-                this.padding = Math.floor(((Math.random()*.25)+.75) * (this.level + 5) * 3) + 1
+                this.padding = Math.floor(((Math.random()*.25)+.75) * (this.level + 5) * 2.6) + 1
             }
             if (this.resistyes == 1) {
-                this.resist = Math.floor(((Math.random()*.25)+.75) * (this.level + 1) * 2) + 1
+                this.resist = Math.floor(((Math.random()*.25)+.75) * (this.level + 1) * 1.75) + 1
             }
             if (this.thickyes == 1) {
                 this.thick = Math.floor(((Math.random()*1)+0) * (this.level + 0)) 
