@@ -2285,7 +2285,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.thorns = Math.floor(((Math.random()*.25)+.75) * (this.level + 1.5) * 1.4)
             }
             if (this.healsyes == 1) {
-                this.heals = Math.floor(((Math.random()*.25)+.75) * (this.level + 5) * 2.8)
+                this.heals = Math.floor(((Math.random()*.25)+.75) * (this.level + 4) * 2.6)
             }
             if (this.venomyes == 1) {
                 this.venom = Math.floor(((Math.random()*.25)+.75) * (this.level + 3) * 2.1)
