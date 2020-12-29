@@ -2269,43 +2269,43 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.explode = Math.floor(Math.random() * (this.level +4) * 2)+1
             }
             if (this.blockyes == 1) {
-                this.blocks = Math.floor(Math.random() * (this.level + 2))
+                this.blocks = Math.floor(Math.random() * (this.level + 2) * 2)
             }
             if (this.thornsyes == 1) {
-                this.thorns = Math.floor(Math.random() * (this.level + 3))
+                this.thorns = Math.floor(Math.random() * (this.level + 3) * 2)
             }
             if (this.healsyes == 1) {
-                this.heals = Math.floor(Math.random() * (this.level + 3))
+                this.heals = Math.floor(Math.random() * (this.level + 3) * 2)
             }
             if (this.venomyes == 1) {
-                this.venom = Math.floor(Math.random() * (this.level + 3))
+                this.venom = Math.floor(Math.random() * (this.level + 3) * 2)
             }
             if (this.enrageyes == 1) {
-                this.enrage = Math.floor(Math.random() * (this.level + 1)) + 1
+                this.enrage = Math.floor(Math.random() * (this.level + 1) * 2) + 1
             }
             if (this.bypassyes == 1) {
-                this.bypass = Math.floor(Math.random() * (this.level * 3)) + 1
+                this.bypass = Math.floor(Math.random() * (this.level * 3) * 2) + 1
             }
             if (this.cureyes == 1) {
-                this.cure = Math.floor(Math.random() * (this.level + 4)) + 1
+                this.cure = Math.floor(Math.random() * (this.level + 4) * 2) + 1
             }
             if (this.betrayyes == 1) {
-                this.betray = Math.floor(Math.random() * (this.level + 4)) + 1
+                this.betray = Math.floor(Math.random() * (this.level + 4) * 2) + 1
             }
             if (this.drainyes == 1) {
-                this.drain = Math.floor(Math.random() * (this.level + 3)) + 1
+                this.drain = Math.floor(Math.random() * (this.level + 3) * 2) + 1
             }
             if (this.paddingyes == 1) {
-                this.padding = Math.floor(Math.random() * (this.level + 5)) + 1
+                this.padding = Math.floor(Math.random() * (this.level + 5) * 2) + 1
             }
             if (this.resistyes == 1) {
-                this.resist = Math.floor(Math.random() * (this.level + 1)) + 1
+                this.resist = Math.floor(Math.random() * (this.level + 1) * 2) + 1
             }
             if (this.thickyes == 1) {
                 this.thick = Math.floor(Math.random() * (this.level + 0)) + 1
             }
             if (this.rampageyes == 1) {
-                this.rampage = Math.floor(Math.random() * (this.level + 2)) + 1
+                this.rampage = Math.floor(Math.random() * (this.level + 2) * 2) + 1
             }
             if (this.summonyes == 1) {
                 this.summon = 1
@@ -2357,7 +2357,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.strings.push([`Treat: ${this.cure}`, "#FFAAAA"])
             }
             if (this.betray > 0) {
-                this.strings.push([`Betray: ${this.betray}`, "#FF0099"])
+                this.strings.push([`Betray: ${this.betray + this.enrage + this.rampage}`, "#FF0099"])
             }
             if (this.drain > 0) {
                 this.strings.push([`Drain: ${this.drain}`, "#99AAFF"])
@@ -2551,11 +2551,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         for (let t = 0; clicked < 1; t++) {
                             index = Math.floor(enemies.length * Math.random())
                             if (enemies[index] != this) {
-                                enemies[index].health -= ((this.betray) - Math.max((enemies[index].blocks - this.bypass), 0))
-                                if (((this.betray) - Math.max((enemies[index].blocks - this.bypass), 0)) > this.drain) {
+                                enemies[index].health -= ((this.betray + this.enrage + this.rampage) - Math.max((enemies[index].blocks - this.bypass), 0))
+                                if (((this.betray + this.enrage + this.rampage) - Math.max((enemies[index].blocks - this.bypass), 0)) > this.drain) {
                                     this.health += this.drain
                                 } else {
-                                    this.health += ((this.betray) - Math.max((enemies[index].blocks - this.bypass), 0))
+                                    this.health += ((this.betray + this.enrage + this.rampage) - Math.max((enemies[index].blocks - this.bypass), 0))
                                 }
                                 if (enemies[index].enrage > 0) {
                                     enemies[index].enrage += 1
