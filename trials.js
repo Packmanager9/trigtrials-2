@@ -2584,7 +2584,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
 
             let indexer = enemies.indexOf(this)
-            console.log(indexer)
+            // console.log(indexer)
             if (indexer < enemies.length - 1) {
                 enemies[indexer + 1].attackstart()
             } else {
