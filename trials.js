@@ -1216,9 +1216,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             // }
 
             player.locked = 1
-            setTimeout(function () {
+            // setTimeout(function () {
                 enemies[0].attack()
-            }, (100));
+            // }, (1));
 
         }
         softpull() {
