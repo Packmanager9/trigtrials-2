@@ -2234,6 +2234,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.type = type
             }
 
+
+
+            this.r = 0
+            this.g = 255
+            this.b = 0
+
+
+            this.healthbarx = new Rectangle(850, 590, 60, 5, `#222222`)
+            this.healthbar = new Rectangle(850, 590, 60, 5, `rgb(${this.r},${this.g},${this.b})`)
+            this.energybar = new Rectangle(1030, 590, 150, 10, "cyan")
+            this.healthbar.strokeWidth = 0
+
+
             // this.type = 0
             this.level = level
             // this.level = 5
@@ -2338,6 +2351,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.health = this.maxhealth
             }
             this.strings.push([`${this.health}/${this.maxhealth}`, "white"])
+            this.strings.push([`dummy`, "transparent"])
             this.strings.push([`Hits: ${this.hits + this.enrage + this.rampage}`, "white"])
             if (this.blocks > 0) {
                 this.strings.push([`Blocks: ${this.blocks}`, "gray"])
@@ -2654,6 +2668,24 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                 this.drawImage(false, false)
             }
+
+
+            this.healthbar.x = this.body.body.x-15
+            this.healthbarx.x = this.healthbar.x
+            this.healthbar.y = this.body.body.y+70
+            this.healthbarx.y = this.healthbar.y
+            this.healthbar.width = Math.min((60 * (this.health / this.maxhealth)), 60)
+
+
+            this.g = ((this.healthbar.width / 60)) * 255
+            this.r = 255 - this.g
+            this.healthbar.color = `rgb(${this.r},${this.g},${this.b})`
+
+            this.healthbarx.draw()
+            this.healthbar.draw()
+
+
+
             canvas_context.font = "12px arial"
             // canvas_context.fillStyle = "white"
             for (let t = 0; t < this.strings.length; t++) {
