@@ -1158,8 +1158,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 canvas_context.fillText(`Clean`, this.cleanbutton.x + 60, this.cleanbutton.y + 40)
                 canvas_context.fillText(`Skip`, this.skipbutton.x + 70, this.skipbutton.y + 40)
                 if (this.cleaning == 1) {
-                    this.deck.drawable[this.displaycardindex].body.x = 100
-                    this.deck.drawable[this.displaycardindex].body.y = 100
+                    this.deck.drawable[this.displaycardindex].body.x = 130
+                    this.deck.drawable[this.displaycardindex].body.y = 120
                     this.deck.drawable[this.displaycardindex].draw()
                     this.removebutton.draw()
                     this.indexdownbutton.draw()
@@ -1193,7 +1193,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.reward.push(new Card(player.level, Math.floor(Math.random() * 10)))
             }
             for (let t = 0; t < this.reward.length; t++) {
-                this.reward[t].body.x = t * 160
+                this.reward[t].body.x =( t * 160) + 500
+                this.reward[t].body.y  = 350
             }
         }
         push(card) {
