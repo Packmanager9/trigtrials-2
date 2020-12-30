@@ -809,6 +809,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 if (player.reward == 0) {
                     if (player.drawbutton.isPointInside(TIP_engine)) {
                         if (player.locked == 0) {
+                            for(let t = 0;t<enemies.length;t++){
+                                enemies[t].attacked = 0
+                            }
                             player.deck.pull()
                         }
                     }
@@ -2272,6 +2275,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.maxhealth = this.health
             this.hits = (Math.floor(((Math.random() * .25) + .75) * (this.level * 2.7))) + 1
 
+            this.attacked = 0
             this.poison = 0
             this.resist = 0
             this.padding = 0
@@ -2312,6 +2316,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.cureyes == 1) {
                 this.cure = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.4) + 1
             }
+
             if (this.betrayyes == 1) {
                 this.betray = Math.floor(((Math.random() * .25) + .75) * (this.level + 4) * 2) + 1
             }
@@ -2465,17 +2470,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
                                                                                                                             guy.body.y += 6.5
                                                                                                                             setTimeout(function () {
                                                                                                                                 guy.body.y += 7
-                                                                                                                                setTimeout(function () {
-                                                                                                                                    setTimeout(function () {
-                                                                                                                                        setTimeout(function () {
-                                                                                                                                            setTimeout(function () {
-                                                                                                                                                setTimeout(function () {
-                                                                                                                                                    // jumpvar = 0
-                                                                                                                                                }, 1);
-                                                                                                                                            }, 1);
-                                                                                                                                        }, 1);
-                                                                                                                                    }, 1);
-                                                                                                                                }, 1);
                                                                                                                             }, 9);
                                                                                                                         }, 9);
                                                                                                                     }, 9);
@@ -2516,111 +2510,131 @@ window.addEventListener('DOMContentLoaded', (event) => {
             // }
         }
         attack() {
-            if (this.health > 0) {
-                if (this.stun <= 0) {
-                    this.animate(this.body)
-                    if (this.summon > 0) {
-                        summons.push(new Enemy(-1, Math.max(this.level - 2, 0)))
-                    }
-                    player.venom += this.venom
-                    if ((this.hits + this.enrage + this.rampage) >= (player.block - this.bypass)) {
-                        player.health -= ((this.hits + this.enrage + this.rampage) - Math.max((player.block - this.bypass), 0))
-                        if (((this.hits + this.enrage + this.rampage) - Math.max((player.block - this.bypass), 0)) > this.drain) {
-                            this.health += this.drain
-                        } else {
-                            this.health += ((this.hits + this.enrage + this.rampage) - Math.max((player.block - this.bypass), 0))
+            if(this.attacked == 0){
+                this.attacked = 1
+                if (this.health > 0) {
+                    if (this.stun <= 0) {
+                        this.animate(this.body)
+                        if (this.summon > 0) {
+                            summons.push(new Enemy(-1, Math.max(this.level - 2, 0)))
                         }
-                    }
-                    if ((this.hits + this.enrage + this.rampage) > 0) {
-                        this.health -= Math.max(player.thorns - this.padding, 0)
-                    }
-                    this.health -= this.poison
-                    if (this.heals > 0) {
-                        let index = Math.floor(enemies.length * Math.random())
-                        let clicked = 0
-                        for (let t = 0; clicked < 1; t++) {
-                            index = Math.floor(enemies.length * Math.random())
-                            if (enemies[index].health < enemies[index].maxhealth) {
-                                enemies[index].health += this.heals
-                                clicked = 1
-                                if (enemies[index].health > enemies[index].maxhealth) {
-                                    enemies[index].health = enemies[index].maxhealth
-                                }
-                            }
-                            if (t > 100) {
-                                break
+                        player.venom += this.venom
+                        if ((this.hits + this.enrage + this.rampage) >= (player.block - this.bypass)) {
+                            player.health -= ((this.hits + this.enrage + this.rampage) - Math.max((player.block - this.bypass), 0))
+                            if (((this.hits + this.enrage + this.rampage) - Math.max((player.block - this.bypass), 0)) > this.drain) {
+                                this.health += this.drain
+                            } else {
+                                this.health += ((this.hits + this.enrage + this.rampage) - Math.max((player.block - this.bypass), 0))
                             }
                         }
-                    }
-                    if (this.cure > 0) {
-                        let index = Math.floor(enemies.length * Math.random())
-                        let clicked = 0
-                        for (let t = 0; clicked < 1; t++) {
-                            index = Math.floor(enemies.length * Math.random())
-                            if (enemies[index].poison > 0) {
-                                enemies[index].poison -= this.cure
-                                clicked = 1
-                                if (enemies[index].poison < 0) {
-                                    enemies[index].poison = 0
+                        if ((this.hits + this.enrage + this.rampage) > 0) {
+                            this.health -= Math.max(player.thorns - this.padding, 0)
+                        }
+                        this.health -= this.poison
+                        if (this.heals > 0) {
+                            let index = Math.floor(enemies.length * Math.random())
+                            let clicked = 0
+                            for (let t = 0; clicked < 1; t++) {
+                                index = Math.floor(enemies.length * Math.random())
+                                if (enemies[index].health < enemies[index].maxhealth) {
+                                    enemies[index].health += this.heals
+                                    clicked = 1
+                                    if (enemies[index].health > enemies[index].maxhealth) {
+                                        enemies[index].health = enemies[index].maxhealth
+                                    }
                                 }
-                            }
-                            if (t > 100) {
-                                break
+                                if (t > 100) {
+                                    break
+                                }
                             }
                         }
-                    }
-                    if (this.betray > 0) {
-                        let index = Math.floor(enemies.length * Math.random())
-                        let clicked = 0
-                        for (let t = 0; clicked < 1; t++) {
-                            index = Math.floor(enemies.length * Math.random())
-                            if (enemies[index] != this) {
-                                enemies[index].health -= ((this.betray + this.enrage + this.rampage) - Math.max((enemies[index].blocks - this.bypass), 0))
-                                if (((this.betray + this.enrage + this.rampage) - Math.max((enemies[index].blocks - this.bypass), 0)) > this.drain) {
-                                    this.health += this.drain
-                                } else {
-                                    this.health += ((this.betray + this.enrage + this.rampage) - Math.max((enemies[index].blocks - this.bypass), 0))
+                        if (this.cure > 0) {
+                            let index = Math.floor(enemies.length * Math.random())
+                            let clicked = 0
+                            for (let t = 0; clicked < 1; t++) {
+                                index = Math.floor(enemies.length * Math.random())
+                                if (enemies[index].poison > 0) {
+                                    enemies[index].poison -= this.cure
+                                    clicked = 1
+                                    if (enemies[index].poison < 0) {
+                                        enemies[index].poison = 0
+                                    }
                                 }
-                                if (enemies[index].enrage > 0) {
-                                    enemies[index].enrage += 1
+                                if (t > 100) {
+                                    break
                                 }
-                                if (enemies[index].thorns > 0) {
-                                    this.health -= Math.max(enemies[index].thorns - this.padding, 0)
-                                }
-                                clicked = 1
-                            }
-                            if (t > 100) {
-                                break
                             }
                         }
+                        if (this.betray > 0) {
+                            let index = Math.floor(enemies.length * Math.random())
+                            let clicked = 0
+                            for (let t = 0; clicked < 1; t++) {
+                                index = Math.floor(enemies.length * Math.random())
+                                if (enemies[index] != this) {
+                                    enemies[index].health -= ((this.betray + this.enrage + this.rampage) - Math.max((enemies[index].blocks - this.bypass), 0))
+                                    if (((this.betray + this.enrage + this.rampage) - Math.max((enemies[index].blocks - this.bypass), 0)) > this.drain) {
+                                        this.health += this.drain
+                                    } else {
+                                        this.health += ((this.betray + this.enrage + this.rampage) - Math.max((enemies[index].blocks - this.bypass), 0))
+                                    }
+                                    if (enemies[index].enrage > 0) {
+                                        enemies[index].enrage += 1
+                                    }
+                                    if (enemies[index].thorns > 0) {
+                                        this.health -= Math.max(enemies[index].thorns - this.padding, 0)
+                                    }
+                                    clicked = 1
+                                }
+                                if (t > 100) {
+                                    break
+                                }
+                            }
+                        }
+                        if (this.rampage > 0) {
+                            this.rampage += 1
+                        }
+                    } else {
+                        this.health -= this.poison
                     }
-                    if (this.rampage > 0) {
-                        this.rampage += 1
-                    }
+                }
+    
+                this.stun -= 1
+                if (this.stun < 0) {
+                    this.stun = 0
+                }
+    
+                let indexer = enemies.indexOf(this)
+                // console.log(indexer)
+                if (indexer < enemies.length - 1) {
+                    enemies[indexer + 1].attackstart()
                 } else {
-                    this.health -= this.poison
-                }
-            }
-
-            this.stun -= 1
-            if (this.stun < 0) {
-                this.stun = 0
-            }
-
-            let indexer = enemies.indexOf(this)
-            // console.log(indexer)
-            if (indexer < enemies.length - 1) {
-                enemies[indexer + 1].attackstart()
-            } else {
-                for (let t = 0; t < summons.length; t++) {
-                    if (enemies.length < 16) {
-                        enemies.push(summons[t])
+                    for (let t = 0; t < summons.length; t++) {
+                        if (enemies.length < 16) {
+                            enemies.push(summons[t])
+                        }
                     }
+                    summons = []
+                    setTimeout(function () {
+                        player.locked = 0
+                    }, (600));
                 }
-                summons = []
-                setTimeout(function () {
-                    player.locked = 0
-                }, (600));
+            }else{
+                
+                let indexer = enemies.indexOf(this)
+                // console.log(indexer)
+                if (indexer < enemies.length - 1) {
+                    enemies[indexer + 1].attackstart()
+                } else {
+                    for (let t = 0; t < summons.length; t++) {
+                        if (enemies.length < 16) {
+                            enemies.push(summons[t])
+                        }
+                    }
+                    summons = []
+                    setTimeout(function () {
+                        player.locked = 0
+                    }, (600));
+                }
             }
         }
         drawImage(flip, flop, img = this.imageholder, x = this.body.body.x, y = this.body.body.y, width = 60, height = 60, deg = 0,) {
