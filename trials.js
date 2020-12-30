@@ -2308,29 +2308,29 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.heals = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 2.3)
             }
             if (this.venomyes == 1) {
-                this.venom = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 1.9)
+                this.venom = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 2.15)
             }
             if (this.enrageyes == 1) {
-                this.enrage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 2) + 1
+                this.enrage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 2.25) + 1
             }
             if (this.bypassyes == 1) {
-                this.bypass = Math.floor(((Math.random() * .25) + .75) * (this.level * 3) * 2.5) + 1
+                this.bypass = Math.floor(((Math.random() * .25) + .75) * (this.level * 3) * 2.75) + 1
             }
             if (this.cureyes == 1) {
-                this.cure = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.4) + 1
+                this.cure = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.65) + 1
             }
 
             if (this.betrayyes == 1) {
-                this.betray = Math.floor(((Math.random() * .25) + .75) * (this.level + 4) * 2) + 1
+                this.betray = Math.floor(((Math.random() * .25) + .75) * (this.level + 4) * 2.25) + 1
             }
             if (this.drainyes == 1) {
-                this.drain = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 5) + 1
+                this.drain = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 5.5) + 1
             }
             if (this.paddingyes == 1) {
-                this.padding = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 2.4) + 1
+                this.padding = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 2.65) + 1
             }
             if (this.resistyes == 1) {
-                this.resist = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.55) + 1
+                this.resist = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.80) + 1
             }
             if (this.thickyes == 1) {
                 this.thick = Math.floor(((Math.random() * .4) + .6) * (this.level + 0.1) * 1.01)
