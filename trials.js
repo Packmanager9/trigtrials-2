@@ -2703,7 +2703,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
 
-            canvas_context.font = "12px arial"
+            // canvas_context.font = "12px arial"
+
+            canvas_context.font = `${12+(2-(enemies.length/8))}px arial`
             // canvas_context.fillStyle = "white"
             for (let t = 0; t < this.strings.length; t++) {
                 canvas_context.fillStyle = this.strings[t][1]
