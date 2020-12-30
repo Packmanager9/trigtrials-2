@@ -1328,7 +1328,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.ret = 0
             }
             if (this.type == 8) {
-                this.stun = Math.ceil(((((Math.random() * .15) + .85) * .65 * level)) * (1 + (((this.energy / 5)))))
+                this.stun = Math.ceil(((((Math.random() * .15) + .85) * .6 * level)) * (1 + (((this.energy / 5)))))
                 if (this.stun == 0) {
                     this.stun = 1
                 }
@@ -2401,7 +2401,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.resist = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.80) + 1
             }
             if (this.thickyes == 1) {
-                this.thick = Math.floor(((Math.random() * .4) + .6) * (this.level + 0.1) * 1.01)
+                this.thick = Math.floor(((Math.random() * .4) + .6) * (this.level + 0.1) * .4)
                 if(this.thick == 0){
                     if(Math.random() > .2){
                         this.thick = 1
