@@ -1101,7 +1101,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.block = 0
             this.thorns = 0
             this.reward = 0
-            this.level = .1
+            this.level = 0
             this.displaycardindex = 0
             this.cleaning = -1
         }
