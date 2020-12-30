@@ -2275,7 +2275,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.body = new Polygon(350, 160, 15, getRandomColor(), this.type)
             this.health = 10 + (Math.floor(((Math.random() * .25) + .75) * this.level * 100))
             this.maxhealth = this.health
-            this.hits = (Math.floor(((Math.random() * .25) + .75) * (this.level * 3.18))) + 1   //2.7
+            this.hits = (Math.floor(((Math.random() * .25) + .75) * (this.level * 4.18))) + 1   //2.7
 
             this.attacked = 0
             this.poison = 0
@@ -2753,7 +2753,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         expcounter++
         if (expcounter > 0) {
             player.level += .05
-            player.maxhealth += 6
+            player.maxhealth += 2
             expcounter = 0
         }
         enenum = Math.floor(Math.random() * 8) + 1
