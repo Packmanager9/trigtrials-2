@@ -784,6 +784,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     function setUp(canvas_pass, style = "#050505") {
         canvas = canvas_pass
         canvas_context = canvas.getContext('2d');
+        canvas_context.imageSmoothingEnabled = true
         canvas.style.background = style
         window.setInterval(function () {
             main()
@@ -1100,7 +1101,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.block = 0
             this.thorns = 0
             this.reward = 0
-            this.level = 0
+            this.level = .1
             this.displaycardindex = 0
             this.cleaning = -1
         }
@@ -1440,7 +1441,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         }
                     } else {
                         for (let t = 0; t < enemies.length; t++) {
-                            enemies[t].health -= this.hits
+                            enemies[t].health -=Math.max((this.hits-enemies[t].alert), 0)
                         }
                     }
                     player.selected.stun += Math.max(this.stun - player.selected.thick, 0)
@@ -1761,8 +1762,26 @@ window.addEventListener('DOMContentLoaded', (event) => {
         constructor(type = -1, level = player.level) {
 
             if (type == -1) {
-                this.type = Math.floor(Math.random() * 120)
+                this.type = Math.floor(Math.random() * 136)
                 // this.type = 99
+
+                // if(enemies.length == 0){
+                //     this.type = 73
+                // }else if(enemies.length == 1){
+                //     this.type = 128
+                // }else if(enemies.length == 2){
+                //     this.type = 93
+                // }else if(enemies.length == 3){
+                //     this.type = 110
+                // }else if(enemies.length == 4){
+                //     this.type = 81
+                // }else if(enemies.length == 5){
+                //     this.type = 54
+                // }else if(enemies.length == 6){
+                //     this.type = 60
+                // }else if(enemies.length == 7){
+                //     this.type = 23
+                // }
                 if (this.type == 0) {
                     this.thornsyes = 1
                 }
@@ -1807,8 +1826,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.healsyes = 1
                 }
                 if (this.type == 12) {
-                    this.enrageyes = 1
-                    this.thornsyes = 1
+                    this.healsyes = 1 //bongu: was enrage same as 16  childabeest
+                    this.summonyes = 1 //was throns
                 }
                 if (this.type == 13) {
                     this.enrageyes = 1
@@ -2228,6 +2247,69 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.rampageyes = 1
                     this.explodeyes = 1
                 }
+                if (this.type == 120) {
+                    this.alertyes = 1
+                }
+                if (this.type == 121) {
+                    this.paddingyes = 1
+                    this.alertyes = 1
+                }
+                if (this.type == 122) {
+                    this.betrayyes = 1
+                    this.alertyes = 1
+                }
+                if (this.type == 123) {
+                    this.alertyes = 1
+                    this.enrageyes = 1
+                }
+                if (this.type == 124) {
+                    this.alertyes = 1
+                    this.venomyes = 1
+                }
+                if (this.type == 125) {
+                    this.alertyes = 1
+                    this.summonyes = 1
+                }
+                if (this.type == 126) {
+                    this.alertyes = 1
+                    this.thornsyes = 1
+                }
+                if (this.type == 127) {
+                    this.alertyes = 1
+                    this.blockyes = 1
+                }
+                if (this.type == 128) {
+                    this.alertyes = 1
+                    this.healsyes = 1
+                }
+                if (this.type == 129) {
+                    this.alertyes = 1
+                    this.bypassyes = 1
+                }
+                if (this.type == 130) {
+                    this.cureyes = 1
+                    this.alertyes = 1
+                }
+                if (this.type == 131) {
+                    this.drainyes = 1
+                    this.alertyes = 1
+                }
+                if (this.type == 132) {
+                    this.resistyes = 1
+                    this.alertyes = 1
+                }
+                if (this.type == 133) {
+                    this.thickyes = 1
+                    this.alertyes = 1
+                }
+                if (this.type == 134) {
+                    this.rampageyes = 1
+                    this.alertyes = 1
+                }
+                if (this.type == 135) {
+                    this.explodeyes = 1
+                    this.alertyes = 1
+                }
                 // if(expcounter == 0){
                 //     if(level == 10){
                 //         this.type = 23
@@ -2247,8 +2329,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.b = 0
 
 
-            this.healthbarx = new Rectangle(850, 590, 70, 5, `#222222`)
-            this.healthbar = new Rectangle(850, 590, 70, 5, `rgb(${this.r},${this.g},${this.b})`)
+            this.healthbarx = new Rectangle(850, 590, 75, 5, `#222222`)
+            this.healthbar = new Rectangle(850, 590, 75, 5, `rgb(${this.r},${this.g},${this.b})`)
             this.energybar = new Rectangle(1030, 590, 150, 10, "cyan")
             this.healthbar.strokeWidth = 0
 
@@ -2257,21 +2339,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.level = level
             // this.level = 5
 
-            // if(Math.random() < .5){
-            //     this.level = 5
-            //     this.blockyes = 1
-            //     this.thornsyes = 1
-            //     this.healsyes = 1
-            //     this.venomyes = 1
-            //     this.enrageyes = 1
-            //     this.bypassyes = 1
-            //     this.cureyes = 1
-            //     this.betrayyes = 1
-            //     this.drainyes = 1
-            //     this.paddingyes = 1
-            //     this.summonyes = 1
-            // }
-
 
             this.body = new Polygon(350, 160, 15, getRandomColor(), this.type)
             this.health = 10 + (Math.floor(((Math.random() * .25) + .75) * this.level * 100))
@@ -2279,6 +2346,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.hits = (Math.floor(((Math.random() * .25) + .75) * (this.level * 4.18))) + 1   //2.7
 
             this.attacked = 0
+            this.alert = 0
             this.poison = 0
             this.resist = 0
             this.padding = 0
@@ -2321,7 +2389,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
 
             if (this.betrayyes == 1) {
-                this.betray = Math.floor(((Math.random() * .25) + .75) * (this.level + 4) * 2.25) + 1
+                this.betray = Math.floor(((Math.random() * .25) + .75) * (this.level + 3.75) * 2.25) + 1
             }
             if (this.drainyes == 1) {
                 this.drain = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 5.5) + 1
@@ -2334,9 +2402,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             if (this.thickyes == 1) {
                 this.thick = Math.floor(((Math.random() * .4) + .6) * (this.level + 0.1) * 1.01)
+                if(this.thick == 0){
+                    if(Math.random() > .2){
+                        this.thick = 1
+                    }
+                }
             }
             if (this.rampageyes == 1) {
                 this.rampage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.8) + 1
+            }
+            if (this.alertyes == 1) {
+                this.alert = Math.floor(((Math.random() * .25) + .75) * (this.level+2) * 4.4)  //should always be much higher than block or is completely redundant
             }
             if (this.summonyes == 1) {
                 this.summon = 1
@@ -2411,6 +2487,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             if (this.explode > 0) {
                 this.strings.push([`Detonate: ${this.explode + this.enrage + this.rampage}`, "#FF6600"])
+            }
+            if (this.alert > 0) {
+                this.strings.push([`Alert: ${this.alert}`, "#50AAAA"])
             }
         }
         animate(guy) {
@@ -2640,7 +2719,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 }
             }
         }
-        drawImage(flip, flop, img = this.imageholder, x = this.body.body.x, y = this.body.body.y, width = 70, height = 70, deg = 0) {
+        drawImage(flip, flop, img = this.imageholder, x = this.body.body.x, y = this.body.body.y, width = 75, height = 75, deg = 0) {
 
             this.imageholder.src = `m${this.type}.png`//(srcnames(this.type) + ".svg").toLowerCase()
             canvas_context.save();
@@ -2669,7 +2748,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             canvas_context.scale(flipScale, flopScale);
 
             // Draw the image    
-            canvas_context.drawImage(this.imageholder, -35, -35, 70, 70);
+            canvas_context.drawImage(this.imageholder, -37.5, -37.5, 75, 75);
 
             canvas_context.restore();
         }
@@ -2687,14 +2766,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
 
 
-            this.healthbar.x = this.body.body.x - 35
+            this.healthbar.x = this.body.body.x - 37.5
             this.healthbarx.x = this.healthbar.x
-            this.healthbar.y = this.body.body.y + 70
+            this.healthbar.y = this.body.body.y + 75
             this.healthbarx.y = this.healthbar.y
-            this.healthbar.width = Math.min((70 * (this.health / this.maxhealth)), 70)
+            this.healthbar.width = Math.min((75 * (this.health / this.maxhealth)), 75)
 
 
-            this.g = ((this.healthbar.width / 70)) * 255
+            this.g = ((this.healthbar.width / 75)) * 255
             this.r = 255 - this.g
             this.healthbar.color = `rgb(${this.r},${this.g},${this.b})`
 
@@ -2720,7 +2799,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.health <= 0) {
                 if (this.explode > 0) {
                     for (let t = 0; t < enemies.length; t++) {
-                        enemies[t].health -= ((this.explode + this.enrage + this.rampage) - Math.max((enemies[t].blocks - this.bypass), 0))
+                        enemies[t].health -=Math.max(((this.explode + this.enrage + this.rampage) - Math.max((enemies[t].blocks - this.bypass), 0)-enemies[t].alert), 0)
                     }
                     player.health -= ((this.explode + this.enrage + this.rampage) - Math.max((player.block - this.bypass), 0))
 
