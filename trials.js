@@ -2247,8 +2247,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.b = 0
 
 
-            this.healthbarx = new Rectangle(850, 590, 60, 5, `#222222`)
-            this.healthbar = new Rectangle(850, 590, 60, 5, `rgb(${this.r},${this.g},${this.b})`)
+            this.healthbarx = new Rectangle(850, 590, 70, 5, `#222222`)
+            this.healthbar = new Rectangle(850, 590, 70, 5, `rgb(${this.r},${this.g},${this.b})`)
             this.energybar = new Rectangle(1030, 590, 150, 10, "cyan")
             this.healthbar.strokeWidth = 0
 
@@ -2640,7 +2640,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 }
             }
         }
-        drawImage(flip, flop, img = this.imageholder, x = this.body.body.x, y = this.body.body.y, width = 60, height = 60, deg = 0,) {
+        drawImage(flip, flop, img = this.imageholder, x = this.body.body.x, y = this.body.body.y, width = 70, height = 70, deg = 0) {
 
             this.imageholder.src = `m${this.type}.png`//(srcnames(this.type) + ".svg").toLowerCase()
             canvas_context.save();
@@ -2669,7 +2669,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             canvas_context.scale(flipScale, flopScale);
 
             // Draw the image    
-            canvas_context.drawImage(this.imageholder, -30, -30, 60, 60);
+            canvas_context.drawImage(this.imageholder, -35, -35, 70, 70);
 
             canvas_context.restore();
         }
@@ -2687,14 +2687,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
 
 
-            this.healthbar.x = this.body.body.x - 15
+            this.healthbar.x = this.body.body.x - 35
             this.healthbarx.x = this.healthbar.x
             this.healthbar.y = this.body.body.y + 70
             this.healthbarx.y = this.healthbar.y
-            this.healthbar.width = Math.min((60 * (this.health / this.maxhealth)), 60)
+            this.healthbar.width = Math.min((70 * (this.health / this.maxhealth)), 70)
 
 
-            this.g = ((this.healthbar.width / 60)) * 255
+            this.g = ((this.healthbar.width / 70)) * 255
             this.r = 255 - this.g
             this.healthbar.color = `rgb(${this.r},${this.g},${this.b})`
 
@@ -2707,7 +2707,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             // canvas_context.fillStyle = "white"
             for (let t = 0; t < this.strings.length; t++) {
                 canvas_context.fillStyle = this.strings[t][1]
-                canvas_context.fillText(this.strings[t][0], this.body.body.x - 15, this.body.body.y + 60 + (t * 18))
+                canvas_context.fillText(this.strings[t][0], this.body.body.x - 20, this.body.body.y + 60 + (t * 18))
             }
             // canvas_context.fillText(`${this.health}/${this.maxhealth}`, this.body.body.x - 15, this.body.body.y + 60)
             // canvas_context.fillText(`Hits: ${this.hits}`, this.body.body.x - 15, this.body.body.y + 80)
