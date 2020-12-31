@@ -9,6 +9,8 @@ let scape4 = new Image()
 scape4.src = "1624.jpg"
 let scape5 = new Image()
 scape5.src = "1847.jpg"
+let bumper = new Audio()
+bumper.src = "bump.wav"
 window.addEventListener('DOMContentLoaded', (event) => {
     const gamepadAPI = {
         controller: {},
@@ -827,7 +829,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         }
                     }
                 } else {
-                
+
                 }
                 for (let t = 0; t < player.deck.active.length; t++) {
                     if (player.deck.active[t].body.isPointInside(TIP_engine)) {
@@ -851,7 +853,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     player.deck.softpull()
                     spawn()
                 }
-                if(player.reward != 0){
+                if (player.reward != 0) {
                     if (player.skipbutton.isPointInside(TIP_engine)) {
                         player.deck.reward = []
                         player.reward = 0
@@ -1025,7 +1027,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     class Player {
         constructor() {
-            this.image = Math.floor(Math.random()*5)
+            this.image = Math.floor(Math.random() * 5)
             this.leftdisp = Math.random()
             this.topdisp = Math.random()
             this.locked = 0
@@ -1210,7 +1212,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         makeprize() {
 
-            player.image = Math.floor(Math.random()*5)
+            player.image = Math.floor(Math.random() * 5)
             player.leftdisp = Math.random()
             player.topdisp = Math.random()
             summons = []
@@ -1218,8 +1220,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.reward.push(new Card(player.level, Math.floor(Math.random() * 10)))
             }
             for (let t = 0; t < this.reward.length; t++) {
-                this.reward[t].body.x =( t * 160) + 500
-                this.reward[t].body.y  = 350
+                this.reward[t].body.x = (t * 160) + 500
+                this.reward[t].body.y = 350
             }
         }
         push(card) {
@@ -1448,6 +1450,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         play() {
             if (this.played == 0) {
                 if (player.energy >= this.energy) {
+                    bumper.play()
                     this.played = 1
                     player.health -= this.ret
                     player.thorns += this.thorns
@@ -1465,7 +1468,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         }
                     } else {
                         for (let t = 0; t < enemies.length; t++) {
-                            enemies[t].health -=Math.max((this.hits-enemies[t].alert), 0)
+                            enemies[t].health -= Math.max((this.hits - enemies[t].alert), 0)
                         }
                     }
                     player.selected.stun += Math.max(this.stun - player.selected.thick, 0)
@@ -2426,8 +2429,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             if (this.thickyes == 1) {
                 this.thick = Math.floor(((Math.random() * .4) + .6) * (this.level + 0.1) * .4)
-                if(this.thick == 0){
-                    if(Math.random() > .2){
+                if (this.thick == 0) {
+                    if (Math.random() > .2) {
                         this.thick = 1
                     }
                 }
@@ -2436,7 +2439,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.rampage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.8) + 1
             }
             if (this.alertyes == 1) {
-                this.alert = Math.floor(((Math.random() * .25) + .75) * (this.level+2) * 4.4)  //should always be much higher than block or is completely redundant
+                this.alert = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 4.4)  //should always be much higher than block or is completely redundant
             }
             if (this.summonyes == 1) {
                 this.summon = 1
@@ -2808,7 +2811,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
             // canvas_context.font = "12px arial"
 
-            canvas_context.font = `${13+(2-(enemies.length/8))}px arial`
+            canvas_context.font = `${13 + (2 - (enemies.length / 8))}px arial`
             // canvas_context.fillStyle = "white"
             for (let t = 0; t < this.strings.length; t++) {
                 canvas_context.fillStyle = this.strings[t][1]
@@ -2826,7 +2829,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.health <= 0) {
                 if (this.explode > 0) {
                     for (let t = 0; t < enemies.length; t++) {
-                        enemies[t].health -=Math.max(((this.explode + this.enrage + this.rampage) - Math.max((enemies[t].blocks - this.bypass), 0)-enemies[t].alert), 0)
+                        enemies[t].health -= Math.max(((this.explode + this.enrage + this.rampage) - Math.max((enemies[t].blocks - this.bypass), 0) - enemies[t].alert), 0)
                     }
                     player.health -= ((this.explode + this.enrage + this.rampage) - Math.max((player.block - this.bypass), 0))
 
@@ -2868,17 +2871,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
         enenum = Math.floor(Math.random() * 8) + 1
         for (let t = 0; t < enenum; t++) {
             let enemy
-            if(enenum > 3){
-                enemy = new Enemy(-1, player.level*(1+(1-(enenum/8))))
-            }else{
+            if (enenum > 3) {
+                enemy = new Enemy(-1, player.level * (1 + (1 - (enenum / 8))))
+            } else {
 
-            if(enenum == 1){
-                enemy = new Enemy(-1, player.level*3)
-            }else  if(enenum == 2){
-                enemy = new Enemy(-1, player.level*2.3)
-            }else  if(enenum == 3){
-                enemy = new Enemy(-1, player.level*1.8)
-            }
+                if (enenum == 1) {
+                    enemy = new Enemy(-1, player.level * 3)
+                } else if (enenum == 2) {
+                    enemy = new Enemy(-1, player.level * 2.3)
+                } else if (enenum == 3) {
+                    enemy = new Enemy(-1, player.level * 1.8)
+                }
             }
             enemies.push(enemy)
         }
@@ -2927,10 +2930,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         canvas_context.clearRect(0, 0, (canvas.width), canvas.height)
 
-        if(player.reward == 0){
+        if (player.reward == 0) {
 
             drawbg()
-        // canvas_context.drawImage(scape1, 0,0,1280,720) 
+            // canvas_context.drawImage(scape1, 0,0,1280,720) 
         }
         gamepadAPI.update()
         for (let t = 0; t < enemies.length; t++) {
@@ -2948,21 +2951,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
         }
     }
-    function drawbg(){
-        if(player.image == 0){
-            canvas_context.drawImage(scape1, player.leftdisp*(scape1.width-(1280*1.5)), player.topdisp*(scape1.height-(720*1.5)), 1280*1.5, 720*1.5, 0,0, 1280, 720)
+    function drawbg() {
+        if (player.image == 0) {
+            canvas_context.drawImage(scape1, player.leftdisp * (scape1.width - (1280 * 1.5)), player.topdisp * (scape1.height - (720 * 1.5)), 1280 * 1.5, 720 * 1.5, 0, 0, 1280, 720)
         }
-        if(player.image == 1){
-            canvas_context.drawImage(scape2, player.leftdisp*(scape2.width-(1280*1.5)), player.topdisp*(scape2.height-(720*1.5)), 1280*1.5, 720*1.5, 0,0, 1280, 720)
+        if (player.image == 1) {
+            canvas_context.drawImage(scape2, player.leftdisp * (scape2.width - (1280 * 1.5)), player.topdisp * (scape2.height - (720 * 1.5)), 1280 * 1.5, 720 * 1.5, 0, 0, 1280, 720)
         }
-        if(player.image == 2){
-            canvas_context.drawImage(scape3, player.leftdisp*(scape3.width-(1280*1.5)), player.topdisp*(scape3.height-(720*1.5)), 1280*1.5, 720*1.5, 0,0, 1280, 720)
+        if (player.image == 2) {
+            canvas_context.drawImage(scape3, player.leftdisp * (scape3.width - (1280 * 1.5)), player.topdisp * (scape3.height - (720 * 1.5)), 1280 * 1.5, 720 * 1.5, 0, 0, 1280, 720)
         }
-        if(player.image == 3){
-            canvas_context.drawImage(scape4, player.leftdisp*(scape4.width-(1280*1.5)), player.topdisp*(scape4.height-(720*1.5)), 1280*1.5, 720*1.5, 0,0, 1280, 720)
+        if (player.image == 3) {
+            canvas_context.drawImage(scape4, player.leftdisp * (scape4.width - (1280 * 1.5)), player.topdisp * (scape4.height - (720 * 1.5)), 1280 * 1.5, 720 * 1.5, 0, 0, 1280, 720)
         }
-        if(player.image == 4){
-            canvas_context.drawImage(scape5, player.leftdisp*(scape5.width-(1280*1.5)), player.topdisp*(scape5.height-(720*1.5)), 1280*1.5, 720*1.5, 0,0, 1280, 720)
+        if (player.image == 4) {
+            canvas_context.drawImage(scape5, player.leftdisp * (scape5.width - (1280 * 1.5)), player.topdisp * (scape5.height - (720 * 1.5)), 1280 * 1.5, 720 * 1.5, 0, 0, 1280, 720)
         }
     }
 })
