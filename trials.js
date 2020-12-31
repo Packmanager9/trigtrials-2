@@ -10,7 +10,7 @@ scape4.src = "1624.jpg"
 let scape5 = new Image()
 scape5.src = "1847.jpg"
 let bumper = new Audio()
-bumper.src = "bump.wav"
+bumper.src = "bumpy.wav"
 window.addEventListener('DOMContentLoaded', (event) => {
     const gamepadAPI = {
         controller: {},
