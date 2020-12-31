@@ -11,6 +11,44 @@ let scape5 = new Image()
 scape5.src = "1847.jpg"
 let bumper = new Audio()
 bumper.src = "bumpy.wav"
+
+
+let alertsong = new Audio()
+alertsong.src = "Alert.wav"
+let betraysong = new Audio()
+betraysong.src = "Betray.wav"
+let blocksong = new Audio()
+blocksong.src = "Block.wav"
+let bypasssong = new Audio()
+bypasssong.src = "Bypass.wav"
+let detonatesong = new Audio()
+detonatesong.src = "Detonate.wav"
+let drainsong = new Audio()
+drainsong.src = "Drain.wav"
+let enragesong = new Audio()
+enragesong.src = "Enrage.wav"
+let paddingsong = new Audio()
+paddingsong.src = "Padding.wav"
+let poisonedsong = new Audio()
+poisonedsong.src = "Poisoned.wav"
+let rampagesong = new Audio()
+rampagesong.src = "Rampage.wav"
+let resistsong = new Audio()
+resistsong.src = "Resist.wav"
+let stunsong = new Audio()
+stunsong.src = "Stunned.wav"
+let summonsong = new Audio()
+summonsong.src = "Summoner.wav"
+let thicksong = new Audio()
+thicksong.src = "Thick.wav"
+let thornsong = new Audio()
+thornsong.src = "Thorns.wav"
+let treatsong = new Audio()
+treatsong.src = "Treat.wav"
+let venomsong = new Audio()
+venomsong.src = "Venom.wav"
+let healsong = new Audio()
+healsong.src = "Heal.wav"
 window.addEventListener('DOMContentLoaded', (event) => {
     const gamepadAPI = {
         controller: {},
@@ -1452,6 +1490,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (this.played == 0) {
                 if (player.energy >= this.energy) {
                     bumper.play()
+
+
                     this.played = 1
                     player.health -= this.ret
                     player.thorns += this.thorns
@@ -2465,59 +2505,79 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.strings.push([`${this.health}/${this.maxhealth}`, "white"])
             this.strings.push([``, "transparent"])
             this.strings.push([`Hits: ${this.hits + this.enrage + this.rampage}`, "white"])
+
+
             if (this.blocks > 0) {
                 this.strings.push([`Blocks: ${this.blocks}`, "gray"])
+                blocksong.play()
             }
             if (this.thorns > 0) {
                 this.strings.push([`Thorns: ${this.thorns}`, "yellow"])
+                thornsong.play()
             }
             if (this.poison > 0) {
                 this.strings.push([`Poisoned: ${this.poison}`, "green"])
+                poisonedsong.play()
             }
             if (this.heals > 0) {
                 this.strings.push([`Heals: ${this.heals}`, "#00FF00"])
+                healsong.play()
             }
             if (this.venom > 0) {
                 this.strings.push([`Venom: ${this.venom}`, "magenta"])
+                venomsong.play()
             }
             if (this.enrage > 0) {
                 this.strings.push([`Enrage: ${this.enrage}`, "#DD2222"])
+                enragesong.play()
             }
             if (this.summon > 0) {
                 this.strings.push([`Summoner`, "#AAAA00"])
+                summonsong.play()
             }
             if (this.bypass > 0) {
                 this.strings.push([`Bypass: ${this.bypass}`, "#AAAAAA"])
+                bypasssong.play()
             }
             if (this.cure > 0) {
                 this.strings.push([`Treat: ${this.cure}`, "#FFAAAA"])
+                treatsong.play()
             }
             if (this.betray > 0) {
                 this.strings.push([`Betray: ${this.betray + this.enrage + this.rampage}`, "#FF0099"])
+                betraysong.play()
             }
             if (this.drain > 0) {
                 this.strings.push([`Drain: ${this.drain}`, "#99AAFF"])
+                drainsong.play()
             }
             if (this.padding > 0) {
                 this.strings.push([`Padded: ${this.padding}`, "#FFFFFF"])
+                paddingsong.play()
             }
             if (this.resist > 0) {
                 this.strings.push([`Resist: ${this.resist}`, "#FFAA00"])
+                resistsong.play()
             }
             if (this.stun > 0) {
                 this.strings.push([`Stunned: ${this.stun}`, "#3311FF"])
+                stunsong.play()
             }
             if (this.thick > 0) {
                 this.strings.push([`Thick: ${this.thick}`, "#33FFAA"])
+                thicksong.play()
             }
             if (this.rampage > 0) {
                 this.strings.push([`Frenzy: ${this.rampage}`, "#AA33FF"])
+                rampagesong.play()
             }
             if (this.explode > 0) {
                 this.strings.push([`Detonate: ${this.explode + this.enrage + this.rampage}`, "#FF6600"])
+                detonatesong.play()
             }
             if (this.alert > 0) {
                 this.strings.push([`Alert: ${this.alert}`, "#50AAAA"])
+                alertsong.play()
             }
         }
         animate(guy) {
@@ -2836,6 +2896,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                 }
                 enemies.splice(enemies.indexOf(this), 1)
+
+                if(enemies.length > 0){
+                alertsong.pause()
+                betraysong.pause()
+                blocksong.pause()
+                bypasssong.pause()
+                detonatesong.pause()
+                drainsong.pause()
+                enragesong.pause()
+                paddingsong.pause()
+                poisonedsong.pause()
+                rampagesong.pause()
+                resistsong.pause()
+                stunsong.pause()
+                summonsong.pause()
+                thicksong.pause()
+                thornsong.pause()
+                treatsong.pause()
+                venomsong.pause()
+                healsong.pause()
+                }
+
                 if (enemies.length == 0) {
                     player.reward = 1
                     for (let t = 0; t < player.deck.active.length; t++) {
@@ -2893,6 +2975,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
         player.venom = 0
 
         player.deck.softpull()
+
+        alertsong.pause()
+        betraysong.pause()
+        blocksong.pause()
+        bypasssong.pause()
+        detonatesong.pause()
+        drainsong.pause()
+        enragesong.pause()
+        paddingsong.pause()
+        poisonedsong.pause()
+        rampagesong.pause()
+        resistsong.pause()
+        stunsong.pause()
+        summonsong.pause()
+        thicksong.pause()
+        thornsong.pause()
+        treatsong.pause()
+        venomsong.pause()
+        healsong.pause()
     }
 
     let setup_canvas = document.getElementById('canvas') //getting canvas from document
