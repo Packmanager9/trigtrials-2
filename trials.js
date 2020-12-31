@@ -1013,6 +1013,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         draw() {
             canvas_context.beginPath();
             canvas_context.lineWidth = 3
+            canvas_context.strokeStyle = "black"
             canvas_context.moveTo(this.x, this.y + this.length / 2);
             canvas_context.lineTo(this.x + this.length, this.y + this.length / 2);
             canvas_context.lineTo(this.x, this.y + this.length * 1.41);
