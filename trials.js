@@ -1,4 +1,14 @@
 
+let scape1 = new Image()
+scape1.src = "2399.jpg"
+let scape2 = new Image()
+scape2.src = "1876.jpg"
+let scape3 = new Image()
+scape3.src = "3930.jpg"
+let scape4 = new Image()
+scape4.src = "1624.jpg"
+let scape5 = new Image()
+scape5.src = "1847.jpg"
 window.addEventListener('DOMContentLoaded', (event) => {
     const gamepadAPI = {
         controller: {},
@@ -817,6 +827,31 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         }
                     }
                 } else {
+                
+                }
+                for (let t = 0; t < player.deck.active.length; t++) {
+                    if (player.deck.active[t].body.isPointInside(TIP_engine)) {
+                        player.deck.active[t].play()
+                    }
+                }
+                for (let t = 0; t < enemies.length; t++) {
+                    if (enemies[t].body.body.isPointInside(TIP_engine)) {
+                        player.selected = enemies[t]
+                        tringle.x = player.selected.body.body.x
+                        tringle.y = player.selected.body.body.y - 65
+                    }
+                }
+            }
+
+            for (let t = 0; t < player.deck.reward.length; t++) {
+                if (player.deck.reward[t].body.isPointInside(TIP_engine)) {
+                    player.deck.drawable.push(player.deck.reward[t].clone())
+                    player.deck.reward = []
+                    player.reward = 0
+                    player.deck.softpull()
+                    spawn()
+                }
+                if(player.reward != 0){
                     if (player.skipbutton.isPointInside(TIP_engine)) {
                         player.deck.reward = []
                         player.reward = 0
@@ -850,28 +885,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         }
                     }
 
-                }
-                for (let t = 0; t < player.deck.active.length; t++) {
-                    if (player.deck.active[t].body.isPointInside(TIP_engine)) {
-                        player.deck.active[t].play()
-                    }
-                }
-                for (let t = 0; t < enemies.length; t++) {
-                    if (enemies[t].body.body.isPointInside(TIP_engine)) {
-                        player.selected = enemies[t]
-                        tringle.x = player.selected.body.body.x
-                        tringle.y = player.selected.body.body.y - 65
-                    }
-                }
-            }
-
-            for (let t = 0; t < player.deck.reward.length; t++) {
-                if (player.deck.reward[t].body.isPointInside(TIP_engine)) {
-                    player.deck.drawable.push(player.deck.reward[t].clone())
-                    player.deck.reward = []
-                    player.reward = 0
-                    player.deck.softpull()
-                    spawn()
                 }
             }
         });
@@ -1012,6 +1025,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     class Player {
         constructor() {
+            this.image = Math.floor(Math.random()*5)
+            this.leftdisp = Math.random()
+            this.topdisp = Math.random()
             this.locked = 0
             this.selected = {}
             this.selected.body = {}
@@ -1081,7 +1097,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.removebutton = new Rectangle(100, 270, 160, 50, "white")
             this.indexupbutton = new Rectangle(280, 180, 50, 50, "#00FF00")
             this.indexdownbutton = new Rectangle(30, 180, 50, 50, "#FF0000")
-            this.drawbutton = new Rectangle(880, 660, 220, 50, "black")
+            this.drawbutton = new Rectangle(900, 660, 220, 50, "black")
             this.cardbox = new Rectangle(0, 500, 750, 220, "#222222")
             this.statbox = new Rectangle(750, 500, 620, 220, "#111111")
             this.buffbox = new Rectangle(850, 610, 330, 40, "#222222")
@@ -1106,8 +1122,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.cleaning = -1
         }
         draw() {
-            this.cardbox.draw()
-            this.statbox.draw()
+            // this.cardbox.draw()
+            // this.statbox.draw()
 
             if (this.health < 0) {
                 this.health = 0
@@ -1140,6 +1156,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 // canvas_context.fillText("Draw", this.drawbutton.x + 60, this.drawbutton.y + 40)
                 canvas_context.font = "19px arial"
                 canvas_context.fillStyle = "white"
+                canvas_context.strokeStyle = "black"
+                canvas_context.lineWidth = 3
+                canvas_context.strokeText(`Health: ${this.health}`, this.healthbar.x, this.healthbar.y - 20)
+                canvas_context.strokeText(`Energy: ${this.energy}`, this.energybar.x, this.energybar.y - 20)
                 canvas_context.fillText(`Health: ${this.health}`, this.healthbar.x, this.healthbar.y - 20)
                 canvas_context.fillText(`Energy: ${this.energy}`, this.energybar.x, this.energybar.y - 20)
                 canvas_context.font = "19px arial"
@@ -1189,6 +1209,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
         }
         makeprize() {
+
+            this.image = Math.floor(Math.random()*5)
+            this.leftdisp = Math.random()
+            this.topdisp = Math.random()
             summons = []
             for (let t = 0; t < 5; t++) {
                 this.reward.push(new Card(player.level, Math.floor(Math.random() * 10)))
@@ -1217,7 +1241,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
             for (let t = 0; t < this.active.length; t++) {
                 this.active[t].body.x = (t * 141) + 40
-                this.active[t].body.y = 550
+                this.active[t].body.y = 570
             }
             // for (let t = 0; t < enemies.length; t++) {
             //     enemies[t].attack()
@@ -1262,7 +1286,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         constructor(level = 0, type = 0) {
             this.level = level + 1
             this.type = type
-            this.body = new Rectangle(0, 550, 100, 120, "red")
+            this.body = new Rectangle(0, 570, 100, 120, "red")
             this.energy = Math.floor(Math.random() * 3) + 1
             if (Math.random() < .4) {
                 this.energy -= 1
@@ -2435,7 +2459,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.health = this.maxhealth
             }
             this.strings.push([`${this.health}/${this.maxhealth}`, "white"])
-            this.strings.push([`dummy`, "transparent"])
+            this.strings.push([``, "transparent"])
             this.strings.push([`Hits: ${this.hits + this.enrage + this.rampage}`, "white"])
             if (this.blocks > 0) {
                 this.strings.push([`Blocks: ${this.blocks}`, "gray"])
@@ -2784,10 +2808,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
             // canvas_context.font = "12px arial"
 
-            canvas_context.font = `${12+(2-(enemies.length/8))}px arial`
+            canvas_context.font = `${13+(2-(enemies.length/8))}px arial`
             // canvas_context.fillStyle = "white"
             for (let t = 0; t < this.strings.length; t++) {
                 canvas_context.fillStyle = this.strings[t][1]
+                canvas_context.strokeStyle = "black"
+                canvas_context.lineWidth = 3
+                canvas_context.strokeText(this.strings[t][0], this.body.body.x - 20, this.body.body.y + 60 + (t * 18))
                 canvas_context.fillText(this.strings[t][0], this.body.body.x - 20, this.body.body.y + 60 + (t * 18))
             }
             // canvas_context.fillText(`${this.health}/${this.maxhealth}`, this.body.body.x - 15, this.body.body.y + 60)
@@ -2899,6 +2926,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
         }
         canvas_context.clearRect(0, 0, (canvas.width), canvas.height)
+
+        if(player.reward == 0){
+
+            drawbg()
+        // canvas_context.drawImage(scape1, 0,0,1280,720) 
+        }
         gamepadAPI.update()
         for (let t = 0; t < enemies.length; t++) {
             enemies[t].body.body.x = (((canvas.width - 36) / enemies.length + 1) * (t)) + (((canvas.width - 36) / (enemies.length * 2)))
@@ -2913,6 +2946,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 tringle.y = player.selected.body.body.y - 65
                 tringle.draw()
             }
+        }
+    }
+    function drawbg(){
+        if(player.image == 0){
+            canvas_context.drawImage(scape1, player.leftdisp*(scape1.width-(1280*1.5)), player.topdisp*(scape1.height-(720*1.5)), 1280*1.5, 720*1.5, 0,0, 1280, 720)
+        }
+        if(player.image == 1){
+            canvas_context.drawImage(scape2, player.leftdisp*(scape2.width-(1280*1.5)), player.topdisp*(scape2.height-(720*1.5)), 1280*1.5, 720*1.5, 0,0, 1280, 720)
+        }
+        if(player.image == 2){
+            canvas_context.drawImage(scape3, player.leftdisp*(scape3.width-(1280*1.5)), player.topdisp*(scape3.height-(720*1.5)), 1280*1.5, 720*1.5, 0,0, 1280, 720)
+        }
+        if(player.image == 3){
+            canvas_context.drawImage(scape4, player.leftdisp*(scape4.width-(1280*1.5)), player.topdisp*(scape4.height-(720*1.5)), 1280*1.5, 720*1.5, 0,0, 1280, 720)
+        }
+        if(player.image == 4){
+            canvas_context.drawImage(scape5, player.leftdisp*(scape5.width-(1280*1.5)), player.topdisp*(scape5.height-(720*1.5)), 1280*1.5, 720*1.5, 0,0, 1280, 720)
         }
     }
 })
