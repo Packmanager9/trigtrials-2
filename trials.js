@@ -1210,9 +1210,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         makeprize() {
 
-            this.image = Math.floor(Math.random()*5)
-            this.leftdisp = Math.random()
-            this.topdisp = Math.random()
+            player.image = Math.floor(Math.random()*5)
+            player.leftdisp = Math.random()
+            player.topdisp = Math.random()
             summons = []
             for (let t = 0; t < 5; t++) {
                 this.reward.push(new Card(player.level, Math.floor(Math.random() * 10)))
