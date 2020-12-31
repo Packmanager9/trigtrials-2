@@ -2768,7 +2768,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
             this.healthbar.x = this.body.body.x - 37.5
             this.healthbarx.x = this.healthbar.x
-            this.healthbar.y = this.body.body.y + 75
+            this.healthbar.y = this.body.body.y + 70
             this.healthbarx.y = this.healthbar.y
             this.healthbar.width = Math.min((75 * (this.health / this.maxhealth)), 75)
 
