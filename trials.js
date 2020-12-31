@@ -898,6 +898,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         player.deck.softpull()
                         spawn()
                     }
+                }
+            }
                     if (player.cleanbutton.isPointInside(TIP_engine)) {
                         player.cleaning *= -1
                     }
@@ -925,8 +927,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         }
                     }
 
-                }
-            }
+                
+            
         });
         // window.addEventListener('pointerup', e => {
         //     window.removeEventListener("pointermove", continued_stimuli);
@@ -1333,31 +1335,31 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.energy -= 1
             }
             this.hits = Math.floor(((Math.random() * .15) + .85) * 8 * this.level) + 2
-            this.hits = Math.ceil(this.hits * (1 + (((this.energy / 5)))))
+            this.hits = Math.ceil(this.hits * (1 + (((this.energy / 4)))))
             this.played = 0
             if (this.type == 0) {
                 this.hits *= 2
             }
             if (this.type == 1) {
-                this.healing = Math.ceil(((((Math.random() * .15) + .85) * 5.1) + Math.ceil(((Math.random() * .15) + .85) * 6.1 * (level + 1)) + 1) * (1 + (((this.energy / 5)))))
+                this.healing = Math.ceil(((((Math.random() * .15) + .85) * 5.1) + Math.ceil(((Math.random() * .15) + .85) * 6.1 * (level + 1)) + 1) * (1 + (((this.energy / 4)))))
                 this.body.color = "#00FF00"
             } else {
                 this.healing = 0
             }
             if (this.type == 2) {
-                this.block = (Math.ceil((((((Math.random() * .15) + .85) * 1) + Math.ceil(((Math.random() * .15) + .85) * .8 * (level + 0))) + 1) * (1 + (((this.energy / 5))))))
+                this.block = (Math.ceil((((((Math.random() * .15) + .85) * 1) + Math.ceil(((Math.random() * .15) + .85) * .8 * (level + 0))) + 1) * (1 + (((this.energy / 4))))))
                 this.body.color = "gray"
             } else {
                 this.block = 0
             }
             if (this.type == 3) {
-                this.poison = Math.ceil(((((Math.random() * .15) + .85) * 1.05) + Math.ceil(((Math.random() * .15) + .85) * 9 * (level + 1)) + 1) * (1 + (((this.energy / 5)))))
+                this.poison = Math.ceil(((((Math.random() * .15) + .85) * 1.05) + Math.ceil(((Math.random() * .15) + .85) * 9 * (level + 1)) + 1) * (1 + (((this.energy / 4)))))
                 this.body.color = "#FF00FF"
             } else {
                 this.poison = 0
             }
             if (this.type == 4) {
-                this.thorns = (Math.ceil((((((Math.random() * .15) + .85) * 1.05) + Math.ceil(((Math.random() * .15) + .85) * 3.5 * (level + 1))) + 1) * (1 + (((this.energy / 5))))))
+                this.thorns = (Math.ceil((((((Math.random() * .15) + .85) * 1.05) + Math.ceil(((Math.random() * .15) + .85) * 3.5 * (level + 1))) + 1) * (1 + (((this.energy / 4))))))
                 this.body.color = "#666600"
             } else {
                 this.thorns = 0
@@ -1371,20 +1373,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         this.energybonus += 1
                     }
                 }
-                this.energybonus = Math.floor(this.energybonus * (1 + (((this.energy / 5)))))
+                this.energybonus = Math.floor(this.energybonus * (1 + (((this.energy / 4)))))
                 this.body.color = "#00CCFF"
             } else {
                 this.energybonus = 0
             }
             if (this.type == 6) {
                 this.cure = 1
-                this.healing = Math.ceil(((((Math.random() * .15) + .85) * 2) + Math.ceil(((Math.random() * .15) + .85) * 3 * (level + 1)) + 1) * (1 + (((this.energy / 5)))))
+                this.healing = Math.ceil(((((Math.random() * .15) + .85) * 2) + Math.ceil(((Math.random() * .15) + .85) * 3 * (level + 1)) + 1) * (1 + (((this.energy / 4)))))
                 this.body.color = "#EEEEEE"
             } else {
                 this.cure = 0
             }
             if (this.type == 7) {
-                this.ret = Math.ceil(((((Math.random() * 1) + 0)) + Math.ceil(((Math.random() * 1) + 0) * 2 * level)) * (1 + ((this.energy / 500))))
+                this.ret = Math.ceil(((((Math.random() * 1) + 0)) + Math.ceil(((Math.random() * 1) + 0) * 2 * level)) * (1 + ((this.energy / 400))))
                 this.body.color = "teal"
                 if (this.ret > this.hits) {
                     this.hits = this.ret
@@ -1393,7 +1395,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.ret = 0
             }
             if (this.type == 8) {
-                this.stun = Math.ceil(((((Math.random() * .15) + .85) * .6 * level)) * (1 + (((this.energy / 5)))))
+                this.stun = Math.ceil(((((Math.random() * .15) + .85) * .6 * level)) * (1 + (((this.energy / 4)))))
                 if (this.stun == 0) {
                     this.stun = 1
                 }
