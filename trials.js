@@ -2422,9 +2422,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
             this.body = new Polygon(350, 160, 15, getRandomColor(), this.type)
-            this.health = 10 + (Math.floor(((Math.random() * .25) + .75) * this.level * 306))
+            this.health = 50 + (Math.floor(((Math.random() * .25) + .75) * this.level * 280))
             this.maxhealth = this.health
-            this.hits = (Math.floor(((Math.random() * .25) + .75) * (this.level * 4.20))) + 1   //2.7
+            this.hits = (Math.floor(((Math.random() * .25) + .75) * (this.level * 18))) + 1   //2.7
+
 
 
             this.attacked = 0
@@ -3160,7 +3161,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             canvas_context.fillText("Click to Start", 375, 400)
             canvas_context.font = "29px arial"
             canvas_context.fillStyle = "Black"
-            canvas_context.fillText("Music By: Lekman, Interface Layout by: vvvv, Backgrounds by upklyak and vectorpouch / Freepik", 0, 710)
+            canvas_context.fillText("Music By: Lekman, Interface Layout by: ssstar, Backgrounds by upklyak and vectorpouch / Freepik", 0, 710)
         }
     }
     function drawbg() {
