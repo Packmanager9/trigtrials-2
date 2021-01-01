@@ -1259,7 +1259,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
         }
         makeprize() {
-
+            player.displaycardindex = 0
             player.image = Math.floor(Math.random() * 5)
             player.leftdisp = Math.random()
             player.topdisp = Math.random()
