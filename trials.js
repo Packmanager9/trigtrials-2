@@ -2422,9 +2422,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
             this.body = new Polygon(350, 160, 15, getRandomColor(), this.type)
-            this.health = 10 + (Math.floor(((Math.random() * .25) + .75) * this.level * 100))
+            this.health = 10 + (Math.floor(((Math.random() * .25) + .75) * this.level * 306))
             this.maxhealth = this.health
-            this.hits = (Math.floor(((Math.random() * .25) + .75) * (this.level * 4.18))) + 1   //2.7
+            this.hits = (Math.floor(((Math.random() * .25) + .75) * (this.level * 4.20))) + 1   //2.7
 
 
             this.attacked = 0
@@ -2510,7 +2510,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
             if (this.explodeyes == 1) {
-                this.explode = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 4) + 1
+                this.explode = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 10) - 1
             }
             if (this.blockyes == 1) {
                 this.blocks = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 2.1)
@@ -2541,10 +2541,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.drain = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 5.5) + 1
             }
             if (this.paddingyes == 1) {
-                this.padding = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 2.95) + 1
+                this.padding = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 3.1) + 1
             }
             if (this.resistyes == 1) {
-                this.resist = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.20) + 1
+                this.resist = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.90) + 1
             }
             if (this.thickyes == 1) {
                 this.thick = Math.floor(((Math.random() * .4) + .6) * (this.level + 0.1) * .4)
@@ -2555,7 +2555,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 }
             }
             if (this.rampageyes == 1) {
-                this.rampage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 2.3) + 1
+                this.rampage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 2.7) + 1
             }
             if (this.alertyes == 1) {
                 this.alert = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 4.4)  //should always be much higher than block or is completely redundant
@@ -2950,7 +2950,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
             // canvas_context.font = "12px arial"
 
-            canvas_context.font = `${13 + (2 - (enemies.length / 8))}px arial`
+            canvas_context.font = `${15 + (2 - (enemies.length / 8))}px arial`
 
 
             if (player.selected == this) {
@@ -2959,10 +2959,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                 canvas_context.strokeStyle = "black"
                 canvas_context.lineWidth = 3
-                canvas_context.font = `${15 + (2 - (enemies.length / 8))}px arial`
+                canvas_context.font = `${17 + (2 - (enemies.length / 8))}px arial`
                 canvas_context.strokeText(this.name, tringle.x - (getTextWidth(this.name, canvas_context.font) / 2), this.body.body.y - 76 + (1 * 18))
                 canvas_context.fillText(this.name, tringle.x - (getTextWidth(this.name, canvas_context.font) / 2), this.body.body.y - 76 + (1 * 18))
 
+                canvas_context.font = `${16 + (2 - (enemies.length / 8))}px arial`
             }
 
             // canvas_context.fillStyle = "white"
