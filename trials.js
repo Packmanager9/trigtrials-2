@@ -878,7 +878,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     if (enemies[t].body.body.isPointInside(TIP_engine)) {
                         player.selected = enemies[t]
                         tringle.x = player.selected.body.body.x
-                        tringle.y = player.selected.body.body.y - 65
+                        tringle.y = player.selected.body.body.y - 75
                     }
                 }
             }
@@ -2798,7 +2798,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     enemies[indexer + 1].attackstart()
                 } else {
                     for (let t = 0; t < summons.length; t++) {
-                        if (enemies.length < 16) {
+                        if (enemies.length < 12) {
                             enemies.push(summons[t])
                         }
                     }
@@ -2809,7 +2809,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 }
             }
         }
-        drawImage(flip, flop, img = this.imageholder, x = this.body.body.x, y = this.body.body.y, width = 75, height = 75, deg = 0) {
+        drawImage(flip, flop, img = this.imageholder, x = this.body.body.x, y = this.body.body.y, width = 100, height = 100, deg = 0) {
 
             this.imageholder.src = `m${this.type}.png`//(srcnames(this.type) + ".svg").toLowerCase()
             canvas_context.save();
@@ -2838,7 +2838,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             canvas_context.scale(flipScale, flopScale);
 
             // Draw the image    
-            canvas_context.drawImage(this.imageholder, -37.5, -37.5, 75, 75);
+            canvas_context.drawImage(this.imageholder, -50, -50, 100, 100);
 
             canvas_context.restore();
         }
@@ -2858,7 +2858,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
             this.healthbar.x = this.body.body.x - 37.5
             this.healthbarx.x = this.healthbar.x
-            this.healthbar.y = this.body.body.y + 70
+            this.healthbar.y = this.body.body.y + 80
             this.healthbarx.y = this.healthbar.y
             this.healthbar.width = Math.min((75 * (this.health / this.maxhealth)), 75)
 
@@ -2880,8 +2880,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 canvas_context.fillStyle = this.strings[t][1]
                 canvas_context.strokeStyle = "black"
                 canvas_context.lineWidth = 3
-                canvas_context.strokeText(this.strings[t][0], this.body.body.x - 20, this.body.body.y + 60 + (t * 18))
-                canvas_context.fillText(this.strings[t][0], this.body.body.x - 20, this.body.body.y + 60 + (t * 18))
+                canvas_context.strokeText(this.strings[t][0], this.body.body.x - 20, this.body.body.y + 70 + (t * 18))
+                canvas_context.fillText(this.strings[t][0], this.body.body.x - 20, this.body.body.y + 70 + (t * 18))
             }
             // canvas_context.fillText(`${this.health}/${this.maxhealth}`, this.body.body.x - 15, this.body.body.y + 60)
             // canvas_context.fillText(`Hits: ${this.hits}`, this.body.body.x - 15, this.body.body.y + 80)
@@ -3050,7 +3050,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 player.selected = enemies[0]
             } else {
                 tringle.x = player.selected.body.body.x
-                tringle.y = player.selected.body.body.y - 65
+                tringle.y = player.selected.body.body.y - 75
                 tringle.draw()
             }
         }
