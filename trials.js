@@ -850,85 +850,92 @@ window.addEventListener('DOMContentLoaded', (event) => {
             //     enemies[t].type += 1
             // }
 
-            if (player.health > 0) {
-                FLEX_engine = canvas.getBoundingClientRect();
-                XS_engine = e.clientX - FLEX_engine.left;
-                YS_engine = e.clientY - FLEX_engine.top;
-                TIP_engine.x = XS_engine
-                TIP_engine.y = YS_engine
-                TIP_engine.body = TIP_engine
-                if (player.reward == 0) {
-                    if (player.drawbutton.isPointInside(TIP_engine)) {
-                        if (player.locked == 0) {
-                            for (let t = 0; t < enemies.length; t++) {
-                                enemies[t].attacked = 0
+            if(notstarted == 1){
+                if(startbutton.isPointInside(TIP_engine)){
+                    notstarted = 0
+                }
+            }else{
+
+                if (player.health > 0) {
+                    FLEX_engine = canvas.getBoundingClientRect();
+                    XS_engine = e.clientX - FLEX_engine.left;
+                    YS_engine = e.clientY - FLEX_engine.top;
+                    TIP_engine.x = XS_engine
+                    TIP_engine.y = YS_engine
+                    TIP_engine.body = TIP_engine
+                    if (player.reward == 0) {
+                        if (player.drawbutton.isPointInside(TIP_engine)) {
+                            if (player.locked == 0) {
+                                for (let t = 0; t < enemies.length; t++) {
+                                    enemies[t].attacked = 0
+                                }
+                                player.deck.pull()
                             }
-                            player.deck.pull()
+                        }
+                    } else {
+    
+                    }
+                    for (let t = 0; t < player.deck.active.length; t++) {
+                        if (player.deck.active[t].body.isPointInside(TIP_engine)) {
+                            player.deck.active[t].play()
                         }
                     }
-                } else {
-
-                }
-                for (let t = 0; t < player.deck.active.length; t++) {
-                    if (player.deck.active[t].body.isPointInside(TIP_engine)) {
-                        player.deck.active[t].play()
+                    for (let t = 0; t < enemies.length; t++) {
+                        if (enemies[t].body.body.isPointInside(TIP_engine)) {
+                            player.selected = enemies[t]
+                            tringle.x = player.selected.body.body.x
+                            tringle.y = player.selected.body.body.y - 90
+                        }
                     }
                 }
-                for (let t = 0; t < enemies.length; t++) {
-                    if (enemies[t].body.body.isPointInside(TIP_engine)) {
-                        player.selected = enemies[t]
-                        tringle.x = player.selected.body.body.x
-                        tringle.y = player.selected.body.body.y - 90
-                    }
-                }
-            }
-
-            for (let t = 0; t < player.deck.reward.length; t++) {
-                if (player.deck.reward[t].body.isPointInside(TIP_engine)) {
-                    player.deck.drawable.push(player.deck.reward[t].clone())
-                    player.deck.reward = []
-                    player.reward = 0
-                    player.deck.softpull()
-                    spawn()
-                }
-                if (player.reward != 0) {
-                    if (player.skipbutton.isPointInside(TIP_engine)) {
+    
+                for (let t = 0; t < player.deck.reward.length; t++) {
+                    if (player.deck.reward[t].body.isPointInside(TIP_engine)) {
+                        player.deck.drawable.push(player.deck.reward[t].clone())
                         player.deck.reward = []
                         player.reward = 0
                         player.deck.softpull()
                         spawn()
                     }
+                    if (player.reward != 0) {
+                        if (player.skipbutton.isPointInside(TIP_engine)) {
+                            player.deck.reward = []
+                            player.reward = 0
+                            player.deck.softpull()
+                            spawn()
+                        }
+                    }
                 }
-            }
-            if (player.cleanbutton.isPointInside(TIP_engine)) {
-                player.cleaning *= -1
-            }
-
-            if (player.indexdownbutton.isPointInside(TIP_engine)) {
-                player.displaycardindex -= 1
-                if (player.displaycardindex < 0) {
-                    player.displaycardindex = 0
+                if (player.cleanbutton.isPointInside(TIP_engine)) {
+                    player.cleaning *= -1
                 }
-            }
-            if (player.indexupbutton.isPointInside(TIP_engine)) {
-                player.displaycardindex += 1
-                if (player.displaycardindex > player.deck.drawable.length - 1) {
-                    player.displaycardindex = player.deck.drawable.length - 1
-                }
-            }
-
-            if (player.removebutton.isPointInside(TIP_engine)) {
-                if (player.deck.drawable.length > 1) {
-                    player.deck.drawable.splice(player.displaycardindex, 1)
+    
+                if (player.indexdownbutton.isPointInside(TIP_engine)) {
                     player.displaycardindex -= 1
                     if (player.displaycardindex < 0) {
                         player.displaycardindex = 0
                     }
                 }
+                if (player.indexupbutton.isPointInside(TIP_engine)) {
+                    player.displaycardindex += 1
+                    if (player.displaycardindex > player.deck.drawable.length - 1) {
+                        player.displaycardindex = player.deck.drawable.length - 1
+                    }
+                }
+    
+                if (player.removebutton.isPointInside(TIP_engine)) {
+                    if (player.deck.drawable.length > 1) {
+                        player.deck.drawable.splice(player.displaycardindex, 1)
+                        player.displaycardindex -= 1
+                        if (player.displaycardindex < 0) {
+                            player.displaycardindex = 0
+                        }
+                    }
+                }
+    
+    
+    
             }
-
-
-
         });
         // window.addEventListener('pointerup', e => {
         //     window.removeEventListener("pointermove", continued_stimuli);
@@ -1117,17 +1124,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
             pullcard.energy = 1
             let retcard = new Card(1, 7)
             retcard.ret = 1
-            retcard.hits = 40000
+            retcard.hits = 4
             retcard.energy = 0
 
-            // this.deck.push(pullcard)
-            // this.deck.push(healingcard)
-            // this.deck.push(blockcard)
-            // this.deck.push(poisoncard)
-            // this.deck.push(thorncard)
-            // this.deck.push(energybonuscard)
-            // this.deck.push(curecard)
-            // this.deck.push(stuncard)
+            this.deck.push(pullcard)
+            this.deck.push(healingcard)
+            this.deck.push(blockcard)
+            this.deck.push(poisoncard)
+            this.deck.push(thorncard)
+            this.deck.push(energybonuscard)
+            this.deck.push(curecard)
+            this.deck.push(stuncard)
             this.deck.push(retcard)
 
             this.r = 0
@@ -2503,41 +2510,41 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
             if (this.explodeyes == 1) {
-                this.explode = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 3) + 1
+                this.explode = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 4) + 1
             }
             if (this.blockyes == 1) {
-                this.blocks = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 2)
+                this.blocks = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 2.1)
             }
             if (this.thornsyes == 1) {
-                this.thorns = Math.floor(((Math.random() * .25) + .75) * (this.level + 1.5) * 1.4)
+                this.thorns = Math.floor(((Math.random() * .25) + .75) * (this.level + 1.5) * 1.5)
             }
             if (this.healsyes == 1) {
-                this.heals = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 2.3)
+                this.heals = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 2.8)
             }
             if (this.venomyes == 1) {
-                this.venom = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 2.15)
+                this.venom = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 2.4)
             }
             if (this.enrageyes == 1) {
-                this.enrage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 2.25) + 1
+                this.enrage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 2.5) + 1
             }
             if (this.bypassyes == 1) {
-                this.bypass = Math.floor(((Math.random() * .25) + .75) * (this.level * 3) * 2.75) + 1
+                this.bypass = Math.floor(((Math.random() * .25) + .75) * (this.level * 3) * 2.9) + 1
             }
             if (this.cureyes == 1) {
-                this.cure = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.65) + 1
+                this.cure = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.9) + 1
             }
 
             if (this.betrayyes == 1) {
-                this.betray = Math.floor(((Math.random() * .25) + .75) * (this.level + 3.75) * 2.25) + 1
+                this.betray = Math.floor(((Math.random() * .25) + .75) * (this.level + 3.75) * 2.35) + 1
             }
             if (this.drainyes == 1) {
                 this.drain = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 5.5) + 1
             }
             if (this.paddingyes == 1) {
-                this.padding = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 2.65) + 1
+                this.padding = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 2.95) + 1
             }
             if (this.resistyes == 1) {
-                this.resist = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.80) + 1
+                this.resist = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.20) + 1
             }
             if (this.thickyes == 1) {
                 this.thick = Math.floor(((Math.random() * .4) + .6) * (this.level + 0.1) * .4)
@@ -2548,7 +2555,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 }
             }
             if (this.rampageyes == 1) {
-                this.rampage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.8) + 1
+                this.rampage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 2.3) + 1
             }
             if (this.alertyes == 1) {
                 this.alert = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 4.4)  //should always be much higher than block or is completely redundant
@@ -3088,8 +3095,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     let tringle = new Pointer(350, 350, "white", 10)
 
+    let notstarted = 1
+    let startbutton = new Rectangle(0, 0, 1280, 720, "white")
     player.deck.softpull()
     function main() {
+
         if (player.reward == 0) {
             if (player.health > 0) {
                 if (keysPressed['1']) {
@@ -3117,6 +3127,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         canvas_context.clearRect(0, 0, (canvas.width), canvas.height)
 
+
         if (player.reward == 0) {
 
             drawbg()
@@ -3136,6 +3147,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 tringle.y = player.selected.body.body.y - 90
                 tringle.draw()
             }
+        }
+        if(notstarted == 1){
+            startbutton.draw()
+
+            canvas_context.font = "100px arial"
+            canvas_context.fillStyle = "Black"
+            canvas_context.fillText("Click to Start", 375, 400)
+            canvas_context.fillText("Click to Start", 375, 400)
+            canvas_context.fillText("Click to Start", 375, 400)
+            canvas_context.fillText("Click to Start", 375, 400)
+            canvas_context.font = "29px arial"
+            canvas_context.fillStyle = "Black"
+            canvas_context.fillText("Music By: Lekman, Interface Layout by: vvvv, Backgrounds by upklyak and vectorpouch / Freepik", 0, 710)
         }
     }
     function drawbg() {
