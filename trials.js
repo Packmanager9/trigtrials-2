@@ -1117,17 +1117,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
             pullcard.energy = 1
             let retcard = new Card(1, 7)
             retcard.ret = 1
-            retcard.hits = 4
+            retcard.hits = 40000
             retcard.energy = 0
 
-            this.deck.push(pullcard)
-            this.deck.push(healingcard)
-            this.deck.push(blockcard)
-            this.deck.push(poisoncard)
-            this.deck.push(thorncard)
-            this.deck.push(energybonuscard)
-            this.deck.push(curecard)
-            this.deck.push(stuncard)
+            // this.deck.push(pullcard)
+            // this.deck.push(healingcard)
+            // this.deck.push(blockcard)
+            // this.deck.push(poisoncard)
+            // this.deck.push(thorncard)
+            // this.deck.push(energybonuscard)
+            // this.deck.push(curecard)
+            // this.deck.push(stuncard)
             this.deck.push(retcard)
 
             this.r = 0
@@ -2438,9 +2438,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.stun = 0
 
             if(this.pomaoyes == 1){
-                this.maxhealth = (Math.ceil(this.maxhealth*1.5))
-                this.health = (Math.ceil(this.health*1.5))
-                this.hits = (Math.ceil(this.hits*1.5))
+                this.maxhealth = (Math.ceil(this.maxhealth*1.2))
+                this.health = (Math.ceil(this.health*1.2))
+                this.hits = (Math.ceil(this.hits*1.2))
 
 
             if (Math.random()<.09){
