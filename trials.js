@@ -2436,50 +2436,50 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.explode = 0
             this.rampage = 0
             this.stun = 0
-            
+
             if(this.pomaoyes == 1){
                 this.maxhealth = (Math.ceil(this.maxhealth*1.5))
                 this.health = (Math.ceil(this.health*1.5))
                 this.hits = (Math.ceil(this.hits*1.5))
 
 
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.explode = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 3) + 1
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.blocks = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 2)
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.thorns = Math.floor(((Math.random() * .25) + .75) * (this.level + 1.5) * 1.4)
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.heals = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 2.3)
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.venom = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 2.15)
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.enrage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 2.25) + 1
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.bypass = Math.floor(((Math.random() * .25) + .75) * (this.level * 3) * 2.75) + 1
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.cure = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.65) + 1
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.betray = Math.floor(((Math.random() * .25) + .75) * (this.level + 3.75) * 2.25) + 1
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.drain = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 5.5) + 1
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.padding = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 2.65) + 1
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.resist = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.80) + 1
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.thick = Math.floor(((Math.random() * .4) + .6) * (this.level + 0.1) * .4)
                 if (this.thick == 0) {
                     if (Math.random() > .2) {
@@ -2487,13 +2487,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     }
                 }
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.rampage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.8) + 1
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.alert = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 4.4)  //should always be much higher than block or is completely redundant
             }
-            if (Math.random()<.15){
+            if (Math.random()<.09){
                 this.summon = 1
                 if (Math.random() < .09) {
                     this.hits = 0
