@@ -10,7 +10,7 @@ scape4.src = "1624.jpg"
 let scape5 = new Image()
 scape5.src = "1847.jpg"
 let bumper = new Audio()
-bumper.src = "bump.wav"
+bumper.src = "bumpy.wav"
 
 
 let alertsong = new Audio()
@@ -878,7 +878,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     if (enemies[t].body.body.isPointInside(TIP_engine)) {
                         player.selected = enemies[t]
                         tringle.x = player.selected.body.body.x
-                        tringle.y = player.selected.body.body.y - 75
+                        tringle.y = player.selected.body.body.y - 90
                     }
                 }
             }
@@ -900,35 +900,35 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     }
                 }
             }
-                    if (player.cleanbutton.isPointInside(TIP_engine)) {
-                        player.cleaning *= -1
-                    }
+            if (player.cleanbutton.isPointInside(TIP_engine)) {
+                player.cleaning *= -1
+            }
 
-                    if (player.indexdownbutton.isPointInside(TIP_engine)) {
-                        player.displaycardindex -= 1
-                        if (player.displaycardindex < 0) {
-                            player.displaycardindex = 0
-                        }
-                    }
-                    if (player.indexupbutton.isPointInside(TIP_engine)) {
-                        player.displaycardindex += 1
-                        if (player.displaycardindex > player.deck.drawable.length - 1) {
-                            player.displaycardindex = player.deck.drawable.length - 1
-                        }
-                    }
+            if (player.indexdownbutton.isPointInside(TIP_engine)) {
+                player.displaycardindex -= 1
+                if (player.displaycardindex < 0) {
+                    player.displaycardindex = 0
+                }
+            }
+            if (player.indexupbutton.isPointInside(TIP_engine)) {
+                player.displaycardindex += 1
+                if (player.displaycardindex > player.deck.drawable.length - 1) {
+                    player.displaycardindex = player.deck.drawable.length - 1
+                }
+            }
 
-                    if (player.removebutton.isPointInside(TIP_engine)) {
-                        if (player.deck.drawable.length > 1) {
-                            player.deck.drawable.splice(player.displaycardindex, 1)
-                            player.displaycardindex -= 1
-                            if (player.displaycardindex < 0) {
-                                player.displaycardindex = 0
-                            }
-                        }
+            if (player.removebutton.isPointInside(TIP_engine)) {
+                if (player.deck.drawable.length > 1) {
+                    player.deck.drawable.splice(player.displaycardindex, 1)
+                    player.displaycardindex -= 1
+                    if (player.displaycardindex < 0) {
+                        player.displaycardindex = 0
                     }
+                }
+            }
 
-                
-            
+
+
         });
         // window.addEventListener('pointerup', e => {
         //     window.removeEventListener("pointermove", continued_stimuli);
@@ -1835,6 +1835,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.type = Math.floor(Math.random() * 136)
                 // this.type = 99
 
+                this.name = nameswitch(this.type)
                 // if(enemies.length == 0){
                 //     this.type = 73
                 // }else if(enemies.length == 1){
@@ -2875,6 +2876,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
             // canvas_context.font = "12px arial"
 
             canvas_context.font = `${13 + (2 - (enemies.length / 8))}px arial`
+
+
+            if(player.selected == this){
+
+            canvas_context.fillStyle = "white"
+            
+            canvas_context.strokeStyle = "black"
+            canvas_context.lineWidth = 3
+            canvas_context.font = `${15 + (2 - (enemies.length / 8))}px arial`
+                canvas_context.strokeText(this.name, tringle.x - (getTextWidth(this.name,canvas_context.font)/2), this.body.body.y - 76 + (1* 18))
+                canvas_context.fillText(this.name, tringle.x - (getTextWidth(this.name,canvas_context.font)/2), this.body.body.y - 76 + (1 * 18))
+
+            }
+            
             // canvas_context.fillStyle = "white"
             for (let t = 0; t < this.strings.length; t++) {
                 canvas_context.fillStyle = this.strings[t][1]
@@ -2899,25 +2914,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 }
                 enemies.splice(enemies.indexOf(this), 1)
 
-                if(enemies.length > 0){
-                alertsong.pause()
-                betraysong.pause()
-                blocksong.pause()
-                bypasssong.pause()
-                detonatesong.pause()
-                drainsong.pause()
-                enragesong.pause()
-                paddingsong.pause()
-                poisonedsong.pause()
-                rampagesong.pause()
-                resistsong.pause()
-                stunsong.pause()
-                summonsong.pause()
-                thicksong.pause()
-                thornsong.pause()
-                treatsong.pause()
-                venomsong.pause()
-                healsong.pause()
+                if (enemies.length > 0) {
+                    alertsong.pause()
+                    betraysong.pause()
+                    blocksong.pause()
+                    bypasssong.pause()
+                    detonatesong.pause()
+                    drainsong.pause()
+                    enragesong.pause()
+                    paddingsong.pause()
+                    poisonedsong.pause()
+                    rampagesong.pause()
+                    resistsong.pause()
+                    stunsong.pause()
+                    summonsong.pause()
+                    thicksong.pause()
+                    thornsong.pause()
+                    treatsong.pause()
+                    venomsong.pause()
+                    healsong.pause()
                 }
 
                 if (enemies.length == 0) {
@@ -3050,7 +3065,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 player.selected = enemies[0]
             } else {
                 tringle.x = player.selected.body.body.x
-                tringle.y = player.selected.body.body.y - 75
+                tringle.y = player.selected.body.body.y - 90
                 tringle.draw()
             }
         }
@@ -3072,4 +3087,290 @@ window.addEventListener('DOMContentLoaded', (event) => {
             canvas_context.drawImage(scape5, player.leftdisp * (scape5.width - (1280 * 1.5)), player.topdisp * (scape5.height - (720 * 1.5)), 1280 * 1.5, 720 * 1.5, 0, 0, 1280, 720)
         }
     }
+
+    function nameswitch(type) {
+        switch (type) {
+            case 0:
+                return "Adenolish"
+            case 1:
+                return "Avokaboom"
+            case 2:
+                return "Algadjin"
+            case 3:
+                return "Ayateda"
+            case 4:
+                return "Baa"
+            case 5:
+                return "Banandroid"
+            case 6:
+                return "Beary"
+            case 7:
+                return "Beeurchin"
+            case 8:
+                return "Bice"
+            case 9:
+                return "Bellaja"
+            case 10:
+                return "Blanqast"
+            case 11:
+                return "Blattle"
+            case 12:
+                return "Bongu"
+            case 13:
+                return "Battlerfly"
+            case 14:
+                return "Centiclak"
+            case 15:
+                return "Cheetza"
+            case 16:
+                return "Chilldabeast"
+            case 17:
+                return "Chimpansy"
+            case 18:
+                return "Communigator"
+            case 19:
+                return "Phishuk"
+            case 20:
+                return "Cyosteroth"
+            case 21:
+                return "Rushroom"
+            case 22:
+                return "Deblobbio"
+            case 23:
+                return "Degeissdt"
+            case 24:
+                return "Dicyto"
+            case 25:
+                return "Djoper"
+            case 26:
+                return "Dothog"
+            case 27:
+                return "Doughgnat"
+            case 28:
+                return "Eggress"
+            case 29:
+                return "Elocurl"
+            case 30:
+                return "Epibazang"
+            case 31:
+                return "Errantnope"
+            case 32:
+                return "Farmot"
+            case 33:
+                return "Faedendron"
+            case 34:
+                return "Flashmer"
+            case 35:
+                return "Flyinsoup"
+            case 36:
+                return "Fwuffynumpkins"
+            case 37:
+                return "Geliphant"
+            case 38:
+                return "Threadnought"
+            case 39:
+                return "Giteriglia"
+            case 40:
+                return "Glyer"
+            case 41:
+                return "Grobhost"
+            case 42:
+                return "Gungholio"
+            case 43:
+                return "Gytanic"
+            case 44:
+                return "Halocordate"
+            case 45:
+                return "Haptozahen"
+            case 46:
+                return "Hemtan"
+            case 47:
+                return "Honigkonig"
+            case 48:
+                return "Hmun"
+            case 49:
+                return "Hykeyna"
+            case 50:
+                return "Hyuntress"
+            case 51:
+                return "Ihmpdrap"
+            case 52:
+                return "Illellonab"
+            case 53:
+                return "Indeo"
+            case 54:
+                return "Jiyou"
+            case 55:
+                return "Kachort"
+            case 56:
+                return "Knightstacean"
+            case 57:
+                return "Kohboh"
+            case 58:
+                return "Kungulp"
+            case 59:
+                return "Kunk"
+            case 60:
+                return "Levdzell"
+            case 61:
+                return "Mangoon"
+            case 62:
+                return "Manterfly"
+            case 63:
+                return "Mantidile"
+            case 64:
+                return "Meloncollie"
+            case 65:
+                return "Memeek"
+            case 66:
+                return "Minkohabod"
+            case 67:
+                return "Toximastica"
+            case 68:
+                return "Mnemont"
+            case 69:
+                return "Mondosplak"
+            case 70:
+                return "Monopteryx"
+            case 71:
+                return "Mossboss"
+            case 72:
+                return "Munegull"
+            case 73:
+                return "Sungull"
+            case 74:
+                return "Nentopode"
+            case 75:
+                return "Nhainhai"
+            case 76:
+                return "Nimnamnom"
+            case 77:
+                return "Nokoyl"
+            case 78:
+                return "Obchovy"
+            case 79:
+                return "Octgotot"
+            case 80:
+                return "Ogo"
+            case 81:
+                return "Origanimal"
+            case 82:
+                return "Osteoplang"
+            case 83:
+                return "Parafox"
+            case 84:
+                return "Pigin"
+            case 85:
+                return "Probocetus"
+            case 86:
+                return "Prostrax"
+            case 87:
+                return "Psychobath"
+            case 88:
+                return "R@tic"
+            case 89:
+                return "Reefcake"
+            case 90:
+                return "Rhischlosserous"
+            case 91:
+                return "Rivzo"
+            case 92:
+                return "Rongzeed"
+            case 93:
+                return "Runnybabbit"
+            case 94:
+                return "Rytegg"
+            case 95:
+                return "Wrongegg"
+            case 96:
+                return "Sapiosuant"
+            case 97:
+                return "Satinella"
+            case 98:
+                return "Scarbecue"
+            case 99:
+                return "Schlorkupine"
+            case 100:
+                return "Schmodozer"
+            case 101:
+                return "Schorp"
+            case 102:
+                return "Scorphibian"
+            case 103:
+                return "Slamelion"
+            case 104:
+                return "Sluggernaut"
+            case 105:
+                return "Sorba"
+            case 106:
+                return "Sortsand"
+            case 107:
+                return "Sparvae"
+            case 108:
+                return "Spikegul"
+            case 109:
+                return "Strachid"
+            case 110:
+                return "Sudakleez"
+            case 111:
+                return "Swogharnler"
+            case 112:
+                return "Tacroach"
+            case 113:
+                return "Tafantula"
+            case 114:
+                return "Takobie"
+            case 115:
+                return "Tankgolin"
+            case 116:
+                return "Toobapath"
+            case 117:
+                return "Missleaneous"
+            case 118:
+                return "Triaural"
+            case 119:
+                return "Tutewtoo"
+            case 120:
+                return "Uggnawb"
+            case 121:
+                return "Urcaria"
+            case 122:
+                return "Vamprey"
+            case 123:
+                return "Vellup"
+            case 124:
+                return "Wheeliosbop"
+            case 125:
+                return "Whumpump"
+            case 126:
+                return "Wochem"
+            case 127:
+                return "Xaltoxis"
+            case 128:
+                return "Xlitch"
+            case 129:
+                return "Yallod"
+            case 130:
+                return "Yuggle"
+            case 131:
+                return "Zaum"
+            case 132:
+                return "Zeen"
+            case 133:
+                return "Zentipede"
+            case 134:
+                return "Xrachnid"
+            case 135:
+                return "Zubgondrakter"
+        }
+    }
+
+function getTextWidth(text, font) {
+    // re-use canvas object for better performance
+    var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+    var context = canvas.getContext("2d");
+    context.font = font;
+    var metrics = context.measureText(text);
+    return metrics.width;
+}
 })
