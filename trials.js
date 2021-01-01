@@ -1335,31 +1335,31 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.energy -= 1
             }
             this.hits = Math.floor(((Math.random() * .15) + .85) * 8 * this.level) + 2
-            this.hits = Math.ceil(this.hits * (1 + (((this.energy / 4)))))
+            this.hits = Math.ceil(this.hits * (1 + (((this.energy / 3)))))
             this.played = 0
             if (this.type == 0) {
                 this.hits *= 2
             }
             if (this.type == 1) {
-                this.healing = Math.ceil(((((Math.random() * .15) + .85) * 5.1) + Math.ceil(((Math.random() * .15) + .85) * 6.1 * (level + 1)) + 1) * (1 + (((this.energy / 4)))))
+                this.healing = Math.ceil(((((Math.random() * .15) + .85) * 5.1) + Math.ceil(((Math.random() * .15) + .85) * 6.1 * (level + 1)) + 1) * (1 + (((this.energy / 3)))))
                 this.body.color = "#00FF00"
             } else {
                 this.healing = 0
             }
             if (this.type == 2) {
-                this.block = (Math.ceil((((((Math.random() * .15) + .85) * 1) + Math.ceil(((Math.random() * .15) + .85) * .8 * (level + 0))) + 1) * (1 + (((this.energy / 4))))))
+                this.block = (Math.ceil((((((Math.random() * .15) + .85) * 1) + Math.ceil(((Math.random() * .15) + .85) * .8 * (level + 0))) + 1) * (1 + (((this.energy / 3))))))
                 this.body.color = "gray"
             } else {
                 this.block = 0
             }
             if (this.type == 3) {
-                this.poison = Math.ceil(((((Math.random() * .15) + .85) * 1.05) + Math.ceil(((Math.random() * .15) + .85) * 9 * (level + 1)) + 1) * (1 + (((this.energy / 4)))))
+                this.poison = Math.ceil(((((Math.random() * .15) + .85) * 1.05) + Math.ceil(((Math.random() * .15) + .85) * 9 * (level + 1)) + 1) * (1 + (((this.energy / 3)))))
                 this.body.color = "#FF00FF"
             } else {
                 this.poison = 0
             }
             if (this.type == 4) {
-                this.thorns = (Math.ceil((((((Math.random() * .15) + .85) * 1.05) + Math.ceil(((Math.random() * .15) + .85) * 3.5 * (level + 1))) + 1) * (1 + (((this.energy / 4))))))
+                this.thorns = (Math.ceil((((((Math.random() * .15) + .85) * 1.05) + Math.ceil(((Math.random() * .15) + .85) * 3.5 * (level + 1))) + 1) * (1 + (((this.energy / 3))))))
                 this.body.color = "#666600"
             } else {
                 this.thorns = 0
@@ -1380,13 +1380,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             if (this.type == 6) {
                 this.cure = 1
-                this.healing = Math.ceil(((((Math.random() * .15) + .85) * 2) + Math.ceil(((Math.random() * .15) + .85) * 3 * (level + 1)) + 1) * (1 + (((this.energy / 4)))))
+                this.healing = Math.ceil(((((Math.random() * .15) + .85) * 2) + Math.ceil(((Math.random() * .15) + .85) * 3 * (level + 1)) + 1) * (1 + (((this.energy / 3)))))
                 this.body.color = "#EEEEEE"
             } else {
                 this.cure = 0
             }
             if (this.type == 7) {
-                this.ret = Math.ceil(((((Math.random() * 1) + 0)) + Math.ceil(((Math.random() * 1) + 0) * 2 * level)) * (1 + ((this.energy / 400))))
+                this.ret = Math.ceil(((((Math.random() * 1) + 0)) + Math.ceil(((Math.random() * 1) + 0) * 2 * level)) * (1 + ((this.energy / 300))))
                 this.body.color = "teal"
                 if (this.ret > this.hits) {
                     this.hits = this.ret
@@ -1395,7 +1395,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 this.ret = 0
             }
             if (this.type == 8) {
-                this.stun = Math.ceil(((((Math.random() * .15) + .85) * .6 * level)) * (1 + (((this.energy / 4)))))
+                this.stun = Math.ceil(((((Math.random() * .15) + .85) * .6 * level)) * (1 + (((this.energy / 3)))))
                 if (this.stun == 0) {
                     this.stun = 1
                 }
@@ -1832,7 +1832,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         constructor(type = -1, level = player.level) {
 
             if (type == -1) {
-                this.type = Math.floor(Math.random() * 136)
+                this.type = Math.floor(Math.random() * 137)
                 // this.type = 99
 
                 this.name = nameswitch(this.type)
@@ -2381,6 +2381,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     this.explodeyes = 1
                     this.alertyes = 1
                 }
+                if (this.type == 136) {
+                    this.pomaoyes = 1
+                }
                 // if(expcounter == 0){
                 //     if(level == 10){
                 //         this.type = 23
@@ -2416,6 +2419,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.maxhealth = this.health
             this.hits = (Math.floor(((Math.random() * .25) + .75) * (this.level * 4.18))) + 1   //2.7
 
+
             this.attacked = 0
             this.alert = 0
             this.poison = 0
@@ -2432,6 +2436,70 @@ window.addEventListener('DOMContentLoaded', (event) => {
             this.explode = 0
             this.rampage = 0
             this.stun = 0
+            
+            if(this.pomaoyes == 1){
+                this.maxhealth = (Math.ceil(this.maxhealth*1.5))
+                this.health = (Math.ceil(this.health*1.5))
+                this.hits = (Math.ceil(this.hits*1.5))
+
+
+            if (Math.random()<.15){
+                this.explode = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 3) + 1
+            }
+            if (Math.random()<.15){
+                this.blocks = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 2)
+            }
+            if (Math.random()<.15){
+                this.thorns = Math.floor(((Math.random() * .25) + .75) * (this.level + 1.5) * 1.4)
+            }
+            if (Math.random()<.15){
+                this.heals = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 2.3)
+            }
+            if (Math.random()<.15){
+                this.venom = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 2.15)
+            }
+            if (Math.random()<.15){
+                this.enrage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 2.25) + 1
+            }
+            if (Math.random()<.15){
+                this.bypass = Math.floor(((Math.random() * .25) + .75) * (this.level * 3) * 2.75) + 1
+            }
+            if (Math.random()<.15){
+                this.cure = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.65) + 1
+            }
+            if (Math.random()<.15){
+                this.betray = Math.floor(((Math.random() * .25) + .75) * (this.level + 3.75) * 2.25) + 1
+            }
+            if (Math.random()<.15){
+                this.drain = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 5.5) + 1
+            }
+            if (Math.random()<.15){
+                this.padding = Math.floor(((Math.random() * .25) + .75) * (this.level + 3) * 2.65) + 1
+            }
+            if (Math.random()<.15){
+                this.resist = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.80) + 1
+            }
+            if (Math.random()<.15){
+                this.thick = Math.floor(((Math.random() * .4) + .6) * (this.level + 0.1) * .4)
+                if (this.thick == 0) {
+                    if (Math.random() > .2) {
+                        this.thick = 1
+                    }
+                }
+            }
+            if (Math.random()<.15){
+                this.rampage = Math.floor(((Math.random() * .25) + .75) * (this.level + 1) * 1.8) + 1
+            }
+            if (Math.random()<.15){
+                this.alert = Math.floor(((Math.random() * .25) + .75) * (this.level + 2) * 4.4)  //should always be much higher than block or is completely redundant
+            }
+            if (Math.random()<.15){
+                this.summon = 1
+                if (Math.random() < .09) {
+                    this.hits = 0
+                }
+            }
+            }
 
 
             if (this.explodeyes == 1) {
@@ -2878,18 +2946,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
             canvas_context.font = `${13 + (2 - (enemies.length / 8))}px arial`
 
 
-            if(player.selected == this){
+            if (player.selected == this) {
 
-            canvas_context.fillStyle = "white"
-            
-            canvas_context.strokeStyle = "black"
-            canvas_context.lineWidth = 3
-            canvas_context.font = `${15 + (2 - (enemies.length / 8))}px arial`
-                canvas_context.strokeText(this.name, tringle.x - (getTextWidth(this.name,canvas_context.font)/2), this.body.body.y - 76 + (1* 18))
-                canvas_context.fillText(this.name, tringle.x - (getTextWidth(this.name,canvas_context.font)/2), this.body.body.y - 76 + (1 * 18))
+                canvas_context.fillStyle = "white"
+
+                canvas_context.strokeStyle = "black"
+                canvas_context.lineWidth = 3
+                canvas_context.font = `${15 + (2 - (enemies.length / 8))}px arial`
+                canvas_context.strokeText(this.name, tringle.x - (getTextWidth(this.name, canvas_context.font) / 2), this.body.body.y - 76 + (1 * 18))
+                canvas_context.fillText(this.name, tringle.x - (getTextWidth(this.name, canvas_context.font) / 2), this.body.body.y - 76 + (1 * 18))
 
             }
-            
+
             // canvas_context.fillStyle = "white"
             for (let t = 0; t < this.strings.length; t++) {
                 canvas_context.fillStyle = this.strings[t][1]
@@ -3362,15 +3430,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 return "Xrachnid"
             case 135:
                 return "Zubgondrakter"
+            case 136:
+                return "Pomao"
         }
     }
 
-function getTextWidth(text, font) {
-    // re-use canvas object for better performance
-    var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
-    var context = canvas.getContext("2d");
-    context.font = font;
-    var metrics = context.measureText(text);
-    return metrics.width;
-}
+    function getTextWidth(text, font) {
+        // re-use canvas object for better performance
+        var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+        var context = canvas.getContext("2d");
+        context.font = font;
+        var metrics = context.measureText(text);
+        return metrics.width;
+    }
 })
