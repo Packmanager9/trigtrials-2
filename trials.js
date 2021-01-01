@@ -3186,9 +3186,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             case 0:
                 return "Adenolish"
             case 1:
-                return "Avokaboom"
-            case 2:
                 return "Algadjin"
+            case 2:
+                return "Avokaboom"
             case 3:
                 return "Ayateda"
             case 4:
